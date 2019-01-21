@@ -1,0 +1,107 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: rgb(235, 235, 235);
+}
+.bg-green{
+    background-color: rgb(0, 100, 0, 0.75);
+    color: white;
+}
+.bg-yellow{
+    background-color: darkorange;
+    color: white;
+}
+.car{
+    position: fixed;
+    bottom: 0;
+    margin-left: 92%;
+    font-size: 50px;
+    
+}
+@media screen and (max-width:1200px) {
+    .car {
+        bottom: 0;
+        margin-left: 0;
+    }
+}
+
+#car2{
+    font-size: 50px;
+    color: rgb(0, 0, 0, 0.7);
+}
+@media screen and (max-width:1200px) {
+    #car2{
+    color: rgb(0, 0, 0, 0.9);
+}
+}
+#aa{
+    font-size: 18px;
+    border-radius: 50%;
+    background-color: white;
+    color: purple;
+}
+#aa:hover{
+    text-decoration: none;
+    color: white;
+    background-color: rgb(0, 0, 0, 0.4);
+}
+nav #search-lg {
+    width: 350px;
+}
+
+@media screen and (max-width:1200px) {
+    nav #search-lg {
+        width: 350px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    nav #search-lg {
+        width: auto;
+    }
+}
+
+.container .bg-purple {
+    width: 100%;
+    background-color: var(--purple);
+}
+
+.btn-purple {
+    color: rgb(156, 39, 176);
+}
+
+.btn-purple:hover {
+    color: #ffff;
+    background-color: rgb(156, 39, 176);
+
+}
+.btn-danger2{
+    color: orangered;
+}
+.btn-danger2:hover{
+    background-color: orangered;
+    color: white;
+}
+.bg-hover:hover{
+    cursor: pointer;
+    background-color: rgb(235, 235, 235);    
+}
+.icono{
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    margin-top: 15px
+}
+.shopping{
+    font-size: 20px
+}
+.aling-right{
+    margin-right: 7px;
+}
+.larger{
+    color: purple;
+}
+.smaller{
+    color: rgb(150, 80, 150, 0.8);
+}

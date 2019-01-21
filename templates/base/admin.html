@@ -1,0 +1,72 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            Libreria
+        {% endblock %}
+    </title>
+    <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text|ZCOOL+KuaiLe" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://file.myfontastic.com/pHAyhgVB2i58ku9XgAcojg/icons.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+</head>
+
+<body>
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-green">
+        <a class="navbar-brand" href="#">Libreria</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% block active1 %} {% endblock %}">
+                    <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item {% block active2 %} {% endblock %}">
+                    <a class="nav-link" href="{% url 'articulo:articulo' %}">Productos</a>
+                </li>
+                <li class="nav-item {% block active3 %} {% endblock %}">
+                    <a class="nav-link" href="{% url 'articulo:inventario' %}">Inventario</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0 ">
+                <input id="search-lg" class=" form-control mr-sm-2 " type="search" placeholder="Buscar..." aria-label="Search">
+                <button class="btn btn-light  my-2 my-sm-0" type="submit">buscar</button>
+            </form>
+        </div>
+    </nav>
+
+{% endblock %}
+{% block car %}
+    <div class="car">
+        <a class="btn"><i id="car2" class="icon-shopping-cart shopping" data-toggle="modal" data-target="#car-shopping"></i><span style="font-size: 20px">3</span></a>
+    </div>
+{% endblock %}
+
+    <div class="row">
+        <div class="container">
+            {% block body %}
+
+            {% endblock %}
+        </div>
+    </div>
+{% block modal %}
+
+{% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('body').bootstrapMaterialDesign();
+        });
+    </script>
+</body>
+
+</html>

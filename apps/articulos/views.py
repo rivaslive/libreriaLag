@@ -25,11 +25,10 @@ class CrearArticulo(CreateView):
 
 def inventario(request):
     # Articulos con estado activo, con stock mayor que 1 pero menores que 10
-    query = Articulo.objects.filter(
-        Q(is_activate=1) & Q(stock__gt=0) & Q(stock__lt=11))
+    query = Articulo.objects.filter(Q(stock__gt=0) & Q(stock__lt=11)).exclude(is_activate=0)
     # Articulos con 0 existencias
-    query_ar = Articulo.objects.filter(is_activate=1, stock=0)
+    query_ar = Articulo.objects.filter(stock=0).exclude(is_activate=0)
     # Todos los demás articulos mayores ue 10
-    query_are = Articulo.objects.filter(Q(is_activate=1) & Q(stock__gt=10))
+    query_are = Articulo.objects.filter(stock__gt=10).exclude(is_activate=0)
 
     return render(request, 'productos/inventario.html', {'inventario1': query, 'inventario': query_ar, 'inventariop': query_are})

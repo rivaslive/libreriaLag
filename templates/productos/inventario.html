@@ -17,60 +17,33 @@
             </div>
             <div class="my-3 p-3 bg-white rounded box-shadow">
                 <h6 class="border-bottom border-gray pb-2 mb-0">Productos sin existencias</h6>
+                {% if inventario %}
+                    {% for foo in inventario %}
                 <div class="media text-muted pt-3 bg-hover">
                     <i class="icono icon-share"></i>
                     <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
                         <div class="d-flex justify-content-between align-items-center w-100">
                             <div class="1h-100">
-                                <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                <h6 class="smaller"><small>cod: </small>123456789</h6>
+                                <h6 class="larger">{{ foo.nombre_articulo }}</h6>
+                                <h6 class="smaller"><small>cod: </small>
+                                    {{ foo.codigo_articulo }}
+                                </h6>
                             </div>
-                            <p>Categoria: <strong>Libros</strong></p>
-                            <p>Precio: <strong>$ 10.00</strong></p>
-                            <p>Stock: <strong style="color: orangered">Agotadas</strong></p>
+                            <p>Categoria: <strong>{{ foo.id_categoria }}</strong></p>
+                            <p>Precio: <strong>{{ foo.precio_unidad }}</strong></p>
+                            <p>Stock: <strong style="color: orangered">{{ foo.stock }}</strong></p>
                             <p>
                                 <a title="Eliminar producto" data-toggle="modal" data-target="#elimarProducto"><i class="btn btn-danger2 icon-minus-circle shopping"></i></a>
                                 <a title="agregar stock"  data-toggle="modal" data-target="#editar"><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
                             </p>
                         </div>
-                    </div>
+                    </div>                   
                 </div>
-                <div class="media text-muted pt-3 bg-hover">
-                    <i class="icono icon-share"></i>
-                    <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                        <div class="d-flex justify-content-between align-items-center w-100">
-                            <div class="1h-100">
-                                <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                <h6 class="smaller"><small>cod: </small>123456789</h6>
-                            </div>
-                            <p>Categoria: <strong>Libros</strong></p>
-                            <p>Precio: <strong>$ 10.00</strong></p>
-                            <p>Stock: <strong style="color: orangered">Agotadas</strong></p>
-                            <p>
-                                <a title="Eliminar producto" data-toggle="modal" data-target="#elimarProducto"><i class="btn btn-danger2 icon-minus-circle shopping"></i></a>
-                                <a title="agregar stock"  data-toggle="modal" data-target="#editar"><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="media text-muted pt-3 bg-hover">
-                    <i class="icono icon-share"></i>
-                    <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                        <div class="d-flex justify-content-between align-items-center w-100">
-                            <div class="1h-100">
-                                <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                <h6 class="smaller"><small>cod: </small>123456789</h6>
-                            </div>
-                            <p>Categoria: <strong>Libros</strong></p>
-                            <p>Precio: <strong>$ 10.00</strong></p>
-                            <p>Stock: <strong style="color: orangered">Agotadas</strong></p>
-                            <p>
-                                <a title="Eliminar producto" data-toggle="modal" data-target="#elimarProducto"><i class="btn btn-danger2 icon-minus-circle shopping"></i></a>
-                                <a title="agregar stock"  data-toggle="modal" data-target="#editar"><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                    {% endfor %}
+                {% else %}
+                    <h6>No tienes productos sin unidades :D</h6>
+                {% endif %}
+                
             </div>
             <!--Productos por agotarse -->
             <div class="d-flex align-items-center p-3 my-2 text-white-50 bg-yellow rounded box-shadow">
@@ -81,60 +54,33 @@
             </div>
             <div class="my-3 p-3 bg-white rounded box-shadow">
                 <h6 class="border-bottom border-gray pb-2 mb-0">menos de 10 unidades</h6>
+                {% if inventario1 %}
+                    {% for foo in inventario1 %}
                 <div class="media text-muted pt-3 bg-hover">
                     <i class="icono icon-share"></i>
                     <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
                         <div class="d-flex justify-content-between align-items-center w-100">
                             <div class="1h-100">
-                                <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                <h6 class="smaller"><small>cod: </small>123456789</h6>
+                                <h6 class="larger">{{ foo.nombre_articulo }}</h6>
+                                <h6 class="smaller"><small>cod: </small>
+                                    {{ foo.codigo_articulo }}
+                                </h6>
                             </div>
-                            <p>Categoria: <strong>Libros</strong></p>
-                            <p>Precio: <strong>$ 10.00</strong></p>
-                            <p>Stock: <strong style="color: orangered">5</strong></p>
+                            <p>Categoria: <strong>{{ foo.id_categoria }}</strong></p>
+                            <p>Precio: <strong>{{ foo.precio_unidad }}</strong></p>
+                            <p>Stock: <strong style="color: orangered">{{ foo.stock }}</strong></p>
                             <p>
                                 <a title="Eliminar producto" data-toggle="modal" data-target="#elimarProducto"><i class="btn btn-danger2 icon-minus-circle shopping"></i></a>
                                 <a title="agregar stock"  data-toggle="modal" data-target="#editar"><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
                             </p>
                         </div>
-                    </div>
+                    </div>                   
                 </div>
-                <div class="media text-muted pt-3 bg-hover">
-                    <i class="icono icon-share"></i>
-                    <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                        <div class="d-flex justify-content-between align-items-center w-100">
-                            <div class="1h-100">
-                                <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                <h6 class="smaller"><small>cod: </small>123456789</h6>
-                            </div>
-                            <p>Categoria: <strong>Libros</strong></p>
-                            <p>Precio: <strong>$ 10.00</strong></p>
-                            <p>Stock: <strong style="color: orangered">8</strong></p>
-                            <p>
-                                <a title="Eliminar producto" data-toggle="modal" data-target="#elimarProducto"><i class="btn btn-danger2 icon-minus-circle shopping"></i></a>
-                                <a title="agregar stock"  data-toggle="modal" data-target="#editar"><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="media text-muted pt-3 bg-hover">
-                    <i class="icono icon-share"></i>
-                    <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                        <div class="d-flex justify-content-between align-items-center w-100">
-                            <div class="1h-100">
-                                <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                <h6 class="smaller"><small>cod: </small>123456789</h6>
-                            </div>
-                            <p>Categoria: <strong>Libros</strong></p>
-                            <p>Precio: <strong>$ 10.00</strong></p>
-                            <p>Stock: <strong style="color: orangered">2</strong></p>
-                            <p>
-                                <a title="Eliminar producto" data-toggle="modal" data-target="#elimarProducto"><i class="btn btn-danger2 icon-minus-circle shopping"></i></a>
-                                <a title="agregar stock"  data-toggle="modal" data-target="#editar"><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                    {% endfor %}
+                {% else %}
+                    <h6>Actualmente no hay productos con menos de 10 unidades</h6>
+                {% endif %}
+              
             </div>
             <!-- Producto Activos -->
             <div class="d-flex align-items-center p-3 my-2 text-white-50 bg-purple rounded box-shadow">
@@ -145,60 +91,32 @@
             </div>
             <div class="my-3 p-3 bg-white rounded box-shadow">
                 <h6 class="border-bottom border-gray pb-2 mb-0">Productos</h6>
+                {% if inventariop %}
+                    {% for foo in inventariop %}
                 <div class="media text-muted pt-3 bg-hover">
                     <i class="icono icon-share"></i>
                     <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
                         <div class="d-flex justify-content-between align-items-center w-100">
                             <div class="1h-100">
-                                <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                <h6 class="smaller"><small>cod: </small>123456789</h6>
+                                <h6 class="larger">{{ foo.nombre_articulo }}</h6>
+                                <h6 class="smaller"><small>cod: </small>
+                                    {{ foo.codigo_articulo }}
+                                </h6>
                             </div>
-                            <p>Categoria: <strong>Libros</strong></p>
-                            <p>Precio: <strong>$ 10.00</strong></p>
-                            <p>Stock: <strong>15</strong></p>
+                            <p>Categoria: <strong>{{ foo.id_categoria }}</strong></p>
+                            <p>Precio: <strong>{{ foo.precio_unidad }}</strong></p>
+                            <p>Stock: <strong style="color: orangered">{{ foo.stock }}</strong></p>
                             <p>
                                 <a title="Eliminar producto" data-toggle="modal" data-target="#elimarProducto"><i class="btn btn-danger2 icon-minus-circle shopping"></i></a>
                                 <a title="agregar stock"  data-toggle="modal" data-target="#editar"><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
                             </p>
                         </div>
-                    </div>
+                    </div>                   
                 </div>
-                <div class="media text-muted pt-3 bg-hover">
-                    <i class="icono icon-share"></i>
-                    <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                        <div class="d-flex justify-content-between align-items-center w-100">
-                            <div class="1h-100">
-                                <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                <h6 class="smaller"><small>cod: </small>123456789</h6>
-                            </div>
-                            <p>Categoria: <strong>Libros</strong></p>
-                            <p>Precio: <strong>$ 10.00</strong></p>
-                            <p>Stock: <strong>15</strong></p>
-                            <p>
-                                <a title="Eliminar producto" data-toggle="modal" data-target="#elimarProducto"><i class="btn btn-danger2 icon-minus-circle shopping"></i></a>
-                                <a title="agregar stock"  data-toggle="modal" data-target="#editar"><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="media text-muted pt-3 bg-hover">
-                    <i class="icono icon-share"></i>
-                    <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                        <div class="d-flex justify-content-between align-items-center w-100">
-                            <div class="1h-100">
-                                <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                <h6 class="smaller"><small>cod: </small>123456789</h6>
-                            </div>
-                            <p>Categoria: <strong>Libros</strong></p>
-                            <p>Precio: <strong>$ 10.00</strong></p>
-                            <p>Stock: <strong>15</strong></p>
-                            <p>
-                                <a title="Eliminar producto" data-toggle="modal" data-target="#elimarProducto"><i class="btn btn-danger2 icon-minus-circle shopping"></i></a>
-                                <a title="agregar stock"  data-toggle="modal" data-target="#editar"><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                    {% endfor %}
+                {% else %}
+                    <h6>Actualmente no hay productos con más de 10 unidades</h6>
+                {% endif %}
             </div>
         </div>
     </div>

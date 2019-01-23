@@ -17,8 +17,15 @@
     <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
             integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/alertify.css' %}">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+    <!--script type="text/javascript" src="{% static 'js/main.js' %}"></script-->
+    <style>
+        .error {
+            border: none;
+            border-bottom: 2px solid orangered;
+        }
+    </style>
 </head>
 
 <body>
@@ -71,7 +78,7 @@
 
 {% endblock %}
 
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
         integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
         crossorigin="anonymous"></script>
@@ -83,6 +90,14 @@
     $(document).ready(function () {
         $('body').bootstrapMaterialDesign();
     });
+</script>
+<script src="{% static 'js/alertify.js' %}"></script>
+<script type="text/javascript">
+    //override defaults
+    alertify.defaults.transition = "slide";
+    alertify.defaults.theme.ok = "btn btn-primary";
+    alertify.defaults.theme.cancel = "btn btn-danger";
+    alertify.defaults.theme.input = "form-control";
 </script>
 <script>
     function abrir_modal(url) {
@@ -96,14 +111,6 @@
         $('#popup').modal('hide');
         return false;
     }
-
-    $(document).ready(function () {
-        var table = $('#tabla').dataTable({
-            "language": {
-                url: "/static/localizacion/es_ES.json"
-            }
-        });
-    });
 </script>
 
 </body>

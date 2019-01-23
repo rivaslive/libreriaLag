@@ -1,61 +1,124 @@
 <!-- Modal -->
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form role="form" id="crearArticulo" action="{% url 'articulo:crearArticulo' %}" method="post">
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="Name">Nombre</label>
-                                {{ form.nombre_articulo }}
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="Codigo">Codigo</label>
-                                {{ form.codigo_articulo }}
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="Categoria">Categoria</label>
-                                {{ form.id_categoria }}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-2">
-                                <label for="Id_Presentacion">Presentacion</label>
-                                {{ form.id_presentacion }}
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="StockUni">Stock Unidades</label>
-                                {{ form.stock }}
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="StockBox">Stock Caja</label>
-                                {{ form.stock_caja }}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="PriceUnid">Precio Unidad</label>
-                                {{ form.precio_unidad }}
-                            </div>
-                            <div class="form-group mx-auto col-md-4">
-                                <label for="PriceCj">Precio Caja</label>
-                                <input id="PriceCj" class="form-control" readonly>
-                            </div>
-                        </div>
-                        <input type="hidden" name="is_activate" value="1">
-                        {% csrf_token %}
 
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" form="crearArticulo" class="btn btn-primary" id="art">Registrar</button>
-
-                </div>
-            </div>
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Producto</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
+        <div class="modal-body">
+            <form id="form2" name="crearArt" action="{% url 'articulo:crearArticulo' %}" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="Name">Nombre</label>
+                        {{ form.nombre_articulo }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Codigo">Codigo</label>
+                        {{ form.codigo_articulo }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="Categoria">Categoria</label>
+                        {{ form.id_categoria }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="Id_Presentacion">Presentacion</label>
+                        <select name="id_presentacion" required="" class="form-control" id="id_id_presentacion">
+                            <option value="" selected="">---------</option>
+                            <option value="1">Unidades</option>
+                            <option value="2">Cajas</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="StockUni">Stock Unidades</label>
+                        {{ form.stock }}
+                    </div>
+                    <div id="inputCaja" style="display: none;" class="form-group col-md-4">
+                        <label for="StockBox">Stock Caja</label>
+                        {{ form.stock_caja }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="PriceUnid">Precio Unidad</label>
+                        {{ form.precio_unidad }}
+                    </div>
+                    <div class="form-group mx-auto col-md-4">
+                        <label for="PriceCj">Precio Caja</label>
+                        <input id="PriceCj" class="form-control" readonly>
+                    </div>
+                </div>
+                <input type="hidden" name="is_activate" value="1">
+                {% csrf_token %}
+
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" form="form2" class="btn btn-primary" id="subm">Registrar</button>
+            <script>
+
+                $(function () {
+                    $('#subm').click(function (e) {
+                        var nombre, codigo, stock, cajas;
+                        nombre = $("#id_nombre_articulo").val();
+                        codigo = $("#id_codigo_articulo").val();
+                        stock = $("#id_stock").val();
+                        cajas = $("#id_stock_caja").val();
+
+                        limpiar();
+
+                        var onlyText = /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/;
+                        var onlyInt = /^[0-9]+(.[0-9]+)?$/;
+
+                        if (nombre === "" || codigo === "" || stock === "") {
+                            e.preventDefault();
+                            $("#id_nombre_articulo").addClass("error");
+                            $("#id_codigo_articulo").addClass("error");
+                            $("#id_stock").addClass("error");
+                            alertify.alert("Error de Campos", "Todos los campos son obligatorios");
+                            return false;
+                        } else if (nombre === null) {
+                            e.preventDefault();
+                            $("#id_nombre_articulo").addClass("error");
+                            alertify.alert("Error de Campos", "Nombre no puede ser nulo");
+                            return false;
+                        } else if (codigo === null || !codigo.match(onlyInt)) {
+                            e.preventDefault();
+                            $("#id_codigo_articulo").addClass("error");
+                            alertify.alert("Error de Campos", "el codigo solo puede ser numerico");
+                            return false;
+                        }
+                        return $("#form2").submit();
+                    });
+
+                    function limpiar() {
+                        $("#id_nombre_articulo").removeClass("error");
+                        $("#id_codigo_articulo").removeClass("error");
+                        $("#id_stock").removeClass("error");
+                        $("#id_stock_caja").removeClass("error");
+                    }
+
+
+                });
+                $(function () {
+                    $("#id_id_presentacion").on('change', function () {
+                        if ($(this).val() === '1'){
+                            $("#id_stock_caja").val('');
+                            $("#inputCaja").css("display", "none");
+                        } else if ($(this).val() === '2'){
+                            $("#inputCaja").css("display", "block");
+                        }
+
+                    });
+                });
+            </script>
+        </div>
+    </div>
+</div>

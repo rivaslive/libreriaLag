@@ -82,6 +82,7 @@ DATABASES = {
         'NAME': 'db_libreria',
         'USER': 'root',
         'PASSWORD':'cementerio123',
+        #'PASSWORD':'root',
         'HOST': 'localhost',
         'PORT': '3306',
     }

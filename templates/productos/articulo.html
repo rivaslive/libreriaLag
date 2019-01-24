@@ -28,12 +28,20 @@
                                     {{ foo.codigo_articulo }}
                                 </h6>
                             </div>
-                            <p>Categoria: <strong>{{ foo.id_categoria }}</strong></p>
                             <p>Precio: <strong>${{ foo.precio_unidad }}</strong></p>
-                            <p>Stock: <strong>{{ foo.stock }}</strong></p>
-                            <a title="vender" data-toggle="modal" data-target="#add-car"><i
-                                    class="btn btn-purple aling-right icon-basket shopping"><span
-                                    style="font-size: 20px">+</span></i></a>
+                            {% if foo.cant > 0 %}
+                                <p>Stock: <strong>{{ foo.cant }}</strong></p>
+                            {% else %}
+                                <p>Stock: <strong>{{ foo.stock }}</strong></p>
+                            {% endif %}
+                            <p>
+                                <a title="Detalle Articulo" onclick="return abrir_modal('{% url 'articulo:articuloDetalle' foo.pk %}')"><i
+                                        class="btn btn-primary2 aling-right icon-eye shopping"><span
+                                        style="font-size: 20px"></span></i></a>
+                                <a title="vender" data-toggle="modal" data-target="#add-car"><i
+                                        class="btn btn-purple aling-right icon-basket shopping"><span
+                                        style="font-size: 20px">+</span></i></a>
+                            </p>
                         </div>
                     </div>
                 </div>

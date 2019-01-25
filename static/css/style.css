@@ -4,72 +4,112 @@ body {
     overflow-x: hidden;
     background-color: rgb(235, 235, 235);
 }
-.bg-green{
+
+.bg-green {
     background-color: rgb(0, 100, 0, 0.75);
     color: white;
 }
-.bg-yellow{
+
+.bg-yellow {
     background-color: darkorange;
     color: white;
 }
-.car{
+
+.car {
     position: fixed;
     bottom: 0;
     margin-left: 92%;
     font-size: 50px;
-    
+
 }
-@media screen and (max-width:1200px) {
+
+@media screen and (max-width: 1200px) {
     .car {
         bottom: 0;
         margin-left: 0;
     }
 }
 
-#car2{
+#car2 {
     font-size: 50px;
     color: rgb(0, 0, 0, 0.7);
 }
-@media screen and (max-width:1200px) {
-    #car2{
-    color: rgb(0, 0, 0, 0.9);
+
+@media screen and (max-width: 1200px) {
+    #car2 {
+        color: rgb(0, 0, 0, 0.9);
+    }
 }
-}
-#aa{
+
+#aa {
     font-size: 18px;
     border-radius: 50%;
     background-color: white;
     color: purple;
 }
-#aa:hover{
+
+#aa:hover {
     text-decoration: none;
     color: white;
     background-color: rgb(0, 0, 0, 0.4);
 }
+
 nav #search-lg {
     width: 350px;
 }
 
-@media screen and (max-width:1200px) {
+@media screen and (max-width: 1200px) {
     nav #search-lg {
         width: 350px;
     }
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width: 768px) {
     nav #search-lg {
         width: auto;
     }
+}
+
+#navbarSupportedContent ul li a {
+    font-weight: bolder;
+}
+
+.activo {
+    border: none;
+    color: white;
+    border-bottom: 2.3px solid white;
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+.activo a{
+    color: white;
+}
+.nav-link2{
+    padding: 20px;
+    font-family: 'Nova Mono', monospace;
+    color: rgb(240, 240, 240, 0.7);
+    text-decoration: none;
+}
+.nav-link2:hover{
+    text-decoration: none;
+    border: none;
+    color: white;
+    padding: 20px;
+    width: auto;
+    background-color: rgb(59, 120, 59);
 }
 
 .container .bg-purple {
     width: 100%;
     background-color: var(--purple);
 }
+
 .bg2-purple {
     width: 100%;
     background-color: var(--purple);
 }
+
 .btn-purple {
     color: rgb(156, 39, 176);
 }
@@ -79,39 +119,49 @@ nav #search-lg {
     background-color: rgb(156, 39, 176);
 
 }
-.btn-primary2{
+
+.btn-primary2 {
     color: rgb(62, 172, 190);
 }
-.btn-primary2:hover{
+
+.btn-primary2:hover {
     background-color: rgb(62, 172, 190);
     color: white;
 }
-.btn-danger2{
+
+.btn-danger2 {
     color: orangered;
 }
-.btn-danger2:hover{
+
+.btn-danger2:hover {
     background-color: orangered;
     color: white;
 }
-.bg-hover:hover{
+
+.bg-hover:hover {
     cursor: pointer;
-    background-color: rgb(235, 235, 235);    
+    background-color: rgb(235, 235, 235);
 }
-.icono{
+
+.icono {
     width: 20px;
     height: 20px;
     font-size: 10px;
     margin-top: 15px
 }
-.shopping{
+
+.shopping {
     font-size: 20px
 }
-.aling-right{
+
+.aling-right {
     margin-right: 7px;
 }
-.larger{
+
+.larger {
     color: purple;
 }
-.smaller{
+
+.smaller {
     color: rgb(150, 80, 150, 0.8);
 }

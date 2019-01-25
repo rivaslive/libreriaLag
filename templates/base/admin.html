@@ -8,7 +8,8 @@
             Libreria
         {% endblock %}
     </title>
-    <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text|ZCOOL+KuaiLe" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+128+Text|ZCOOL+KuaiLe|Noto+Sans|Noto+Sans+JP|Noto+Sans+KR|Noto+Sans+SC|Noto+Sans+TC|Noto+Serif|Noto+Serif+JP|Noto+Serif+KR|Noto+Serif+SC|Noto+Serif+TC|Nova+Mono|Nova+Script|Nova+Square|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Rock+Salt|Yellowtail|Great+Vibes"
+          rel="stylesheet">
     <link rel="stylesheet"
           href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
           integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
@@ -37,22 +38,22 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto mx-auto">
                 <li class="nav-item {% block active1 %} {% endblock %}">
-                    <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+                    <a class="nav-link2" href="#">Inicio <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item {% block active2 %} {% endblock %}">
-                    <a class="nav-link" href="{% url 'articulo:articulo' %}">Productos</a>
+                    <a class="nav-link2" href="{% url 'articulo:articulo' %}">Productos</a>
                 </li>
                 <li class="nav-item {% block active3 %} {% endblock %}">
-                    <a class="nav-link" href="{% url 'articulo:inventario' %}">Inventario</a>
+                    <a class="nav-link2" href="{% url 'articulo:inventario' %}">Inventario</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0 ">
+            <!--form class="form-inline my-2 my-lg-0 ">
                 <input id="search-lg" class=" form-control mr-sm-2 " type="search" placeholder="Buscar..."
                        aria-label="Search">
                 <button class="btn btn-light  my-2 my-sm-0" type="submit">buscar</button>
-            </form>
+            </form-->
         </div>
     </nav>
 

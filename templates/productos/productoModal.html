@@ -2,9 +2,9 @@
 
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Agregar Producto</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div class="modal-header text-white-50 bg-green rounded box-shadow">
+            <h5 class="modal-title text-white" id="exampleModalLabel">Agregar Producto</h5>
+            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -60,10 +60,9 @@
 
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="submit" form="form2" class="btn btn-primary" id="subm">Registrar</button>
+            <button type="button" class="btn btn-outline-secondary " data-dismiss="modal">Cerrar</button>
+            <button type="submit" form="form2" class="btn btn-success active mx-2" id="subm">Registrar</button>
             <script>
-
                 $(function () {
                     $('#subm').click(function (e) {
                         var nombre, codigo, stock, cajas, price;
@@ -112,8 +111,6 @@
                         $("#id_stock_caja").removeClass("error");
                         $("#id_precio_unidad").removeClass("error");
                     }
-
-
                 });
                 $(function () {
                     $("#id_id_presentacion").on('change', function () {

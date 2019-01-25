@@ -14,26 +14,15 @@
                     {% if articulo %}
                         <h5 class="card-title"></h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ articulo.nombre_articulo }}</h6>
-
-
                         <p class="card-text">Categoria: <strong>{{ articulo.id_categoria }}</strong></p>
-                        <p class="card-text">Precio Unidad: <strong>{{ articulo.precio_unidad }}</strong></p>
-
-
+                        <p class="card-text">Precio Unidad: <strong>${{ articulo.precio_unidad }}</strong></p>
                         {% if cant > 0 %}
-
-                            <p class="card-text">Cajas: <strong>{{ articulo.stock }}</strong></p>
-
-
                             <p class="card-text">stock: <strong>{{ cant }}</strong></p>
-
-
-                            <p class="card-text">Precio Caja: <strong>{{ precioCj }}</strong></p>
-
+                            <p class="card-text">Cajas: <strong>{{ articulo.stock }}</strong></p>
+                            <p class="card-text">Precio Caja: <strong>${{ precioCj }}</strong></p>
                         {% else %}
                             <p class="card-text">Stock: <strong>{{ articulo.stock }}</strong></p>
                         {% endif %}
-
                         <a href="#" class="btn btn-success active float-right" data-dismiss="modal">Cerrar</a>
                         </div>
                     {% endif %}

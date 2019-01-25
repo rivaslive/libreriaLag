@@ -3,7 +3,9 @@
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Agregar Producto</h5>
+           
+            <h5 class="modal-title" id="exampleModalLabel"> Agregar nuevo Articulo</h5>
+           
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -12,45 +14,50 @@
             <form id="form2" name="crearArt" action="{% url 'articulo:crearArticulo' %}" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="Name">Nombre</label>
+                        <label for="Name">Nombre del Articulo</label>
                         {{ form.nombre_articulo }}
+                     
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="Codigo">Codigo</label>
-                        {{ form.codigo_articulo }}
-                    </div>
+                    
                     <div class="form-group col-md-4">
                         <label for="Categoria">Categoria</label>
                         {{ form.id_categoria }}
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label for="Id_Presentacion">Presentacion</label>
+                    <div class="form-group col-md-4">
+                        <label for="Id_Presentacion">Presentación</label>
                         <select name="id_presentacion" required="" class="form-control" id="id_id_presentacion">
-                            <option value="" selected="">---------</option>
+                            <option value="" selected="">Seleccione una opción</option>
                             <option value="1">Unidades</option>
                             <option value="2">Cajas</option>
                         </select>
 
                     </div>
-                    <div class="form-group col-md-4">
+                </div>
+                <div class="form-row">                   
+                    <div class="form-group col-md-3">
                         <label for="StockUni">Stock Unidades</label>
                         {{ form.stock }}
                     </div>
-                    <div id="inputCaja" style="display: none;" class="form-group col-md-4">
+                    <div id="inputCaja" style="display: none;" class="form-group col-md-3">
                         <label for="StockBox">Stock Caja</label>
                         {{ form.stock_caja }}
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="PriceUnid">Precio Unidad</label>
+                    <div class="form-group col-md-3">
+
+                        <label for="PriceUnid">Precio Unidad $</label>
+                      
                         {{ form.precio_unidad }}
                     </div>
-                    <div class="form-group mx-auto col-md-4">
+                    <div class="form-group mx-auto col-md-3">
                         <label for="PriceCj">Precio Caja</label>
                         <input id="PriceCj" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    
+                    <div class="form-group col-md-4">
+                        <label for="Codigo">Código de barras</label>
+                        {{ form.codigo_articulo }}
                     </div>
                 </div>
                 <input type="hidden" name="is_activate" value="1">
@@ -60,8 +67,11 @@
 
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="submit" form="form2" class="btn btn-primary" id="subm">Registrar</button>
+            <div class="espacio">
+                    <button type="button" class="btn  btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" form="form2" class="btn btn-raised btn-success" id="subm">Registrar</button>
+            </div>
+           
             <script>
 
                 $(function () {

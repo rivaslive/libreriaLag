@@ -12,6 +12,17 @@ body {
     background-color: darkorange;
     color: white;
 }
+.espacio {
+    position: relative;
+    padding: 1rem;
+    margin: 1rem -15px;
+    border: solid #f7f7f9;
+    border-width: .2rem 0 0;
+}
+.bg-blue{
+    background-color: rgb(33,150,243);
+    color: white;
+}
 .car{
     position: fixed;
     bottom: 0;

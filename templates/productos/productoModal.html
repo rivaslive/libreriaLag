@@ -42,11 +42,11 @@
                         <label for="StockBox">Stock Caja</label>
                         {{ form.stock_caja }}
                     </div>
-                    <div class="form-group col-md-3">
-
-                        <label for="PriceUnid">Precio Unidad $</label>
-                      
-                        {{ form.precio_unidad }}
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="id_precio_unidad">Precio Unidad</label>
+                        <input class="form-control" type="text" id="id_precio_unidad" name="precio_unidad" required>
                     </div>
                     <div class="form-group mx-auto col-md-3">
                         <label for="PriceCj">Precio Caja</label>
@@ -76,18 +76,20 @@
 
                 $(function () {
                     $('#subm').click(function (e) {
-                        var nombre, codigo, stock, cajas;
+                        var nombre, codigo, stock, cajas, price;
                         nombre = $("#id_nombre_articulo").val();
                         codigo = $("#id_codigo_articulo").val();
                         stock = $("#id_stock").val();
                         cajas = $("#id_stock_caja").val();
+                        price = $("#id_precio_unidad").val();
 
                         limpiar();
 
-                        var onlyText = /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/;
+                        /*var onlyText = /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/;*/
                         var onlyInt = /^[0-9]+(.[0-9]+)?$/;
+                        var onlyDecimal = /^(0|[1-9]\d*)(\.\d+)?$/;
 
-                        if (nombre === "" || codigo === "" || stock === "") {
+                        if (nombre === "" || codigo === "" || stock === "" || price === "") {
                             e.preventDefault();
                             $("#id_nombre_articulo").addClass("error");
                             $("#id_codigo_articulo").addClass("error");
@@ -104,6 +106,11 @@
                             $("#id_codigo_articulo").addClass("error");
                             alertify.alert("Error de Campos", "el codigo solo puede ser numerico");
                             return false;
+                        } else if (price === null || !price.match(onlyDecimal)) {
+                            e.preventDefault();
+                            $("#id_precio_unidad").addClass("error");
+                            alertify.alert("Error de Campos", "ingrece un numero decimal correcto");
+                            return false;
                         }
                         return $("#form2").submit();
                     });
@@ -113,6 +120,7 @@
                         $("#id_codigo_articulo").removeClass("error");
                         $("#id_stock").removeClass("error");
                         $("#id_stock_caja").removeClass("error");
+                        $("#id_precio_unidad").removeClass("error");
                     }
 
 

@@ -77,7 +77,10 @@ nav #search-lg {
     width: 100%;
     background-color: var(--purple);
 }
-
+.bg2-purple {
+    width: 100%;
+    background-color: var(--purple);
+}
 .btn-purple {
     color: rgb(156, 39, 176);
 }
@@ -86,6 +89,13 @@ nav #search-lg {
     color: #ffff;
     background-color: rgb(156, 39, 176);
 
+}
+.btn-primary2{
+    color: rgb(62, 172, 190);
+}
+.btn-primary2:hover{
+    background-color: rgb(62, 172, 190);
+    color: white;
 }
 .btn-danger2{
     color: orangered;

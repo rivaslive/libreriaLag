@@ -19,6 +19,7 @@ class Articulo(models.Model):
     stock_caja = models.IntegerField(null=True, blank=True)
     stock = models.IntegerField(null=True, blank=True)
     precio_unidad = models.DecimalField(max_digits=5,decimal_places=2,null=False, blank=False)
+    precio_caja = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     is_activate = models.IntegerField(null=False, blank=False)
     id_categoria = models.ForeignKey(
         Categoria, on_delete=models.CASCADE, null=False, blank=False)

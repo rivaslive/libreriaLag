@@ -1,0 +1,68 @@
+<!-- Modal -->
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">Carrito de Compras</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body mx-auto">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-gray">
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Presentacion</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio Venta</th>
+                        <th scope="col">Sub-Total</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                    </thead>
+                    {% if query %}
+                        {% for foo in query %}
+                            <tbody>
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ foo.id_articulo.codigo_articulo }}</td>
+                                <td>{{ foo.id_articulo.nombre_articulo }}</td>
+                                <td>
+                                    <select name="id_presentacion" style="width: 70px" required="" class="form-control"
+                                            id="id_id_presentacion">
+                                        {% if foo.id_articulo.id_presentacion.pk == 1 %}
+                                            <option value="">--------------</option>
+                                            <option value="1" selected="">Unidades</option>
+                                            <option value="2">Cajas</option>
+                                        {% else %}
+                                            <option value="">--------------</option>
+                                            <option value="1">Unidades</option>
+                                            <option value="2" selected="">Cajas</option>
+                                        {% endif %}
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control" style="width: 30px"
+                                           value="{{ foo.cantidad }}"></td>
+                                <td>${{ foo.id_articulo.precio_unidad }}</td>
+                                <td>None</td>
+                                <td>
+                                    <a href="" class=""><i class="icon-minus-circle btn btn-danger2"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+             </div>
+                <div style="text-align: right">
+                    <h6>Total: <strong>{{ total }}</strong></h6>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary mx-4">Vender</button>
+        </div>
+    </div>
+</div>

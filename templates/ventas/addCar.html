@@ -8,16 +8,17 @@
             </button>
         </div>
         <div class="modal-body mx-auto">
-            <form role="form">
-                <div class="form-group mx-auto col-md-8">
+            <form id="addCar" action="{% url 'ventas:addCar' pk %}">
+                {% csrf_token %}
+                <div class="form-group mx-auto">
                     <label for="Cantidad">Cantidad</label>
-                    <input id="Cantidad" class="form-control" type="number">
+                    <input id="Cantidad" class="form-control" name="cantidad" type="number">
                 </div>
             </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Agregar</button>
+            <button type="submit" form="addCar" class="btn btn-primary">Agregar</button>
         </div>
     </div>
 </div>

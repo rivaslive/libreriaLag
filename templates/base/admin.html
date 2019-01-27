@@ -60,8 +60,11 @@
 {% endblock %}
 {% block car %}
     <div class="car">
-        <a class="btn"><i id="car2" class="icon-shopping-cart shopping" data-toggle="modal"
-                          data-target="#car-shopping"></i><span style="font-size: 20px">3</span></a>
+        <a class="btn"><i id="car2" class="icon-shopping-cart shopping" onclick="return abrir_modal('{% url 'ventas:carShopping' %}')"></i><span style="font-size: 20px">{% if notify %}
+            {{ notify }}
+            {% else %}
+                0
+        {% endif %}</span></a>
     </div>
 {% endblock %}
 

@@ -7,9 +7,24 @@ from django.db.models import Q, F
 
 
 # ver articulos
+from apps.ventas.models import detalle
+
+
 def articulo(request):
-    query = Articulo.objects.filter(is_activate=1).annotate(cant=F('stock') * F('stock_caja'))
-    return render(request, 'productos/articulo.html', {'articulo': query})
+    try:
+        if request.session['ventaId']:
+            ventaId = request.session['ventaId']
+            notify = detalle.objects.filter(id_venta=ventaId).count()
+            query = Articulo.objects.filter(is_activate=1).annotate(cant=F('stock') * F('stock_caja'))
+            return render(request, 'productos/articulo.html', {'articulo': query, 'notify':notify})
+        else:
+            request.session['ventaId'] = ''
+            query = Articulo.objects.filter(is_activate=1).annotate(cant=F('stock') * F('stock_caja'))
+            return render(request, 'productos/articulo.html', {'articulo': query})
+    except:
+        request.session['ventaId'] = ''
+        query = Articulo.objects.filter(is_activate=1).annotate(cant=F('stock') * F('stock_caja'))
+        return render(request, 'productos/articulo.html', {'articulo': query})
 # ver articulos
 def articuloDetalle(request, pk):
     query = Articulo.objects.get(id=pk)

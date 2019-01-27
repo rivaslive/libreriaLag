@@ -15,6 +15,12 @@
     </div>
     <div class="my-3 p-3 bg-white rounded box-shadow">
         <h6 class="border-bottom border-gray pb-2 mb-0">Productos</h6>
+    {% if messages %}
+        {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+        {% endfor %}
+
+    {% endif %}
         {% if articulo %}
             {% for foo in articulo %}
                 <div class="media text-muted pt-3 bg-hover">
@@ -38,7 +44,7 @@
                                 <a title="Detalle Articulo" onclick="return abrir_modal('{% url 'articulo:articuloDetalle' foo.pk %}')"><i
                                         class="btn btn-primary2 aling-right icon-eye shopping"><span
                                         style="font-size: 20px"></span></i></a>
-                                <a title="vender" data-toggle="modal" data-target="#add-car"><i
+                                <a title="vender" onclick="return abrir_modal('{% url 'ventas:addCar' foo.pk %}')"><i
                                         class="btn btn-purple aling-right icon-basket shopping"><span
                                         style="font-size: 20px">+</span></i></a>
                             </p>
@@ -49,129 +55,7 @@
         {% else %}
             <h6>No hay registros hechos</h6>
         {% endif %}
-
     </div>
 {% endblock %}
 {% block modal %}
-
-    <!-- Agg al carrito -->
-    <div class="modal fade" id="add-car" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel2">Agregar Producto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form role="form">
-                        <div class="form-group mx-auto col-md-8">
-                            <label for="Cantidad">Cantidad</label>
-                            <input id="Cantidad" class="form-control" type="number">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Agregar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Carrito de compras -->
-    <div class="modal fade" id="car-shopping" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Vender</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="my-3 p-3 bg-white rounded box-shadow">
-                        <div class="media text-muted pt-3 bg-hover">
-                            <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                                <div class="d-flex justify-content-between align-items-center w-100">
-                                    <div class="1h-100">
-                                        <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                        <h6 class="smaller">
-                                            <small>cod:</small>
-                                            123456789
-                                        </h6>
-                                    </div>
-                                    <p>Precio: <strong>$10.00</strong></p>
-                                    <p>Cantidad: <strong>2</strong></p>
-                                    <p>Sub-Total: <strong>$20</strong></p>
-                                    <p>
-                                        <a title="Eliminar producto" data-toggle="modal"
-                                           data-target="#elimarProducto"><i
-                                                class="btn btn-danger2 icon-minus-circle shopping"></i></a>
-                                        <a title="agregar stock" data-toggle="modal" data-target="#editar"><i
-                                                class="btn btn-purple aling-right icon-pencil shopping"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="media text-muted pt-3 bg-hover">
-                            <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                                <div class="d-flex justify-content-between align-items-center w-100">
-                                    <div class="1h-100">
-                                        <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                        <h6 class="smaller">
-                                            <small>cod:</small>
-                                            123456789
-                                        </h6>
-                                    </div>
-                                    <p>Precio: <strong>$10.00</strong></p>
-                                    <p>Cantidad: <strong>2</strong></p>
-                                    <p>Sub-Total: <strong>$20</strong></p>
-                                    <p>
-                                        <a title="Eliminar producto" data-toggle="modal"
-                                           data-target="#elimarProducto"><i
-                                                class="btn btn-danger2 icon-minus-circle shopping"></i></a>
-                                        <a title="agregar stock" data-toggle="modal" data-target="#editar"><i
-                                                class="btn btn-purple aling-right icon-pencil shopping"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="media text-muted pt-3 bg-hover">
-                            <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                                <div class="d-flex justify-content-between align-items-center w-100">
-                                    <div class="1h-100">
-                                        <h6 class="larger">Biblia Reina Valera 1960 6x8"</h6>
-                                        <h6 class="smaller">
-                                            <small>cod:</small>
-                                            123456789
-                                        </h6>
-                                    </div>
-                                    <p>Precio: <strong>$10.00</strong></p>
-                                    <p>Cantidad: <strong>2</strong></p>
-                                    <p>Sub-Total: <strong>$20</strong></p>
-                                    <p>
-                                        <a title="Eliminar producto" data-toggle="modal"
-                                           data-target="#elimarProducto"><i
-                                                class="btn btn-danger2 icon-minus-circle shopping"></i></a>
-                                        <a title="agregar stock" data-toggle="modal" data-target="#editar"><i
-                                                class="btn btn-purple aling-right icon-pencil shopping"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="text-align: right">
-                        <h6>Total: <strong>$20.00</strong></h6>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary mx-4">Vender</button>
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock %}

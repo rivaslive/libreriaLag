@@ -87,3 +87,6 @@ def carShopping(request):
         return render(request, 'ventas/carShopping.html', {'query': query, 'total': total})
     else:
         return render(request, 'ventas/carShopping.html')
+
+def shop(request):
+    return render(request, 'ventas/shop.html')

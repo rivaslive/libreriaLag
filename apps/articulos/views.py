@@ -58,3 +58,6 @@ def inventario(request):
     query_are = Articulo.objects.filter(stock__gt=10).exclude(is_activate=0).order_by('stock')
 
     return render(request, 'productos/inventario.html', {'inventario1': query, 'inventario': query_ar, 'inventariop': query_are})
+
+def buscar(request):
+    return render(request, 'productos/buscar.html')

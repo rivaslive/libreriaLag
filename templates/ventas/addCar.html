@@ -7,12 +7,13 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body mx-auto">
+        <div class="modal-body">
+
             <form id="addCar" action="{% url 'ventas:addCar' pk %}">
                 {% csrf_token %}
-                <div class="form-group mx-auto">
+                <div class="form-row">
                     <label for="Cantidad">Cantidad</label>
-                    <input id="Cantidad" class="form-control" name="cantidad" type="number">
+                    <input id="Cantidad" class="form-control mx-auto"  name="cantidad" type="number">
                 </div>
             </form>
         </div>

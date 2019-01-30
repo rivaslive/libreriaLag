@@ -8,16 +8,18 @@
             Libreria
         {% endblock %}
     </title>
-    <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39+Text|ZCOOL+KuaiLe|Noto+Sans|Noto+Sans+JP|Noto+Sans+KR|Noto+Sans+SC|Noto+Sans+TC|Noto+Serif|Noto+Serif+JP|Noto+Serif+KR|Noto+Serif+SC|Noto+Serif+TC|Nova+Mono|Nova+Script|Nova+Square|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Rock+Salt|Yellowtail|Great+Vibes"
+
+    <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39+Text|ZCOOL+KuaiLe|Noto+Sans|Noto+Sans+JP|Noto+Sans+KR|Noto+Sans+SC|Noto+Sans+TC|Noto+Serif|Noto+Serif+JP|Noto+Serif+KR|Noto+Serif+SC|Noto+Serif+TC|Nova+Mono|Nova+Script|Nova+Square|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Rock+Salt|Yellowtail|Great+Vibes|Pacifico"
           rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+            integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet"
           href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
           integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://file.myfontastic.com/pHAyhgVB2i58ku9XgAcojg/icons.css" rel="stylesheet">
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
-            integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
-            crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="{% static 'css/alertify.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/default.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/semantic.min.css' %}">
@@ -42,12 +44,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto mx-auto">
                 <li class="nav-item {% block active1 %} {% endblock %}">
-                    <a class="nav-link2" href="#">Inicio <span class="sr-only">(current)</span></a>
+                    <a class="nav-link2" href="{% url 'articulo:buscar' %}">Inicio <span
+                            class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item {% block active2 %} {% endblock %}">
                     <a class="nav-link2" href="{% url 'articulo:articulo' %}">Productos</a>
                 </li>
                 <li class="nav-item {% block active3 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
+                </li>
+                <li class="nav-item {% block active4 %} {% endblock %}">
                     <a class="nav-link2" href="{% url 'articulo:inventario' %}">Inventario</a>
                 </li>
             </ul>
@@ -62,10 +68,12 @@
 {% endblock %}
 {% block car %}
     <div class="car">
-        <a class="btn"><i id="car2" class="icon-shopping-cart shopping" onclick="return abrir_modal('{% url 'ventas:carShopping' %}')"></i><span style="font-size: 20px">{% if notify %}
+        <a class="btn"><i id="car2" class="icon-shopping-cart shopping"
+                          onclick="return abrir_modal('{% url 'ventas:carShopping' %}')"></i><span
+                style="font-size: 20px">{% if notify %}
             {{ notify }}
-            {% else %}
-                0
+        {% else %}
+            0
         {% endif %}</span></a>
     </div>
 {% endblock %}
@@ -78,7 +86,6 @@
     </div>
 </div>
 <div id="popup" class="modal fade" role="dialog">
-
 </div>
 {% block modal %}
 
@@ -118,7 +125,5 @@
         return false;
     }
 </script>
-
 </body>
-
 </html>

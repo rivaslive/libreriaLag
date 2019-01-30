@@ -1,0 +1,30 @@
+{% extends 'base/admin.html' %}
+{% block active1 %}
+    activo
+{% endblock %}
+{% block car %}
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="form-group col-md-12">
+            <h1 class="title-search mt-md-5" align="center">Busqueda</h1>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3"></div>
+            <div class="form-group col-md-6">
+                <!--div class="row">
+                    <input type="text" class="form-control" style="width: 80%" name="search">
+                    <button type="submit" class="btn btn-outline-dark active float-right">Buscar</button>
+                </div-->
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2 col-md-9 mx-4" type="search" placeholder="Ingrese el nombre o codigo de producto" aria-label="Search" name="search">
+                    <button id="btn-search" class="btn  my-2 my-sm-0" type="submit">Buscar</button>
+                </form>
+            </div>
+            <div class="form-group col-md-3"></div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block modal %}
+{% endblock %}

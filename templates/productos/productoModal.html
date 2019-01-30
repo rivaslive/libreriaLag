@@ -17,7 +17,11 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="Categoria">Categoria</label>
-                        {{ form.id_categoria }}
+                        <select name="id_categoria" required="" class="form-control" id="id_id_categoria">
+                            <option value="" selected="">Seleccione una opción</option>
+                            <option value="1">Libros</option>
+                            <option value="2">Utiles</option>
+                        </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="Id_Presentacion">Presentación</label>
@@ -43,7 +47,7 @@
                         {{ form.stock_caja }}
                     </div>
 
-                    <div class="form-group mx-auto col-md-3">
+                    <div id="inputCaja2" style="display: none;" class="form-group mx-auto col-md-3">
                         <label for="PriceCj">Precio Caja</label>
                         <input id="PriceCj" class="form-control" name="precio_caja">
                     </div>
@@ -116,16 +120,64 @@
                     }
                 });
                 $(function () {
+                    $("#PriceCj").on('onfocus', function () {
+                        $(this).val();
+
+                    });
+                    $("#id_stock").on('change', function () {
+                        var stock, priceUnidad, cajas, priceCj;
+                        stock = $("#id_stock").val();
+                        priceUnidad = $("#id_precio_unidad").val();
+                        cajas = $("#id_stock_caja").val();
+                        if (stock !== '' && priceUnidad !== '' && cajas !== ''){
+                            priceCj = (parseFloat(stock) * parseFloat(priceUnidad));
+                            console.log(priceCj.toFixed(2));
+                            $("#PriceCj").val(priceCj.toFixed(2));
+                        }
+
+                    });
+                    $("#id_precio_unidad").on('change', function () {
+                        var stock, priceUnidad, cajas, priceCj;
+                        stock = $("#id_stock").val();
+                        priceUnidad = $("#id_precio_unidad").val();
+                        cajas = $("#id_stock_caja").val();
+                        if (stock !== '' && priceUnidad !== '' && cajas !== ''){
+                            priceCj = (parseFloat(stock) * parseFloat(priceUnidad));
+                            console.log(priceCj.toFixed(2));
+                            $("#PriceCj").val(priceCj.toFixed(2));
+                        }
+
+                    });
+                    $("#id_stock_caja").on('change', function () {
+                        var stock, priceUnidad, cajas, priceCj;
+                        stock = $("#id_stock").val();
+                        priceUnidad = $("#id_precio_unidad").val();
+                        cajas = $("#id_stock_caja").val();
+                        if (stock !== '' && priceUnidad !== '' && cajas !== '' ){
+                            priceCj = (parseFloat(stock) * parseFloat(priceUnidad));
+                            console.log(priceCj.toFixed(2));
+                            $("#PriceCj").val(priceCj.toFixed(2));
+                        }
+
+                    });
+
+                });
+
+                $(function () {
                     $("#id_id_presentacion").on('change', function () {
                         if ($(this).val() === '1') {
                             $("#id_stock_caja").val('');
+                            $("#PriceCj").val('');
                             $("#inputCaja").css("display", "none");
+                            $("#inputCaja2").css("display", "none");
                         } else if ($(this).val() === '2') {
                             $("#inputCaja").css("display", "block");
+                            $("#inputCaja2").css("display", "block");
                         }
 
                     });
                 });
+
             </script>
         </div>
     </div>

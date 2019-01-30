@@ -21,29 +21,33 @@ def addCar(request, pk):
     if request.session['ventaId'] == '':
         dateNow = datetime.now()
         print(dateNow)
-        if cantidad <= articulo.stock:
-            print('estamos aqui')
-            form = VentaForm({'fecha_venta': dateNow, 'estado': 1})
-            if form.is_valid():
-                obtener = form.save(commit=False)
-                obtener.save()
-                print('su id de venta es ', obtener.pk)
-                request.session['ventaId'] = obtener.pk
-                subTotal = float(int(cantidad) * articulo.precio_unidad)
-                print('correcto')
-                form2 = DetalleForm(
-                    {'cantidad': cantidad, 'precio': articulo.precio_unidad, 'sub_total': subTotal, 'id_articulo': pk,
-                     'id_venta': request.session['ventaId']})
-                if form2.is_valid():
-                    form2.save()
-                    form3 = get_object_or_404(Articulo, pk=articulo.pk)
-                    form3.stock = (articulo.stock - int(cantidad))
-                    form3.save()
-                    return redirect('articulo:articulo')
-            return render(request, 'ventas/addCar.html', {'pk': pk})
+        if cantidad:
+            if int(cantidad) <= articulo.stock:
+                print('estamos aqui')
+                form = VentaForm({'fecha_venta': dateNow, 'estado': 1})
+                if form.is_valid():
+                    obtener = form.save(commit=False)
+                    obtener.save()
+                    print('su id de venta es ', obtener.pk)
+                    request.session['ventaId'] = obtener.pk
+                    subTotal = float(int(cantidad) * articulo.precio_unidad)
+                    print('correcto')
+                    form2 = DetalleForm(
+                        {'cantidad': cantidad, 'precio': articulo.precio_unidad, 'sub_total': subTotal, 'id_articulo': pk,
+                         'id_venta': request.session['ventaId']})
+                    if form2.is_valid():
+                        form2.save()
+                        form3 = get_object_or_404(Articulo, pk=articulo.pk)
+                        form3.stock = (articulo.stock - int(cantidad))
+                        form3.save()
+                        messages.success(request, 'Operacion Exitosa')
+                        return redirect('articulo:articulo')
+                return render(request, 'ventas/addCar.html', {'pk': pk})
+            else:
+                messages.warning(request, 'No hay suficientes existencias')
+                return redirect('articulo:articulo')
         else:
-            messages.warning(request, 'No hay suficientes existencias')
-            return redirect('articulo:articulo')
+            return render(request, 'ventas/addCar.html', {'pk': pk})
     else:
         print('estamos aqui 2', request.session['ventaId'])
         if cantidad:
@@ -59,6 +63,7 @@ def addCar(request, pk):
                     form3 = get_object_or_404(Articulo, pk=articulo.pk)
                     form3.stock = (articulo.stock - int(cantidad))
                     form3.save()
+                    messages.success(request, 'Operacion Exitosa')
                     return redirect('articulo:articulo')
                 return render(request, 'ventas/addCar.html', {'pk': pk})
             else:

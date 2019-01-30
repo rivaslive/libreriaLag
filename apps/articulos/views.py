@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -35,10 +37,14 @@ def articuloDetalle(request, pk):
     return render(request, 'productos/articuloDetalle.html', {'articulo': query})
 
 # crear articulos
-class CrearArticulo(CreateView):
+class CrearArticulo(SuccessMessageMixin, CreateView):
     template_name = 'productos/productoModal.html'
     form_class = ArticuloForm
-    success_url = reverse_lazy('articulo:articulo')
+
+    def get_success_url(self):
+        return reverse_lazy('articulo:articulo')
+
+    success_message = 'Operacion Exitosa'
 
 # Mostrar los productos sin stock
 

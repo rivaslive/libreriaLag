@@ -15,12 +15,18 @@
     </div>
     <div class="my-3 p-3 bg-white rounded box-shadow">
         <h6 class="border-bottom border-gray pb-2 mb-0">Productos</h6>
-    {% if messages %}
-        {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
-        {% endfor %}
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags  == 'warning' %}
+                    <input id="msj" type="hidden" value="1">
+                {% endif %}
+                {% if message.tags == 'success' %}
+                    <input id="msj" type="hidden" value="0">
+                {% endif %}
 
-    {% endif %}
+            {% endfor %}
+        {% endif %}
+
         {% if articulo %}
             {% for foo in articulo %}
                 <div class="media text-muted pt-3 bg-hover">
@@ -41,7 +47,8 @@
                                 <p>Stock: <strong>{{ foo.stock }}</strong></p>
                             {% endif %}
                             <p>
-                                <a title="Detalle Articulo" onclick="return abrir_modal('{% url 'articulo:articuloDetalle' foo.pk %}')"><i
+                                <a title="Detalle Articulo"
+                                   onclick="return abrir_modal('{% url 'articulo:articuloDetalle' foo.pk %}')"><i
                                         class="btn btn-primary2 aling-right icon-eye shopping"><span
                                         style="font-size: 20px"></span></i></a>
                                 <a title="vender" onclick="return abrir_modal('{% url 'ventas:addCar' foo.pk %}')"><i
@@ -56,6 +63,19 @@
             <h6>No hay registros hechos</h6>
         {% endif %}
     </div>
+
+    <script>
+        function mensaje() {
+            var msj = document.getElementById("msj").value;
+            console.log(msj);
+            if (msj != 0){
+                return alertify.notify('No hay suficientes existencias', 'error', 5, function(){  console.log('dismissed'); });
+            }
+            else{
+                return alertify.notify('Operacion Exitosa', 'success', 5, function(){  console.log('success'); });
+            }
+        }
+    </script>
 {% endblock %}
 {% block modal %}
 {% endblock %}

@@ -6,7 +6,7 @@ body {
 }
 
 .bg-green {
-    background-color: rgb(28, 161, 28);
+    background-color: #5d4037;
     color: white;
 }
 
@@ -121,8 +121,8 @@ nav #search-lg {
 
 .nav-link2 {
     padding: 20px;
-    font-family: 'Nova Mono', monospace;
-    color: rgb(240, 240, 240, 0.7);
+    font-family: 'Open Sans', sans-serif;
+    color: rgb(255,255,255, 0.7);
     text-decoration: none;
 }
 

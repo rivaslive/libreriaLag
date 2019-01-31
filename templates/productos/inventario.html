@@ -9,14 +9,14 @@
     <!-- Producto sin existencias -->
             <div class="d-flex align-items-center p-3 my-2 text-white-50 bg-warning rounded box-shadow">
                 <div class="1h-100">
-                    <h6 class="mb-0 text-white 1h-100">Productos Agotados</h6>
+                    <h6 class="mb-0 text-white 1h-100">Articulos Agotados</h6>
                     <small>Sin existencias</small>
                 </div>
                 <div class="col"></div>
                 <a id="aa" class="btn mx-auto" data-toggle="modal" data-target="#exampleModal">+</a>
             </div>
             <div class="my-3 p-3 bg-white rounded box-shadow">
-                <h6 class="border-bottom border-gray pb-2 mb-0">Productos sin existencias</h6>
+                <h6 class="border-bottom border-gray pb-2 mb-0">Articulos sin existencias</h6>
                 {% if inventario %}
                     {% for foo in inventario %}
                 <div class="media text-muted pt-3 bg-hover">
@@ -41,14 +41,14 @@
                 </div>
                     {% endfor %}
                 {% else %}
-                    <h6>No tienes productos sin unidades :D</h6>
+                    <h6>No tienes Arriculos sin unidades</h6>
                 {% endif %}
                 
             </div>
             <!--Productos por agotarse -->
             <div class="d-flex align-items-center p-3 my-2 text-white-50 bg-yellow rounded box-shadow">
                 <div class="1h-100">
-                    <h6 class="mb-0 text-white 1h-100">Productos a punto de acabarse</h6>
+                    <h6 class="mb-0 text-white 1h-100">Articulos a punto de terminarse</h6>
                     <small style="color: black">Pocas existencias</small>
                 </div>
             </div>
@@ -78,19 +78,19 @@
                 </div>
                     {% endfor %}
                 {% else %}
-                    <h6>Actualmente no hay productos con menos de 10 unidades</h6>
+                    <h6>Actualmente no hay articulos con menos de 10 unidades</h6>
                 {% endif %}
               
             </div>
             <!-- Producto Activos -->
             <div class="d-flex align-items-center p-3 my-2 text-white-50 bg-purple rounded box-shadow">
                 <div class="1h-100">
-                    <h6 class="mb-0 text-white 1h-100">Productos</h6>
+                    <h6 class="mb-0 text-white 1h-100">Articulos</h6>
                     <small>Activos</small>
                 </div>
             </div>
             <div class="my-3 p-3 bg-white rounded box-shadow">
-                <h6 class="border-bottom border-gray pb-2 mb-0">Productos</h6>
+                <h6 class="border-bottom border-gray pb-2 mb-0">Articulos</h6>
                 {% if inventariop %}
                     {% for foo in inventariop %}
                 <div class="media text-muted pt-3 bg-hover">
@@ -115,7 +115,7 @@
                 </div>
                     {% endfor %}
                 {% else %}
-                    <h6>Actualmente no hay productos con más de 10 unidades</h6>
+                    <h6>Actualmente no hay articulo con más de 10 unidades</h6>
                 {% endif %}
             </div>
         </div>
@@ -128,7 +128,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Producto</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar Articulo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -179,7 +179,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel3">Agregar Producto</h5>
+                    <h5 class="modal-title" id="exampleModalLabel3">Agregar Articulo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -230,7 +230,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Agregar Producto</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">Agregar Articulo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from apps.ventas.views import prueba, addCar, carShopping, shop
+from apps.ventas.views import prueba, addCar, carShopping, shop,venta
 app_name='ventas'
 
 urlpatterns = [
@@ -7,4 +7,5 @@ urlpatterns = [
     path('car_shopping/', carShopping, name="carShopping"),
     path(r'^add_car/(?P<pk>\d+)/$', addCar, name="addCar"),
     path('shop/', shop, name="shop"),
+    path('venta/', venta, name="venta"),
 ]

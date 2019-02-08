@@ -23,38 +23,46 @@
     </style>
     <div class="container">
         <div class="row">
+            {% if messages %}
+            {% for message in messages %}
+                {% if message.tags  == 'warning' %}
+                    <input id="msj" type="hidden" value="1">
+                    <input id="contenido" type="hidden" value="{{ message }}">
+                {% endif %}
+                {% if message.tags == 'success' %}
+                    <input id="msj" type="hidden" value="0">
+                    <input id="contenido" type="hidden" value="{{ message }}">
+                {% endif %}
+
+            {% endfor %}
+        {% endif %}
             <div class="card mx-auto mt-2" style="width: 90%">
                 <div class="card-body">
                     <h5 class="card-title">Vender Productos</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Formulario</h6>
                     <div class="card-body">
-                        <form action="#">
+                        <form action="{% url 'ventas:venta' %}">
                             <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="id_cantidad">Cantidad</label>
-                                    <input type="text" id="id_cantidad" class="form-control">
-                                </div>
                                 <div class="form-group col-md-3">
                                     <label for="id_cantidad">Presentacion</label>
                                     <select name="id_presentacion"  required="" class="form-control"
                                             id="id_id_presentacion">
-                                        {% if foo.id_articulo.id_presentacion.pk == 1 %}
-                                            <option value="" selected="">----Seleccione una opcion----</option>
-                                            <option value="1" >Unidades</option>
+                                            <option value="">----Seleccione una opcion----</option>
+                                            <option value="1" selected="">Unidades</option>
                                             <option value="2">Cajas</option>
-                                        {% else %}
-                                            <option value="" selected="">----Seleccione una opcion----</option>
-                                            <option value="1">Unidades</option>
-                                            <option value="2">Cajas</option>
-                                        {% endif %}
                                     </select>
                                 </div>
+                                <div class="form-group col-md-3">
+                                    <label for="id_cantidad">Cantidad</label>
+                                    <input type="text" id="id_cantidad" name="cantidad" class="form-control">
+                                </div>
+
                                 <div class="form-group col-md-5">
                                     <label for="id_codigo_articulo">Codigo</label>
-                                    <input type="text" id="id_codigo_articulo" class="form-control">
+                                    <input type="text" id="id_codigo_articulo" name="codigo" class="form-control">
                                 </div>
                                 <div class="form-group col-md-1">
-                                    <button id="plus-shopping" class="btn mt-4" title="agregar producto">+</button>
+                                    <button id="plus-shopping" class="btn mt-4" type="submit" title="agregar producto">+</button>
                                 </div>
                             </div>
                         </form>
@@ -83,35 +91,25 @@
                             <th scope="row">{{ forloop.counter }}</th>
                             <td>{{ foo.id_articulo.codigo_articulo }}</td>
                             <td>{{ foo.id_articulo.nombre_articulo }}</td>
-                            <td>
-                                <select name="id_presentacion" style="width: 70px" required="" class="form-control"
-                                        id="id_id_presentacion">
-                                    {% if foo.id_articulo.id_presentacion.pk == 1 %}
-                                        <option value="">--------------</option>
-                                        <option value="1" selected="">Unidades</option>
-                                        <option value="2">Cajas</option>
-                                    {% else %}
-                                        <option value="">--------------</option>
-                                        <option value="1">Unidades</option>
-                                        <option value="2" selected="">Cajas</option>
-                                    {% endif %}
-                                </select>
-                            </td>
-                            <td><input type="text" class="form-control" style="width: 30px"
-                                       value="{{ foo.cantidad }}"></td>
+                            <td>{{ foo.id_articulo.id_presentacion }}</td>
+                            <td>{{ foo.cantidad }}</td>
                             <td>${{ foo.id_articulo.precio_unidad }}</td>
-                            <td>None</td>
+                            <td>${{ foo.sub_total }}</td>
                             <td>
-                                <a href="" class=""><i class="icon-minus-circle btn btn-danger2"></i></a>
+                                <a href="" class=""><i class="icon-minus-circle btn btn-danger2" title="Eliminar"></i></a>
+                                <a onclick="return editarShop({{ foo.id_articulo.id_presentacion }}, {{ foo.cantidad }},{{ foo.id_articulo.codigo_articulo }});" class=""><i class="icon-pencil-square-o btn btn-purple" title="Editar"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
-                    </tbody>
                 {% endif %}
                 </tbody>
             </table>
         </div>
     </div>
+
+    <script>
+
+    </script>
 {% endblock %}
 {% block modal %}
 {% endblock %}

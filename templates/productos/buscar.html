@@ -1,27 +1,81 @@
 {% extends 'base/admin.html' %}
-{% block active1 %}
-    activo
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-green" id="nav22">
+        <a class="navbar-brand" href="#">Libreria</a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mx-auto">
+                <li class="nav-item {% block active1 %}act {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:buscar' %}"
+                    >Inicio <span class="sr-only">(current)</span></a
+                    >
+                </li>
+                <li class="nav-item {% block active2 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:articulo' %}"
+                    >Articulos</a
+                    >
+                </li>
+                <li class="nav-item {% block active3 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
+                </li>
+                <li class="nav-item {% block active4 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:inventario' %}"
+                    >Inventario</a
+                    >
+                </li>
+            </ul>
+            <!--form class="form-inline my-2 my-lg-0 ">
+                    <input id="search-lg" class=" form-control mr-sm-2 " type="search" placeholder="Buscar..."
+                           aria-label="Search">
+                    <button class="btn btn-light  my-2 my-sm-0" type="submit">buscar</button>
+                </form-->
+        </div>
+    </nav>
+
 {% endblock %}
 {% block car %}
 {% endblock %}
 {% block body %}
+    <style>
+        body {
+
+            background-image: url("../../static/media/img02.png");
+
+            background-size: 100%;
+        }
+    </style>
     <div class="container">
-        <div class="form-group col-md-12">
-            <h1 class="title-search mt-md-5" align="center">Búsqueda</h1>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-3"></div>
-            <div class="form-group col-md-6">
-                <!--div class="row">
-                    <input type="text" class="form-control" style="width: 80%" name="search">
-                    <button type="submit" class="btn btn-outline-dark active float-right">Buscar</button>
-                </div-->
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2 col-md-9 mx-4" type="search" placeholder="Ingrese el nombre o código del articulo" aria-label="Search" name="search">
-                    <button id="btn-search" class="btn  my-2 my-sm-0" type="submit">Buscar</button>
-                </form>
+        <div class="card mx-auto mt-lg-5" style="width: 35rem; background-color: rgb(40,40,40,0.8)">
+            <div class="card-body">
+                <div class="form-group col-md-12">
+                    <h1 class="title-search mt-md-5" align="center">Búsqueda</h1>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <!--div class="row">
+                            <input type="text" class="form-control" style="width: 80%" name="search">
+                            <button type="submit" class="btn btn-outline-dark active float-right">Buscar</button>
+                        </div-->
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2 col-md-9 mx-4" type="search"
+                                   placeholder="Ingrese el nombre o código del articulo" aria-label="Search"
+                                   name="search">
+                            <button id="btn-search" class="btn  my-2 my-sm-0" type="submit">Buscar</button>
+                        </form>
+                    </div>
+                    <div class="form-group col-md-3"></div>
+                </div>
             </div>
-            <div class="form-group col-md-3"></div>
         </div>
     </div>
 

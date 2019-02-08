@@ -19,9 +19,11 @@
             {% for message in messages %}
                 {% if message.tags  == 'warning' %}
                     <input id="msj" type="hidden" value="1">
+                    <input id="contenido" type="hidden" value="{{ message }}">
                 {% endif %}
                 {% if message.tags == 'success' %}
                     <input id="msj" type="hidden" value="0">
+                    <input id="contenido" type="hidden" value="{{ message }}">
                 {% endif %}
 
             {% endfor %}
@@ -64,18 +66,7 @@
         {% endif %}
     </div>
 
-    <script>
-        function mensaje() {
-            var msj = document.getElementById("msj").value;
-            console.log(msj);
-            if (msj != 0){
-                return alertify.notify('No hay suficientes existencias', 'error', 5, function(){  console.log('dismissed'); });
-            }
-            else{
-                return alertify.notify('Operacion Exitosa', 'success', 5, function(){  console.log('success'); });
-            }
-        }
-    </script>
+
 {% endblock %}
 {% block modal %}
 {% endblock %}

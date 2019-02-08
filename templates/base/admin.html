@@ -1,132 +1,150 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <title>
-      {% block title %} Libreria {% endblock %}
+        {% block title %} Libreria {% endblock %}
     </title>
 
-    <link href="{% static 'fonts/css.css'%}" rel="stylesheet" />
-    <script src="{% static 'js/bootstrap-material-design.js'%}"></script>
+    <link href="{% static 'fonts/css.css' %}" rel="stylesheet"/>
+    <script src="{% static 'js/bootstrap-material-design.js' %}"></script>
     <link
-      rel="stylesheet"
-      href="{% static 'css/bootstrap-material-design.min.css' %}"
+            rel="stylesheet"
+            href="{% static 'css/bootstrap-material-design.min.css' %}"
     />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <link href="{% static 'media/icons.css'%}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link href="{% static 'media/icons.css' %}" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="{% static 'css/alertify.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/default.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/semantic.min.css' %}" />
-    <script src="{% static 'js/jquery-3.3.1.min.js'%}"></script>
+    <link rel="stylesheet" href="{% static 'css/alertify.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/default.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/semantic.min.css' %}"/>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <!--script type="text/javascript" src="{% static 'js/main.js' %}"></script-->
     <style>
-      .error {
-        border: none;
-        border-bottom: 2px solid orangered;
-      }
+        .error {
+            border: none;
+            border-bottom: 2px solid orangered;
+        }
     </style>
-  </head>
+</head>
 
-  <body onload="return mensaje();">
-    {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-green">
-      <a class="navbar-brand" href="#">Libreria</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto mx-auto">
-          <li class="nav-item {% block active1 %} {% endblock %}">
-            <a class="nav-link2" href="{% url 'articulo:buscar' %}"
-              >Inicio <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item {% block active2 %} {% endblock %}">
-            <a class="nav-link2" href="{% url 'articulo:articulo' %}"
-              >Articulos</a
-            >
-          </li>
-          <li class="nav-item {% block active3 %} {% endblock %}">
-            <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
-          </li>
-          <li class="nav-item {% block active4 %} {% endblock %}">
-            <a class="nav-link2" href="{% url 'articulo:inventario' %}"
-              >Inventario</a
-            >
-          </li>
-        </ul>
-        <!--form class="form-inline my-2 my-lg-0 ">
-                <input id="search-lg" class=" form-control mr-sm-2 " type="search" placeholder="Buscar..."
-                       aria-label="Search">
-                <button class="btn btn-light  my-2 my-sm-0" type="submit">buscar</button>
-            </form-->
-      </div>
+<body onload="return mensaje();">
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-green">
+        <a class="navbar-brand" href="#">Libreria</a>
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mx-auto">
+                <li class="nav-item {% block active1 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:buscar' %}"
+                    >Inicio <span class="sr-only">(current)</span></a
+                    >
+                </li>
+                <li class="nav-item {% block active2 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:articulo' %}"
+                    >Articulos</a
+                    >
+                </li>
+                <li class="nav-item {% block active3 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
+                </li>
+                <li class="nav-item {% block active4 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:inventario' %}"
+                    >Inventario</a
+                    >
+                </li>
+            </ul>
+            <!--form class="form-inline my-2 my-lg-0 ">
+                    <input id="search-lg" class=" form-control mr-sm-2 " type="search" placeholder="Buscar..."
+                           aria-label="Search">
+                    <button class="btn btn-light  my-2 my-sm-0" type="submit">buscar</button>
+                </form-->
+        </div>
     </nav>
 
-    {% endblock %} {% block car %}
+{% endblock %}
+{% block car %}
     <div class="car">
-      <a class="btn"
+        <a class="btn"
         ><i
-          id="car2"
-          class="icon-shopping-cart shopping"
-          onclick="return abrir_modal('{% url 'ventas:carShopping' %}')"
+                id="car2"
+                class="icon-shopping-cart shopping"
+                onclick="return abrir_modal('{% url 'ventas:carShopping' %}')"
         ></i
         ><span style="font-size: 20px"
-          >{% if notify %}
-          {{ notify }}
-          {% else %} 0 {% endif %}</span
+        >{% if notify %}
+            {{ notify }}
+        {% else %} 0 {% endif %}</span
         ></a
-      >
+        >
     </div>
-    {% endblock %}
+{% endblock %}
 
-    <div class="row">
-      <div class="container">
+<div class="row">
+    <div class="container">
         {% block body %} {% endblock %}
-      </div>
     </div>
-    <div id="popup" class="modal fade" role="dialog"></div>
-    {% block modal %} {% endblock %}
+</div>
+<div id="popup" class="modal fade" role="dialog"></div>
+{% block modal %} {% endblock %}
 
-    <script src="{% static 'js/jquery-3.3.1.min.js'%}"></script>
-    <script src="{% static 'js/popper.js'%}"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.js' %}"></script>
 
-    <script src="{% static 'js/bootstrap-material-design.js'%}"></script>
-    <script>
-      $(document).ready(function() {
+<script src="{% static 'js/bootstrap-material-design.js' %}"></script>
+<script>
+    $(document).ready(function () {
         $("body").bootstrapMaterialDesign();
-      });
-    </script>
-    <script src="{% static 'js/alertify.js' %}"></script>
-    <script type="text/javascript">
-      //override defaults
-      alertify.defaults.transition = "slide";
-      alertify.defaults.theme.ok = "btn btn-primary";
-      alertify.defaults.theme.cancel = "btn btn-danger";
-      alertify.defaults.theme.input = "form-control";
-    </script>
-    <script>
-      function abrir_modal(url) {
-        $("#popup").load(url, function() {
-          $(this).modal("show");
+    });
+</script>
+<script src="{% static 'js/alertify.js' %}"></script>
+<script type="text/javascript">
+    //override defaults
+    alertify.defaults.transition = "slide";
+    alertify.defaults.theme.ok = "btn btn-primary";
+    alertify.defaults.theme.cancel = "btn btn-danger";
+    alertify.defaults.theme.input = "form-control";
+</script>
+<script>
+    function abrir_modal(url) {
+        $("#popup").load(url, function () {
+            $(this).modal("show");
         });
         return false;
-      }
+    }
 
-      function cerrar_modal() {
+    function cerrar_modal() {
         $("#popup").modal("hide");
         return false;
-      }
-    </script>
-  </body>
+    }
+
+    function mensaje() {
+        var msj = document.getElementById("msj").value;
+        var contenido = document.getElementById("contenido").value;
+        console.log(msj);
+        if (msj != 0) {
+            return alertify.notify(contenido, 'error', 5, function () {
+                console.log('dismissed');
+            });
+        }
+        else {
+            return alertify.notify(contenido, 'success', 5, function () {
+                console.log('success');
+            });
+        }
+    }
+
+</script>
+</body>
 </html>

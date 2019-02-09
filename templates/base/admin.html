@@ -7,6 +7,7 @@
         {% block title %} Libreria {% endblock %}
     </title>
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet">
     <link href="{% static 'fonts/css.css' %}" rel="stylesheet"/>
     <script src="{% static 'js/bootstrap-material-design.js' %}"></script>
     <link
@@ -31,8 +32,8 @@
 
 <body onload="return mensaje();">
 {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-green">
-        <a class="navbar-brand" href="#">Libreria</a>
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-green">
+        <a  class="navbar-brand" href="#" style="font-family: 'Roboto', sans-serif;">Libreria</a>
         <button
                 class="navbar-toggler"
                 type="button"
@@ -97,7 +98,7 @@
     </div>
 </div>
 <div id="popup" class="modal fade" role="dialog"></div>
-{% block modal %} {% endblock %}
+
 
 <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
 <script src="{% static 'js/popper.js' %}"></script>

@@ -4,12 +4,21 @@
 {% endblock %}
 
 {% block body %}
-    <div class="d-flex align-items-center p-3 my-2 text-white-50 bg-purple rounded box-shadow">
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow">
         <div class="1h-100">
             <h6 class="mb-0 text-white 1h-100">Productos</h6>
             <small>Activos</small>
         </div>
-        <div class="col"></div>
+        <div class="col ">
+            <div class="form-group col-md-8 mx-auto">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2 col-md-12 " type="search"
+                                   placeholder="Ingrese el nombre o código del articulo" aria-label="Search"
+                                   name="search">
+
+                        </form>
+            </div>
+        </div>
         <a id="aa" class="btn mx-auto" onclick="return abrir_modal('{% url 'articulo:crearArticulo' %}')"
            title="agregar producto">+</a>
     </div>
@@ -67,6 +76,4 @@
     </div>
 
 
-{% endblock %}
-{% block modal %}
 {% endblock %}

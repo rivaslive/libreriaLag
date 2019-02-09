@@ -20,54 +20,101 @@
             background-color: rgb(33, 150, 243);
         }
 
+        .form-control {
+            color: white;
+        }
+
+        .form-control::-ms-expand {
+            background-color: transparent;
+            border: 0
+        }
+
+        .custom-file-control:focus, .form-control:focus {
+            color: white;
+            background-color: transparent;
+            border-color: white;
+            outline: 0;
+            box-shadow: none, 0 0 0 .2rem rgba(255, 255, 255, 255)
+        }
+
+        .custom-file-control::placeholder, .form-control::placeholder {
+            color: rgb(170, 170, 170);
+            opacity: 1
+        }
+
+        .custom-file-control:disabled, .form-control:disabled, .form-control[readonly], [readonly].custom-file-control {
+            background-color: #e9ecef;
+            opacity: 1
+        }
+
+        select.custom-file-control:focus::-ms-value, select.form-control:focus::-ms-value {
+            color: white;
+            background-color: transparent
+        }
+
+        option {
+            background: rgb(100,100,100);
+        }
     </style>
     <div class="container">
-        <div class="row">
+        <div class="row bg-hover mt-4"
+             style="background-color: rgb(83, 109, 122); border-radius:.525rem; color: white;">
+            <div class="col-md-12 mt-2">
+                <h5 class="card-title">Vender Productos</h5>
+                <h6 class="card-subtitle " style="color: rgb(200,200,200)">Formulario</h6>
+            </div>
             {% if messages %}
-            {% for message in messages %}
-                {% if message.tags  == 'warning' %}
-                    <input id="msj" type="hidden" value="1">
-                    <input id="contenido" type="hidden" value="{{ message }}">
-                {% endif %}
-                {% if message.tags == 'success' %}
-                    <input id="msj" type="hidden" value="0">
-                    <input id="contenido" type="hidden" value="{{ message }}">
-                {% endif %}
-
-            {% endfor %}
-        {% endif %}
-            <div class="card mx-auto mt-2" style="width: 90%">
+                {% for message in messages %}
+                    {% if message.tags  == 'warning' %}
+                        <input id="msj" type="hidden" value="1">
+                        <input id="contenido" type="hidden" value="{{ message }}">
+                    {% endif %}
+                    {% if message.tags == 'success' %}
+                        <input id="msj" type="hidden" value="0">
+                        <input id="contenido" type="hidden" value="{{ message }}">
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <div class="col-md-2">
+                <h4 style="margin-top: 55%;color: white">Total: <span style="color: white">$100.00</span></h4>
+            </div>
+            <div class="col-md-10">
                 <div class="card-body">
-                    <h5 class="card-title">Vender Productos</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Formulario</h6>
-                    <div class="card-body">
-                        <form action="{% url 'ventas:venta' %}">
+
+                    <div class="card-body" style="margin-top: -10px">
+                        <form action="{% url 'ventas:venta' %}" id="formAdd">
                             <div class="form-row">
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-6">
                                     <label for="id_cantidad">Presentacion</label>
-                                    <select name="id_presentacion"  required="" class="form-control"
+                                    <select name="id_presentacion" required="" class="form-control"
                                             id="id_id_presentacion">
-                                            <option value="">----Seleccione una opcion----</option>
-                                            <option value="1" selected="">Unidades</option>
-                                            <option value="2">Cajas</option>
+                                        <option value="">----Seleccione una opcion----</option>
+                                        <option value="1" selected="">Unidades</option>
+                                        <option value="2">Cajas</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-6">
                                     <label for="id_cantidad">Cantidad</label>
-                                    <input type="text" id="id_cantidad" name="cantidad" class="form-control">
+                                    <input placeholder="Cantidad" type="text" id="id_cantidad" name="cantidad"
+                                           class="form-control">
                                 </div>
 
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-11">
                                     <label for="id_codigo_articulo">Codigo</label>
-                                    <input type="text" id="id_codigo_articulo" name="codigo" class="form-control">
+                                    <input placeholder="Codigo" type="text" id="id_codigo_articulo" name="codigo"
+                                           required
+                                           class="form-control">
                                 </div>
                                 <div class="form-group col-md-1">
-                                    <button id="plus-shopping" class="btn mt-4" type="submit" title="agregar producto">+</button>
+                                    <button id="plus-shopping" class="btn mt-4" type="submit" title="agregar producto">
+                                        +
+                                    </button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="responsive mt-4">
@@ -96,8 +143,10 @@
                             <td>${{ foo.id_articulo.precio_unidad }}</td>
                             <td>${{ foo.sub_total }}</td>
                             <td>
-                                <a href="" class=""><i class="icon-minus-circle btn btn-danger2" title="Eliminar"></i></a>
-                                <a onclick="return editarShop({{ foo.id_articulo.id_presentacion }}, {{ foo.cantidad }},{{ foo.id_articulo.codigo_articulo }});" class=""><i class="icon-pencil-square-o btn btn-purple" title="Editar"></i></a>
+                                <a onclick="return abrir_modal('{% url 'ventas:deleteDetail' foo.pk %}')" class=""><i
+                                        class="icon-minus-circle btn btn-danger2" title="Eliminar"></i></a>
+                                <a onclick="return editarShop({{ foo.id_articulo.id_presentacion }}, {{ foo.cantidad }},{{ foo.id_articulo.codigo_articulo }});"
+                                   class=""><i class="icon-pencil-square-o btn btn-purple" title="Editar"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -106,10 +155,4 @@
             </table>
         </div>
     </div>
-
-    <script>
-
-    </script>
-{% endblock %}
-{% block modal %}
 {% endblock %}

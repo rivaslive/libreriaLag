@@ -1,0 +1,24 @@
+<!-- Modal -->
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">Eliminar Articulo</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <form id="eliminar" action="{% url 'ventas:deleteDetail' pk %}" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <h6>Esta seguro de eliminar el registro?</h6>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" form="eliminar" class="btn btn-danger active">Aceptar</button>
+        </div>
+    </div>
+</div>

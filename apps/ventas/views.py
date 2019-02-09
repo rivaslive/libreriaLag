@@ -135,6 +135,7 @@ def venta(request):
                         form3 = get_object_or_404(Articulo, pk=articulo.pk)
                         form3.stock = (articulo.stock - int(cantidad))
                         form3.save()
+                        query = detalle.objects.filter(id_venta=request.session['ventaId'])
                         messages.success(request, 'Operacion Exitosa')
                         return redirect('ventas:venta')
                 else:

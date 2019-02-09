@@ -8,14 +8,19 @@
     </title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
     <link href="{% static 'fonts/css.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
     <script src="{% static 'js/bootstrap-material-design.js' %}"></script>
     <link
             rel="stylesheet"
             href="{% static 'css/bootstrap-material-design.min.css' %}"
     />
     <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
-    <link href="{% static 'media/icons.css' %}" rel="stylesheet"/>
+    <link href="https://file.myfontastic.com/pHAyhgVB2i58ku9XgAcojg/icons.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'css/alertify.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/default.min.css' %}"/>
@@ -33,7 +38,7 @@
 <body onload="return mensaje();">
 {% block navbar %}
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-green">
-        <a  class="navbar-brand" href="#" style="font-family: 'Roboto', sans-serif;">Libreria</a>
+        <a class="navbar-brand" href="#" style="font-family: 'Roboto', sans-serif;">Libreria</a>
         <button
                 class="navbar-toggler"
                 type="button"
@@ -45,8 +50,9 @@
         >
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto mx-auto">
+
+        <div class="collapse navbar-collapse d-flex flex-column" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mx-auto" style="margin-top: -5px">
                 <li class="nav-item {% block active1 %} {% endblock %}">
                     <a class="nav-link2" href="{% url 'articulo:buscar' %}"
                     >Inicio <span class="sr-only">(current)</span></a
@@ -71,6 +77,57 @@
                            aria-label="Search">
                     <button class="btn btn-light  my-2 my-sm-0" type="submit">buscar</button>
                 </form-->
+            <ul class="navbar-nav ml-auto " style="margin-top: -62px">
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown  no-arrow ">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+
+                        <img class="img-profile rounded-circle" width="40" src="{% static 'media/user.png' %}">
+                    </a>
+                    <!-- Dropdown - User Information -->
+                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                        <h6 class="dropdown-header">
+                            Administracion de usuario
+                        </h6>
+                        <a class="dropdown-item d-flex mx-auto" href="#">
+                            <div class="mr-3">
+                                <div class="icon-circle bg-primary">
+                                    <i class="fas fa-file-alt text-white"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="small text-gray-500">December 12, 2019</div>
+                                <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                            </div>
+                        </a>
+                        <a class="dropdown-item d-flex align-items-center mx-auto" href="#">
+                            <div class="mr-3">
+                                <div class="icon-circle bg-success">
+                                    <i class="fas fa-donate text-white"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="small text-gray-500">December 7, 2019</div>
+                                $290.29 has been deposited into your account!
+                            </div>
+                        </a>
+                        <a class="dropdown-item d-flex align-items-center mx-auto" href="#">
+                            <div class="mr-3">
+                                <div class="icon-circle bg-warning">
+                                    <i class="fas fa-exclamation-triangle text-white"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="small text-gray-500">December 2, 2019</div>
+                                Spending Alert: We've noticed unusually high spending for your account.
+                            </div>
+                        </a>
+                        <a class="dropdown-item text-center small text-gray-500 mx-auto" href="#">Show All Alerts</a>
+                    </div>
+                </li>
+
+            </ul>
         </div>
     </nav>
 

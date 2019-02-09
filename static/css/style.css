@@ -1,17 +1,23 @@
 body {
-    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
     background-color: rgb(255, 255, 255);
 }
-.table td{
+
+.table td {
     font-family: 'Roboto', sans-serif;
 }
-.bg-purple2{
+
+.bg-purple2 {
     background-color: rgb(83, 109, 122);
 
 }
+
 .bg-green {
     background-color: rgb(250 250 250);
     color: rgb(30 30 30);
@@ -25,24 +31,26 @@ body {
     background-color: darkorange;
 }
 
-.title-search{
+.title-search {
     font-family: 'Pacifico', cursive;
     font-size: 5em;
-    color: rgb(255,255,255);
+    color: rgb(255, 255, 255);
 }
 
-#btn-search{
-    background-color: rgb(35, 85, 85);
-    color: white;
-}
-#btn-search:hover{
+#btn-search {
     background-color: rgb(35, 85, 85);
     color: white;
 }
 
-#formAdd label{
-    color: rgb(200,200,200);
+#btn-search:hover {
+    background-color: rgb(35, 85, 85);
+    color: white;
 }
+
+#formAdd label {
+    color: rgb(200, 200, 200);
+}
+
 .espacio {
     position: relative;
     padding: 1rem;
@@ -110,17 +118,21 @@ nav #search-lg {
         width: auto;
     }
 }
+
 #nav22 {
     background: rgb(6, 6, 6, 0.2);
 }
-#nav22 a{
+
+#nav22 a {
     color: white;
 }
-#nav22 a:hover{
+
+#nav22 a:hover {
     color: rgb(255, 255, 255);
-    background-color: rgb(45,45,45);
+    background-color: rgb(45, 45, 45);
 }
-.act{
+
+.act {
     border: none;
     color: white;
     border-bottom: 4px solid white;
@@ -128,13 +140,16 @@ nav #search-lg {
     padding-bottom: 15px;
     z-index: 5000;
 }
-#navbarSupportedContent{
+
+#navbarSupportedContent {
     margin: 5px 0 -14px 0;
 }
-#navbar{
+
+#navbar {
     height: 65px;
 
 }
+
 #navbarSupportedContent ul li a {
     font-size: 0.9rem;
 }
@@ -147,6 +162,7 @@ nav #search-lg {
     padding-bottom: 17.5px;
     z-index: 80000;
 }
+
 .activo a {
     color: darkslategrey;
 }
@@ -154,8 +170,8 @@ nav #search-lg {
 .nav-link2 {
     padding: 24px;
     margin-bottom: 0;
-    font-family: 'Roboto',Helvetica, Arial, sans-serif;
-    color: rgb(70,70,70);
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    color: rgb(70, 70, 70);
     text-decoration: none;
     transition: all 0.4s;
 }
@@ -211,7 +227,7 @@ nav #search-lg {
 .bg-hover:hover {
     cursor: pointer;
     background-color: rgb(235, 235, 235);
-    border-radius:.525rem;
+    border-radius: .525rem;
 }
 
 .icono {
@@ -236,8 +252,176 @@ nav #search-lg {
 .smaller {
     color: rgb(150, 80, 150, 0.8);
 }
-
+.text-gray-400 {
+  color: #d1d3e2 !important;
+}
 .car-header2 {
     margin-top: 10px;
     margin-right: 10px;
+}
+#navbar #content-wrapper {
+  background-color: #f8f9fc;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.dropdown-divider {
+  height: 0;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  border-top: 1px solid #eaecf4;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: #3a3b45;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
+
+.dropdown-item:first-child {
+  border-top-left-radius: calc(0.35rem - 1px);
+  border-top-right-radius: calc(0.35rem - 1px);
+}
+
+.dropdown-item:last-child {
+  border-bottom-right-radius: calc(0.35rem - 1px);
+  border-bottom-left-radius: calc(0.35rem - 1px);
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  color: #2e2f37;
+  text-decoration: none;
+  background-color: #f8f9fc;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
+  background-color: #4e73df;
+}
+
+.dropdown-item.disabled, .dropdown-item:disabled {
+  color: #858796;
+  pointer-events: none;
+  background-color: transparent;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+#navbar .dropdown {
+    position: static;
+}
+
+#navbar .dropdown .dropdown-menu {
+    width: calc(100% - 1.5rem);
+    right: 0.75rem;
+}
+
+#navbar .dropdown-list {
+    padding: 0;
+    border: none;
+    overflow: hidden;
+}
+
+#navbar .dropdown-list .dropdown-header {
+    background-color: #4e73df;
+    border: 1px solid #4e73df;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    color: #fff;
+}
+
+#navbar .dropdown-list .dropdown-item {
+    white-space: normal;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-left: 1px solid #e3e6f0;
+    border-right: 1px solid #e3e6f0;
+    border-bottom: 1px solid #e3e6f0;
+    line-height: 1.3rem;
+}
+
+#navbar .dropdown-list .dropdown-item .dropdown-list-image {
+    position: relative;
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+#navbar .dropdown-list .dropdown-item .dropdown-list-image img {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+#navbar .dropdown-list .dropdown-item .dropdown-list-image .status-indicator {
+    background-color: #eaecf4;
+    height: 0.75rem;
+    width: 0.75rem;
+    border-radius: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: 0.125rem solid #fff;
+}
+
+#navbar .dropdown-list .dropdown-item .text-truncate {
+    max-width: 10rem;
+}
+
+#navbar .dropdown-list .dropdown-item:active {
+    background-color: #eaecf4;
+    color: #3a3b45;
+}
+
+@media (min-width: 576px) {
+    #navbar .dropdown {
+        position: relative;
+    }
+
+    #navbar .dropdown .dropdown-menu {
+        width: auto;
+        right: 0;
+    }
+
+    #navbar .dropdown-list {
+        width: 20rem !important;
+    }
+
+    #navbar .dropdown-list .dropdown-item .text-truncate {
+        max-width: 13.375rem;
+    }
+}
+
+#navbar.navbar-light .navbar-nav .nav-item .nav-link {
+    color: #d1d3e2;
+}
+
+#navbar.navbar-light .navbar-nav .nav-item .nav-link:hover {
+    color: #b7b9cc;
+}
+
+#navbar.navbar-light .navbar-nav .nav-item .nav-link:active {
+    color: #858796;
+}
+.dropdown-toggle-split {
+  padding-right: 0.5625rem;
+  padding-left: 0.5625rem;
+}
+
+.dropdown-toggle-split::after,
+.dropup .dropdown-toggle-split::after,
+.dropright .dropdown-toggle-split::after {
+  margin-left: 0;
+}
+
+.dropleft .dropdown-toggle-split::before {
+  margin-right: 0;
 }

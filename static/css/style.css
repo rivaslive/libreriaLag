@@ -9,6 +9,7 @@ body {
     background-color: rgb(255, 255, 255);
 }
 
+
 .table td {
     font-family: 'Roboto', sans-serif;
 }
@@ -283,6 +284,7 @@ nav #search-lg {
   white-space: nowrap;
   background-color: transparent;
   border: 0;
+  
 }
 
 .dropdown-item:first-child {

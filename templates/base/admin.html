@@ -54,7 +54,7 @@
         <div class="collapse navbar-collapse d-flex flex-column" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto mx-auto" style="margin-top: -5px">
                 <li class="nav-item {% block active1 %} {% endblock %}">
-                    <a class="nav-link2" href="{% url 'articulo:buscar' %}"
+                    <a class="nav-link2" href="{% url 'articulo:index' %}"
                     >Inicio <span class="sr-only">(current)</span></a
                     >
                 </li>
@@ -83,48 +83,39 @@
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
 
-                        <img class="img-profile rounded-circle" width="40" src="{% static 'media/user.png' %}">
+                        <img class="img-profile rounded-circle" width="40" src="{% static 'media/hombre.png' %}">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header">
-                            Administracion de usuario
+                            Administración de usuario
                         </h6>
-                        <a class="dropdown-item d-flex mx-auto" href="#">
+                       
+                        <a class="mt-2 dropdown-item   d-flex mx-4" style="text-decoration:none" href="#">
                             <div class="mr-3">
-                                <div class="icon-circle bg-primary">
-                                    <i class="fas fa-file-alt text-white"></i>
+                                <div class="">
+                                    <i class="fas fa-barcode"></i>
+                                </div>
+                            </div>
+                            <div >
+                                <div class=" small text-gray-500">Código de Barras</div>
+                                <span class="font-weight-bold">Crear su código de barras</span>
+                            </div>
+                        </a>
+                        <a style="text-decoration:none" class="dropdown-item mt-2 d-flex align-items-center mx-4" href="#">
+                            <div class="mr-3">
+                                <div class="">
+                                    <i class="fas fa-sign-out-alt"></i>
                                 </div>
                             </div>
                             <div>
-                                <div class="small text-gray-500">December 12, 2019</div>
-                                <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                <div class="small text-gray-500">Salir</div>
+                              Cerrar su sesión
                             </div>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center mx-auto" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-success">
-                                    <i class="fas fa-donate text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">December 7, 2019</div>
-                                $290.29 has been deposited into your account!
-                            </div>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center mx-auto" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-warning">
-                                    <i class="fas fa-exclamation-triangle text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">December 2, 2019</div>
-                                Spending Alert: We've noticed unusually high spending for your account.
-                            </div>
-                        </a>
-                        <a class="dropdown-item text-center small text-gray-500 mx-auto" href="#">Show All Alerts</a>
-                    </div>
+                        </a>                        
+                        <a style="text-decoration:none" class="mt-2 dropdown-item mx-4  text-center small text-gray-500 " href="#">¡Conozca quién hizo el sistema!</a>
+                    
+                </div>
                 </li>
 
             </ul>

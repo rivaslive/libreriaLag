@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto mx-auto">
                 <li class="nav-item {% block active1 %}act {% endblock %}">
-                    <a class="nav-link2" href="{% url 'articulo:buscar' %}"
+                    <a class="nav-link2" href="{% url 'articulo:index' %}"
                     >Inicio <span class="sr-only">(current)</span></a
                     >
                 </li>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <form class="form-inline my-2 my-lg-0">
+                        <form class="form-inline my-2 my-lg-0" action="{% url 'articulo:buscar' %}" method="get">
                             <input class="form-control mr-sm-2 col-md-9 mx-4" type="search"
                                    placeholder="Ingrese el nombre o código del articulo" aria-label="Search"
                                    name="search">

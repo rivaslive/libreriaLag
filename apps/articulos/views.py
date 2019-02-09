@@ -59,5 +59,15 @@ def inventario(request):
 
     return render(request, 'productos/inventario.html', {'inventario1': query, 'inventario': query_ar, 'inventariop': query_are})
 
+
+
+    #Buscar Articulos
 def buscar(request):
-    return render(request, 'productos/buscar.html')
+    buscar= request.GET.get('search','')
+    queryset = Articulo.objects.filter(Q(nombre_articulo__contains=buscar)|Q(codigo_articulo__contains=buscar)).order_by('nombre_articulo')
+    print(buscar)
+    print(queryset)
+    return render(request,'productos/articulo.html',{'articulo':queryset, 'busqueda':buscar}) 
+
+def inicio(request):
+    return render(request, 'productos/index.html')

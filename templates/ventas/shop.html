@@ -60,8 +60,8 @@
         <div class="row bg-hover mt-4"
              style="background-color: rgb(83, 109, 122); border-radius:.525rem; color: white;">
             <div class="col-md-12 mt-2">
-                <h5 class="card-title">Vender Productos</h5>
-                <h6 class="card-subtitle " style="color: rgb(200,200,200)">Formulario</h6>
+                <h3 class="card-title" style="font-weight: 500">Vender Productos</h3>
+                <h5 class="card-subtitle " style="color: rgb(200,200,200)">Formulario</h5>
             </div>
             {% if messages %}
                 {% for message in messages %}
@@ -81,7 +81,7 @@
             <div class="col-md-10">
                 <div class="card-body">
 
-                    <div class="card-body" style="margin-top: -10px">
+                    <div class="card-body" style="margin-top: -50px">
                         <form action="{% url 'ventas:venta' %}" id="formAdd">
                             <div class="form-row">
                                 <div class="form-group col-md-6">

@@ -2,8 +2,58 @@
 {% block active2 %}
     activo
 {% endblock %}
-
 {% block body %}
+    <style>
+        #plus-shopping {
+            margin-top: -20px;
+            font-size: 18px;
+            border-radius: 50%;
+            background-color: rgb(33, 150, 243, 0.7);
+            color: white;
+        }
+
+        #plus-shopping:hover {
+            text-decoration: none;
+            color: white;
+            background-color: rgb(33, 150, 243);
+        }
+
+        .form-control {
+            color: white;
+        }
+
+        .form-control::-ms-expand {
+            background-color: transparent;
+            border: 0
+        }
+
+        .custom-file-control:focus, .form-control:focus {
+            color: white;
+            background-color: transparent;
+            border-color: white;
+            outline: 0;
+            box-shadow: none, 0 0 0 .2rem rgba(255, 255, 255, 255)
+        }
+
+        .custom-file-control::placeholder, .form-control::placeholder {
+            color: rgb(170, 170, 170);
+            opacity: 1
+        }
+
+        .custom-file-control:disabled, .form-control:disabled, .form-control[readonly], [readonly].custom-file-control {
+            background-color: #e9ecef;
+            opacity: 1
+        }
+
+        select.custom-file-control:focus::-ms-value, select.form-control:focus::-ms-value {
+            color: white;
+            background-color: transparent
+        }
+
+        option {
+            background: rgb(100,100,100);
+        }
+    </style>
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow">
         <div class="1h-100">
             <h6 class="mb-0 text-white 1h-100">Productos</h6>

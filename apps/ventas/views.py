@@ -223,5 +223,30 @@ def eliminarDetalle(request, pk):
     else:
         return render(request, 'ventas/deleteDetalleModal.html', {'pk':pk})
 
+def vender(request):
+    ventaId = request.session['ventaId']
+    ventas = Venta.objects.get(id=ventaId)
+    if ventas:
+        form = get_object_or_404(Venta, pk=ventas.pk)
+        form.estado=0
+        form.save()
+        messages.success(request, "Operacion exitosa")
+        return redirect('ventas:ticket')
+    else:
+        messages.warning(request, "No se pudo realizar la venta")
+        return redirect('ventas:shop')
 
-
+def ticket(request):
+    ventaId = request.session['ventaId']
+    print("su id de venta para tiket es " + str(ventaId))
+    detalles = detalle.objects.filter(id_venta=int(4))
+    ventas = Venta.objects.get(id=4)
+    fecha=datetime.now()
+    if detalles:
+        total = 0
+        for foo in detalles:
+            total += (foo.cantidad * foo.id_articulo.precio_unidad)
+    else:
+        total = 0
+    request.session['ventaId'] = ""
+    return  render(request, 'ventas/ticket.html', {'detalle':detalles,'venta':ventas, 'total':total, 'fecha':fecha})

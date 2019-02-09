@@ -76,8 +76,8 @@
                 {% endfor %}
             {% endif %}
             <div class="col-md-2">
-                <h4 class="rounded" style="margin-top: 30%;color: white; background-color: rgb(240,240,240,0.4); height: 45px; padding: 7px 1px">Total: <span style="color: black">${{ total }}</span></h4>
-                <button type="submit" class="rounded btn btn-dark active" style="width: 100%">vender</button>
+                <h4 class="rounded" style="margin-top: 30%;color: white; background-color: rgb(240,240,240,0.4); height: 45px; padding: 7px 1px">Total: <span style="color: black">${% if total %}{{ total }}{% else %}0.00{% endif %}</span></h4>
+                <a target="_blank" href="{% url 'ventas:vender' %}" class="rounded btn btn-dark active" style="width: 100%">vender</a>
             </div>
             <div class="col-md-10">
                 <div class="card-body">

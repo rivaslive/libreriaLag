@@ -32,6 +32,9 @@
             border: none;
             border-bottom: 2px solid orangered;
         }
+        .full{
+            margin: 0 -30px;
+        }
     </style>
 </head>
 
@@ -77,7 +80,7 @@
                            aria-label="Search">
                     <button class="btn btn-light  my-2 my-sm-0" type="submit">buscar</button>
                 </form-->
-            <ul class="navbar-nav ml-auto " style="margin-top: -62px">
+            <ul class="navbar-nav ml-auto " style="margin-top: -62px" id="ulNav">
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown  no-arrow ">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
@@ -86,7 +89,7 @@
                         <img class="img-profile rounded-circle" width="40" src="{% static 'media/hombre.png' %}">
                     </a>
                     <!-- Dropdown - User Information -->
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" style="margin: 0; padding: 0; " aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header">
                             Administración de usuario
                         </h6>
@@ -117,7 +120,6 @@
                     
                 </div>
                 </li>
-
             </ul>
         </div>
     </nav>

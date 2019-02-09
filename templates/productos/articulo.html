@@ -18,16 +18,16 @@
             background-color: rgb(33, 150, 243);
         }
 
-        .form-control {
+        #search .form-control {
             color: white;
         }
 
-        .form-control::-ms-expand {
+        #search .form-control::-ms-expand {
             background-color: transparent;
             border: 0
         }
 
-        .custom-file-control:focus, .form-control:focus {
+        #search .custom-file-control:focus, .form-control:focus {
             color: white;
             background-color: transparent;
             border-color: white;
@@ -35,23 +35,14 @@
             box-shadow: none, 0 0 0 .2rem rgba(255, 255, 255, 255)
         }
 
-        .custom-file-control::placeholder, .form-control::placeholder {
+        #search .custom-file-control::placeholder, .form-control::placeholder {
             color: rgb(170, 170, 170);
             opacity: 1
         }
 
-        .custom-file-control:disabled, .form-control:disabled, .form-control[readonly], [readonly].custom-file-control {
+        #search .custom-file-control:disabled, .form-control:disabled, .form-control[readonly], [readonly].custom-file-control {
             background-color: #e9ecef;
             opacity: 1
-        }
-
-        select.custom-file-control:focus::-ms-value, select.form-control:focus::-ms-value {
-            color: white;
-            background-color: transparent
-        }
-
-        option {
-            background: rgb(100,100,100);
         }
     </style>
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow">
@@ -61,7 +52,7 @@
         </div>
         <div class="col ">
             <div class="form-group col-md-8 mx-auto">
-                        <form class="form-inline my-2 my-lg-0">
+                        <form class="form-inline my-2 my-lg-0" id="search">
                             <input class="form-control mr-sm-2 col-md-12 " type="search"
                                    placeholder="Ingrese el nombre o código del articulo" aria-label="Search"
                                    name="search">

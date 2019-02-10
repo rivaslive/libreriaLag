@@ -18,6 +18,9 @@ class detalle(models.Model):
         Venta, on_delete=models.CASCADE, null=False, blank=False)
 
 class Factura(models.Model):
-    venta = models.ForeignKey(Venta, null=False, blank=False, on_delete=models.CASCADE)
+    venta = models.OneToOneField(Venta, null=False, blank=False, on_delete=models.CASCADE)
     total = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
+    cambio = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
     fecha = models.DateTimeField(null=False, blank=False)
+    numero = models.IntegerField(default=00000000, null=False, blank=False)
+    efectivo = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)

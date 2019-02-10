@@ -37,7 +37,10 @@
                     </div>
                 </div>
             </form-->
-            <a id="plus-shopping" class="btn float-right"
+            <div>
+                <h4 align="center">Total: <strong>{{ total }}</strong></h4>
+            </div>
+            <a id="plus-shopping" style="margin-top: -55px" class="btn float-right"
                onclick="return abrir_modal('{% url 'articulo:crearArticulo' %}')"
                title="agregar producto">+</a>
             <div class="table-responsive">
@@ -80,7 +83,8 @@
                                 <td>${{ foo.id_articulo.precio_unidad }}</td>
                                 <td>None</td>
                                 <td>
-                                    <a href="" class=""><i class="icon-minus-circle btn btn-danger2"></i></a>
+                                    <a href="{% url 'ventas:deleteDetail' foo.pk %} " class=""><i
+                                            class="icon-minus-circle btn btn-danger2"></i></a>
                                 </td>
                             </tr>
 
@@ -89,13 +93,44 @@
                     {% endif %}
                 </table>
             </div>
-            <div style="text-align: right">
-                <h6>Total: <strong>{{ total }}</strong></h6>
-            </div>
+
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary mx-4">Vender</button>
+            <a class="rounded btn btn-info active text-white" data-toggle="modal" data-target="#exampleModal">vender</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Vuelto -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Efectivo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="vender" action="{% url 'ventas:vender' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-row col-md-12">
+                        <label for="Cambio">Ingrese monto con el que pagara</label>
+                        <input type="text" id="Cambio" name="cambio" class="form-control" placeholder="0.00"
+                               style="color: black" required>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button target="_blank" form="vender" onclick="redireccionar()" type="submit"
+                        class="btn btn-success active">Vender
+                </button>
+            </div>
         </div>
     </div>
 </div>

@@ -1,10 +1,11 @@
 from django.urls import path, re_path
-from apps.ventas.views import prueba, addCar, carShopping, shop,venta, eliminarDetalle, vender, ticket
-app_name='ventas'
+from apps.ventas.views import prueba, addCar, carShopping, shop,venta, eliminarDetalle, vender, ticket, drop
+app_name = 'ventas'
 
 urlpatterns = [
     path('articulo/', prueba),
     path('vender/', vender, name="vender"),
+    path('drop/', drop, name="drop"),
     path('ticket/', ticket, name="ticket"),
     path('car_shopping/', carShopping, name="carShopping"),
     path(r'^add_car/(?P<pk>\d+)/$', addCar, name="addCar"),

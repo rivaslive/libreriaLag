@@ -8,7 +8,9 @@ body {
     line-height: 1.5;
     background-color: rgb(255, 255, 255);
 }
-
+.icono i{
+    font-size: 1.5rem;
+}
 
 .table td {
     font-family: 'Roboto', sans-serif;
@@ -31,7 +33,13 @@ body {
 .bg-yellow {
     background-color: darkorange;
 }
-
+.btn-vender{
+    width: 100%;
+    background-color: rgb(83, 200, 122);
+}
+.btn-vender:hover{
+    background-color: rgb(83, 170, 122);
+}
 .title-search {
     font-family: 'Pacifico', cursive;
     font-size: 5em;
@@ -308,6 +316,10 @@ nav #search-lg {
   text-decoration: none;
   background-color: #4e73df;
 }
+#ulNav .dropdown-item:hover {
+
+  background-color: rgb(83, 109, 122, .2);
+}
 
 .dropdown-item.disabled, .dropdown-item:disabled {
   color: #858796;
@@ -335,8 +347,8 @@ nav #search-lg {
 }
 
 #navbar .dropdown-list .dropdown-header {
-    background-color: #4e73df;
-    border: 1px solid #4e73df;
+    background-color: rgb(83, 170, 122);
+    border: 1px solid rgb(83, 170, 122);
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
     color: #fff;

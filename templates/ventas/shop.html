@@ -3,6 +3,9 @@
     activo
 {% endblock %}
 {% block car %}
+    <div class="car">
+        <a id="trash-venta" data-toggle="modal" data-target="#exampleModal2" class="btn"><i id="car2" class="icon-trash shopping"></i></a>
+    </div>
 {% endblock %}
 {% block body %}
     <style>
@@ -18,6 +21,27 @@
             text-decoration: none;
             color: white;
             background-color: rgb(33, 150, 243);
+        }
+        #trash-venta i {
+            width: 5.3rem;
+            transition: all 300ms;
+            font-size: 3rem;
+            border-radius: 50%;
+            color: #B71C1C;
+            background-color: none;
+        }
+
+        #trash-venta:hover {
+            border-radius: 25px;
+            transition: all 300ms;
+            text-decoration: none;
+            color: white;
+            background-color: #B71C1C;
+        }
+        #trash-venta:hover i{
+            transition: all 300ms;
+            color: white;
+
         }
 
         .form-control {
@@ -53,10 +77,12 @@
         }
 
         option {
-            background: rgb(100,100,100);
+            background: rgb(100, 100, 100);
         }
     </style>
+
     <div class="container">
+
         <div class="row bg-hover mt-4"
              style="background-color: rgb(83, 109, 122); border-radius:.525rem; color: white;">
             <div class="col-md-12 mt-2">
@@ -76,14 +102,20 @@
                 {% endfor %}
             {% endif %}
             <div class="col-md-2">
-                <h4 class="rounded" style="margin-top: 30%;color: white; background-color: rgb(240,240,240,0.4); height: 45px; padding: 7px 1px">Total: <span style="color: black">${% if total %}{{ total }}{% else %}0.00{% endif %}</span></h4>
-                <a target="_blank" href="{% url 'ventas:vender' %}" class="rounded btn btn-dark active" style="width: 100%">vender</a>
+                <h4 class="rounded"
+                    style="margin-top: 30%;color: white; background-color: rgb(240,240,240,0.4); height: 45px; padding: 7px 1px">
+                    Total: <span style="color: black">${% if total %}{{ total }}{% else %}0.00{% endif %}</span></h4>
+                <a class="rounded btn btn-vender text-white" data-toggle="modal" data-target="#exampleModal">vender</a>
+
+
             </div>
+
             <div class="col-md-10">
                 <div class="card-body">
 
                     <div class="card-body" style="margin-top: -50px">
-                        <form action="{% url 'ventas:venta' %}" id="formAdd">
+                        <form action="{% url 'ventas:venta' %}" id="formAdd" method="POST">
+                            {% csrf_token %}
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="id_cantidad">Presentacion</label>
@@ -107,10 +139,12 @@
                                            class="form-control">
                                 </div>
                                 <div class="form-group col-md-1">
-                                    <button id="plus-shopping" class="btn mt-4" type="submit" title="agregar producto">
+                                    <button id="plus-shopping" form="formAdd" class="btn mt-4" type="submit"
+                                            title="agregar producto">
                                         +
                                     </button>
                                 </div>
+
                             </div>
                         </form>
                     </div>
@@ -118,6 +152,7 @@
 
             </div>
         </div>
+
         <div class="responsive mt-4">
             <table class="table table-hover">
                 <thead>
@@ -156,4 +191,61 @@
             </table>
         </div>
     </div>
+    <!-- Modal Vuelto -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Efectivo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="vender" action="{% url 'ventas:vender' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row col-md-12">
+                            <label for="Cambio">Ingrese monto con el que pagara</label>
+                            <input type="text" id="Cambio" name="cambio" class="form-control" placeholder="0.00"
+                                   style="color: black" required>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button target="_blank" form="vender" type="submit" class="btn btn-success active">Vender</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Confiramar Eliminar Venta -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3 align="center">¿Esta seguro de eliminar la venta actual?</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <a href="{% url 'ventas:drop' %}" class="btn btn-warning active mx-2">Confirmar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function redireccionar() {
+            setTimeout("window.location.reload()", 3000);
+
+        }
+
+    </script>
 {% endblock %}

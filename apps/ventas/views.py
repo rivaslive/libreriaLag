@@ -10,8 +10,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from apps.articulos.forms import ArticuloForm
 from apps.articulos.models import Articulo
-from apps.ventas.forms import VentaForm, DetalleForm
-from apps.ventas.models import detalle, Venta
+from apps.ventas.forms import VentaForm, DetalleForm, FacturaForm
+from apps.ventas.models import detalle, Venta, Factura
+
 
 def prueba(request):
     return render(request, 'base/admin.html')
@@ -105,12 +106,12 @@ def shop(request):
         return render(request, 'ventas/shop.html')
 
 def venta(request):
-    cantidad = request.GET.get('cantidad', '')
-    codigo = request.GET.get('codigo', '')
+    cantidad = request.POST.get('cantidad', '')
+    codigo = request.POST.get('codigo', '')
     try:
         articulo = Articulo.objects.get(codigo_articulo=codigo)
     except:
-        messages.warning(request, 'No existe el codigo de registro: ' + request.GET.get('codigo', ''))
+        messages.warning(request, '01 No existe el codigo de registro: ' + request.GET.get('codigo', ''))
         return redirect('ventas:shop')
     if request.session['ventaId'] == '':
         dateNow = datetime.now()
@@ -135,7 +136,7 @@ def venta(request):
                         form3 = get_object_or_404(Articulo, pk=articulo.pk)
                         form3.stock = (articulo.stock - int(cantidad))
                         form3.save()
-                        query = detalle.objects.filter(id_venta=request.session['ventaId'])
+
                         messages.success(request, 'Operacion Exitosa')
                         return redirect('ventas:venta')
                 else:
@@ -208,45 +209,154 @@ def eliminarDetalle(request, pk):
     detalles = detalle.objects.get(id=pk)
     pk2=detalles.id_articulo.pk
     cantidad = detalles.cantidad
-    if request.method == "POST":
-        detalles.delete()
-        articulos=Articulo.objects.get(id=pk2)
-        if articulos:
-            form3 = get_object_or_404(Articulo, pk=pk2)
-            form3.stock += cantidad
-            form3.save()
-            messages.success(request, 'Registro Eliminado correctamente, se agrego '+ str(cantidad) + " Unid a " + articulos.nombre_articulo)
-            return redirect('ventas:shop')
-        else:
-            messages.warning(request, 'Error al sumar el STOCK')
-            return redirect('ventas:shop')
+    detalles.delete()
+    articulos=Articulo.objects.get(id=pk2)
+    if articulos:
+        form3 = get_object_or_404(Articulo, pk=pk2)
+        form3.stock += cantidad
+        form3.save()
+        messages.success(request, 'Registro Eliminado correctamente, se agrego '+ str(cantidad) + " Unid a " + articulos.nombre_articulo)
+        return redirect('ventas:shop')
     else:
-        return render(request, 'ventas/deleteDetalleModal.html', {'pk':pk})
+        messages.warning(request, 'Error al sumar el STOCK')
+        return redirect('ventas:shop')
+
 
 def vender(request):
     ventaId = request.session['ventaId']
-    ventas = Venta.objects.get(id=ventaId)
-    if ventas:
-        form = get_object_or_404(Venta, pk=ventas.pk)
-        form.estado=0
-        form.save()
-        messages.success(request, "Operacion exitosa")
-        return redirect('ventas:ticket')
+    if ventaId != "":
+        if request.method == "POST":
+            try:
+                facturas = Factura.objects.latest('id')
+            except:
+                print("estamos en 1")
+                facturas=""
+            if facturas != "":
+                print("estamos en 2")
+                detalles = detalle.objects.filter(id_venta=ventaId)
+                if detalles:
+                    total = 0
+                    for foo in detalles:
+                        total += (foo.cantidad * foo.id_articulo.precio_unidad)
+                else:
+                    total = 0
+                efectivo = float(request.POST.get('cambio', ''))
+                if efectivo >= total:
+                    print("estamos en 3")
+                    cambio = (efectivo-float(total))
+                    numero = (facturas.numero + 1)
+                    ventas = Venta.objects.get(id=ventaId)
+                    print(ventas)
+                    form = FacturaForm({'venta': ventaId, 'total': total, 'cambio': cambio, 'fecha': ventas.fecha_venta, 'numero': numero, 'efectivo':efectivo})
+                    print("paso error" )
+                    if form.is_valid():
+                        print("estamos en 4")
+                        form.save()
+
+                        if ventas:
+                            print("estamos en 5")
+                            form = get_object_or_404(Venta, pk=ventas.pk)
+                            form.estado = 0
+                            form.save()
+                            messages.success(request, "Venta exitosa")
+                            return redirect('ventas:ticket')
+                        else:
+                            messages.warning(request, "No se pudo finalizar la venta")
+                            return redirect('ventas:shop')
+                    else:
+                        messages.warning(request, "No se pudo crear el Ticket")
+                        return redirect('ventas:shop')
+                else:
+                    messages.warning(request, "Ingrese un monto MAYOR al total")
+                    return redirect('ventas:shop')
+            else:
+                print("estamos en 6")
+                efectivo = float(request.POST.get('cambio', ''))
+                detalles = detalle.objects.filter(id_venta=ventaId)
+                if detalles:
+                    total = 0
+                    for foo in detalles:
+                        total += (foo.cantidad * foo.id_articulo.precio_unidad)
+                else:
+                    total = 0
+                if efectivo>=total:
+                    print("estamos en 7")
+                    cambio = (efectivo-float(total))
+                    print(cambio)
+                    numero = 1
+                    ventas = Venta.objects.get(id=ventaId)
+                    form = FacturaForm(
+                        {'venta': ventaId, 'total': total, 'cambio': float(cambio), 'fecha': ventas.fecha_venta, 'numero': numero, 'efectivo':efectivo})
+                    if form.is_valid():
+                        print("estamos en 8")
+                        form.save()
+                        if ventas:
+                            print("estamos en 9")
+                            form = get_object_or_404(Venta, pk=ventas.pk)
+                            form.estado = 0
+                            form.save()
+                            print("exito")
+                            messages.success(request, "Operacion exitosa")
+                            return redirect('ventas:ticket')
+                        else:
+                            messages.warning(request, "No se pudo finalizar la venta")
+                            return redirect('ventas:shop')
+                    else:
+                        print('error')
+                        messages.warning(request, "No se pudo crear el Ticket")
+                        return redirect('ventas:shop')
+                else:
+                    messages.warning(request, "Ingrese un monto MAYOR al total")
+                    return redirect('ventas:shop')
+        else:
+            messages.warning(request, "error metodo POST")
+            return redirect('ventas:shop')
     else:
-        messages.warning(request, "No se pudo realizar la venta")
+        messages.warning(request, "No existe ninguna venta activa")
         return redirect('ventas:shop')
 
 def ticket(request):
     ventaId = request.session['ventaId']
-    print("su id de venta para tiket es " + str(ventaId))
-    detalles = detalle.objects.filter(id_venta=int(4))
-    ventas = Venta.objects.get(id=4)
-    fecha=datetime.now()
-    if detalles:
-        total = 0
-        for foo in detalles:
-            total += (foo.cantidad * foo.id_articulo.precio_unidad)
+    try:
+        facturas = Factura.objects.get(venta_id=ventaId)
+        print(facturas)
+        detalles = detalle.objects.filter(id_venta=ventaId)
+        request.session['ventaId'] = ""
+        return render(request, 'ventas/ticket.html', {'detalle': detalles, 'factura': facturas})
+    except:
+        return render(request, 'ventas/ticket.html')
+
+
+#Elimina la venta actual
+def drop(request):
+    ventaId = request.session['ventaId']
+
+    if ventaId:
+        try:
+            venta = Venta.objects.get(id=ventaId)
+            detalles = detalle.objects.filter(id_venta=ventaId)
+
+        except:
+            messages.warning(request, "error en ID de venta")
+            return redirect('ventas:shop')
+
+        for d in detalles:
+            idArt = d.id_articulo.pk
+            articulo = Articulo.objects.get(id=idArt)
+            cantidad = d.cantidad
+            form = get_object_or_404(Articulo, pk=idArt)
+            form.stock += cantidad
+            form.save()
+            d.delete()
+            print("Paso TODO")
+        if venta:
+            venta.delete()
+            request.session['ventaId'] = ""
+            messages.success(request, "Venta eliminada con exito")
+            return redirect('ventas:shop')
+        else:
+            messages.warning(request, "error en eliminar venta")
+            return redirect('ventas:shop')
     else:
-        total = 0
-    request.session['ventaId'] = ""
-    return  render(request, 'ventas/ticket.html', {'detalle':detalles,'venta':ventas, 'total':total, 'fecha':fecha})
+        messages.warning(request, "no existe ninguna venta")
+        return redirect('ventas:shop')

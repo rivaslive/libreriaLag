@@ -1,0 +1,25 @@
+<!-- Modal -->
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">Pagar Ticket</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <form id="cambio" action="{% url 'ventas:vender' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <label for="Cambio">Ingrese monto con el que pagara</label>
+                    <input type="text" id="Cambio" name="cambio" class="form-control" placeholder="0.00" required>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" form="cambio" class="btn btn-primary active">Aceptar</button>
+        </div>
+    </div>
+</div>

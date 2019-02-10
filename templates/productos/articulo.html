@@ -18,16 +18,16 @@
             background-color: rgb(33, 150, 243);
         }
 
-        #search .form-control {
+        #search {
             color: white;
         }
 
-        #search .form-control::-ms-expand {
+        #search::-ms-expand {
             background-color: transparent;
             border: 0
         }
 
-        #search .custom-file-control:focus, .form-control:focus {
+        #search:focus, #search:focus {
             color: white;
             background-color: transparent;
             border-color: white;
@@ -35,12 +35,12 @@
             box-shadow: none, 0 0 0 .2rem rgba(255, 255, 255, 255)
         }
 
-        #search .custom-file-control::placeholder, .form-control::placeholder {
+        #search::placeholder, #search::placeholder {
             color: rgb(170, 170, 170);
             opacity: 1
         }
 
-        #search .custom-file-control:disabled, .form-control:disabled, .form-control[readonly], [readonly].custom-file-control {
+        #search:disabled, #search:disabled, #search[readonly], [readonly].custom-file-control {
             background-color: #e9ecef;
             opacity: 1
         }
@@ -52,12 +52,12 @@
         </div>
         <div class="col ">
             <div class="form-group col-md-8 mx-auto">
-                        <form class="form-inline my-2 my-lg-0" id="search" action="{% url 'articulo:buscar' %}" method="get">
-                            <input class="form-control mr-sm-2 col-md-12 " type="search"
-                                   placeholder="Ingrese el nombre o código del articulo" aria-label="Search"
-                                   name="search">
+                <form class="form-inline my-2 my-lg-0" action="{% url 'articulo:buscar' %}" method="get">
+                    <input id="search" class="form-control mr-sm-2 col-md-12 " type="search"
+                           placeholder="Ingrese el nombre o código del articulo" aria-label="Search"
+                           name="search">
 
-                        </form>
+                </form>
             </div>
         </div>
         <a id="aa" class="btn mx-auto" onclick="return abrir_modal('{% url 'articulo:crearArticulo' %}')"

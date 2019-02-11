@@ -17,7 +17,51 @@
             color: white;
             background-color: rgb(33, 150, 243);
         }
+        #car-venta {
+            -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+            box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+            width: 60px;
+            height: 60px;
+            position: relative;
+            z-index: 90000;
+            vertical-align: middle;
+            display: inline-block;
+            overflow: hidden;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            margin: 10px;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            padding: 4px 0;
+            cursor: pointer;
 
+        }
+
+        #car-venta i {
+            width: 61.1px;
+            height: 61.1px;
+            border-radius: 100%;
+            line-height: 50px;
+            text-align: center;
+            padding: 0.8rem auto;
+            font-size: 1.6rem;
+            color: white;
+        }
+
+        #car-venta:hover {
+
+            transition: all 300ms;
+            text-decoration: none;
+            color: white;
+
+        }
+
+        #car-venta:hover i {
+            transition: all 300ms;
+            color: white;
+
+        }
         #search {
             color: white;
         }
@@ -115,6 +159,5 @@
             <h6>No hay registros hechos</h6>
         {% endif %}
     </div>
-
 
 {% endblock %}

@@ -205,7 +205,7 @@
                             <td>${{ foo.id_articulo.precio_unidad }}</td>
                             <td>${{ foo.sub_total }}</td>
                             <td>
-                                <a onclick="return abrir_modal('{% url 'ventas:deleteDetail' foo.pk %}')" class=""><i
+                                <a href="{% url 'ventas:deleteDetail' foo.pk %}" class=""><i
                                         class="icon-minus-circle btn btn-danger2" title="Eliminar"></i></a>
                                 <a onclick="return editarShop({{ foo.id_articulo.id_presentacion }}, {{ foo.cantidad }},{{ foo.id_articulo.codigo_articulo }});"
                                    class=""><i class="icon-pencil-square-o btn btn-purple" title="Editar"></i></a>

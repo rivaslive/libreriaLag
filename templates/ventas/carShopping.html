@@ -41,7 +41,7 @@
                 <h4 align="center">Total: <strong>{{ total }}</strong></h4>
             </div>
             <a id="plus-shopping" style="margin-top: -55px" class="btn float-right"
-               onclick="return abrir_modal('{% url 'articulo:crearArticulo' %}')"
+               href="{% url 'ventas:shop' %}"
                title="agregar producto">+</a>
             <div class="table-responsive">
                 <table class="table">

@@ -140,20 +140,13 @@
 
 {% endblock %}
 {% block car %}
+
     <div class="car">
-        <a class="btn"
-        ><i
-                id="car2"
-                class="icon-shopping-cart shopping"
-                onclick="return abrir_modal('{% url 'ventas:carShopping' %}')"
-        ></i
-        ><span style="font-size: 20px"
-        >{% if notify %}
-            {{ notify }}
-        {% else %} 0 {% endif %}</span
-        ></a
-        >
+        <a id="car-venta" onclick="return abrir_modal('{% url 'ventas:carShopping' %}')" class="btn-lg bg-danger"><i
+                class="fas fa-shopping-cart"><span style="font-size: 1rem; color: white">{% if notify %}{{ notify }}{% else %} 0 {% endif %}</span></i></a>
     </div>
+
+
 {% endblock %}
 
 <div class="row">

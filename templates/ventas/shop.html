@@ -127,43 +127,54 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <h4 class="rounded"
-                    style="margin-top: 30%;color: white; background-color: rgb(240,240,240,0.4); height: 45px; padding: 7px 1px">
+                    style="margin-top: 18%;color: white; background-color: rgb(240,240,240,0.4); height: 45px; padding: 7px 5px">
                     Total: <span style="color: black">${% if total %}{{ total }}{% else %}0.00{% endif %}</span></h4>
                 <a class="rounded btn btn-vender text-white" data-toggle="modal" data-target="#exampleModal">vender</a>
-
-
             </div>
 
-            <div class="col-md-10">
+            <div class="col-md-9">
                 <div class="card-body">
 
                     <div class="card-body" style="margin-top: -50px">
-                        <form action="{% url 'ventas:venta' %}" id="formAdd" method="POST">
+                    {% if form %}
+                        <form action="{% url 'ventas:editarShop' form.pk %}" id="formAdd" method="POST">
+                        {% else %}
+                            <form action="{% url 'ventas:venta' %}" id="formAdd" method="POST">
+                    {% endif %}
+
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="id_cantidad">Presentacion</label>
                                     <select name="id_presentacion" required="" class="form-control"
                                             id="id_id_presentacion">
-                                        <option value="">----Seleccione una opcion----</option>
-                                        <option value="1" selected="">Unidades</option>
-                                        <option value="2">Cajas</option>
+
+                                            {% if form.id_articulo.id_presentacion == 0 %}
+                                                <option value="">----Seleccione una opcion----</option>
+                                                <option value="1" selected="">Unidades</option>
+                                                <option value="2">Cajas</option>
+                                                {% else %}
+                                                    <option value="">----Seleccione una opcion----</option>
+                                                    <option value="1" selected="">Unidades</option>
+                                                    <option value="2">Cajas</option>
+                                            {% endif %}
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="id_cantidad">Cantidad</label>
                                     <input placeholder="Cantidad" type="text" id="id_cantidad" name="cantidad"
-                                           class="form-control">
+                                           class="form-control" value="{% if form.cantidad %}{{ form.cantidad }}{% endif %}">
                                 </div>
 
                                 <div class="form-group col-md-11">
                                     <label for="id_codigo_articulo">Codigo</label>
                                     <input placeholder="Codigo" type="text" id="id_codigo_articulo" name="codigo"
-                                           required
+                                           required value="{% if form.id_articulo.codigo_articulo %}{{ form.id_articulo.codigo_articulo }}{% endif %}"
                                            class="form-control">
                                 </div>
+
                                 <div class="form-group col-md-1">
                                     <button id="plus-shopping" form="formAdd" class="btn mt-4" type="submit"
                                             title="agregar producto">
@@ -207,7 +218,7 @@
                             <td>
                                 <a href="{% url 'ventas:deleteDetail' foo.pk %}" class=""><i
                                         class="icon-minus-circle btn btn-danger2" title="Eliminar"></i></a>
-                                <a onclick="return editarShop({{ foo.id_articulo.id_presentacion }}, {{ foo.cantidad }},{{ foo.id_articulo.codigo_articulo }});"
+                                <a href="{% url 'ventas:editarShop' foo.pk %}"
                                    class=""><i class="icon-pencil-square-o btn btn-purple" title="Editar"></i></a>
                             </td>
                         </tr>

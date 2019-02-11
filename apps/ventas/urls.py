@@ -1,15 +1,16 @@
 from django.urls import path, re_path
 from apps.ventas.views import prueba, addCar, carShopping, shop,venta, eliminarDetalle, vender, ticket, drop
+from django.contrib.auth.decorators import login_required
 app_name = 'ventas'
 
 urlpatterns = [
-    path('articulo/', prueba),
-    path('vender/', vender, name="vender"),
-    path('drop/', drop, name="drop"),
-    path('ticket/', ticket, name="ticket"),
-    path('car_shopping/', carShopping, name="carShopping"),
-    path(r'^add_car/(?P<pk>\d+)/$', addCar, name="addCar"),
-    path(r'^deleteDetail/(?P<pk>\d+)/$', eliminarDetalle, name="deleteDetail"),
-    path('shop/', shop, name="shop"),
-    path('venta/', venta, name="venta"),
+    path('articulo/', login_required(prueba)),
+    path('vender/', login_required(vender), name="vender"),
+    path('drop/', login_required(drop), name="drop"),
+    path('ticket/', login_required(ticket), name="ticket"),
+    path('car_shopping/',  login_required(carShopping), name="carShopping"),
+    path(r'^add_car/(?P<pk>\d+)/$',  login_required(addCar), name="addCar"),
+    path(r'^deleteDetail/(?P<pk>\d+)/$',  login_required(eliminarDetalle), name="deleteDetail"),
+    path('shop/',  login_required(shop), name="shop"),
+    path('venta/',  login_required(venta), name="venta"),
 ]

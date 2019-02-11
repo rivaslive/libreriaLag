@@ -423,3 +423,16 @@ def drop(request):
     else:
         messages.warning(request, "no existe ninguna venta")
         return redirect('ventas:shop')
+
+def editarShop(request, pk):
+    detalles = detalle.objects.get(id=pk)
+    if request.method == "POST":
+        cantidad = request.POST.get('cantidad', '')
+        if int(cantidad):
+            form = get_object_or_404(detalle, pk=detalle.pk)
+            form.cantidad = int(cantidad)
+            form.save()
+            messages.success(request, "edicion con exito")
+            return redirect('ventas:shop')
+    else:
+        return

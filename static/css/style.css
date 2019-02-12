@@ -151,7 +151,7 @@ nav #search-lg {
 }
 
 #navbarSupportedContent {
-    margin: 5px 0 -14px 0;
+
 }
 
 #navbar {
@@ -177,7 +177,7 @@ nav #search-lg {
 }
 
 .nav-link2 {
-    padding: 24px;
+    padding: 23px;
     margin-bottom: 0;
     font-family: 'Roboto', Helvetica, Arial, sans-serif;
     color: rgb(70, 70, 70);
@@ -186,7 +186,7 @@ nav #search-lg {
 }
 
 .nav-link2:hover {
-    padding: 24px;
+
     width: auto;
     text-decoration: none;
     border: none;

@@ -93,7 +93,7 @@
 <body onload="return mensaje();">
 {% block navbar %}
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-green">
-        <a class="navbar-brand" href="#" style="font-family: 'pacifico', sans-serif;">CANAAN</a>
+        <img src="{% static 'media/logo_libreria.png' %}">
         <button
                 class="navbar-toggler"
                 type="button"
@@ -145,7 +145,7 @@
                             Administración de usuario
                         </h6>
 
-                        <a class="dropdown-item d-flex mx-0" style="min-width: 100%" href="#">
+                        <a class="dropdown-item d-flex mx-0" style="min-width: 100%" href="{% url 'ventas:listVenta' %}">
                             <div class="mr-3">
                                 <div class="icono">
                                     <i class="fas fa-book"></i>

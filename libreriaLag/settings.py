@@ -26,7 +26,7 @@ SECRET_KEY = 'up28fq3rabi+o6r56(rv+%um66&h7op137l$_ya9$oh9&55z5y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['138.68.1.124']
+ALLOWED_HOSTS = ['138.68.1.124','localhost', '127.0.0.1']
 
 
 # Application definition
@@ -82,8 +82,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_libreria',
         'USER': 'root',
-        'PASSWORD':'Rangerblu7',
-        #'PASSWORD':'root',
+        #'PASSWORD':'Rangerblu7',
+        'PASSWORD':'root',
         'HOST': 'localhost',
         'PORT': '',
     }

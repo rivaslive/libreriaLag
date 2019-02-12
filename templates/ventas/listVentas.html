@@ -1,0 +1,57 @@
+{% extends 'base/admin.html' %}
+{% block car %}
+
+{% endblock %}
+{% block active4 %}
+        activo
+    {% endblock %}
+{% block body %}
+    <!-- Ventas Realizadas -->
+            <div class="d-flex align-items-center p-3 my-2 text-white-50 bg-warning rounded box-shadow">
+                <div class="1h-100">
+                    <h6 class="mb-0 text-white 1h-100">Ventas Realizadas</h6>
+                    <small>Detalle de las ventas</small>
+                </div>
+                <div class="col"></div>
+                <a id="aa" class="btn mx-auto" data-toggle="modal" data-target="#exampleModal">+</a>
+            </div>
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-0">Ventas realizadas</h6>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id_Venta</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Sub_Total</th>
+                    <th scope="col">Articulo</th>
+                    <th scope="col">Fecha</th>
+
+                    <th scope="col">Acciones</th>
+                </tr>
+                </thead>
+            <tbody>
+                  {% if datosVenta %}
+                    {% for foo in datosVenta %}
+                        <tr>
+                        <td>{{ foo.id }}</td>
+                        <td>{{ foo.cantidad }}</td>
+                        <td>{{ foo.precio }}</td>
+                        <td>{{ foo.sub_total }}</td>
+                        <td>{{ foo.id_articulo.nombre_articulo }}</td>
+                        <td>{{ foo.id_venta }}</td>
+
+                        <td> <button class="bnt btn-danger">X</button></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <h6>No hay ventas disponibles</h6>
+                {% endif %}
+              </tbody>
+            </table>
+
+
+            </div>
+
+
+{% endblock %}

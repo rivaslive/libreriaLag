@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from apps.ventas.views import prueba, addCar, carShopping, shop,venta, eliminarDetalle, vender, ticket, drop, editarShop
+from apps.ventas.views import prueba, addCar, carShopping, shop,venta, eliminarDetalle, vender, ticket, drop, editarShop, llenarTablaVentas
 from django.contrib.auth.decorators import login_required
 app_name = 'ventas'
 
@@ -14,4 +14,5 @@ urlpatterns = [
     path(r'^editarShop/(?P<pk>\d+)/$',  login_required(editarShop), name="editarShop"),
     path('shop/',  login_required(shop), name="shop"),
     path('venta/',  login_required(venta), name="venta"),
+    path('listventa/', login_required(llenarTablaVentas), name="listVenta")
 ]

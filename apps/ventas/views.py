@@ -480,3 +480,10 @@ def editarShop(request, pk):
     else:
         request.session['ventaId'] = ""
         return render(request, 'ventas/shop.html', {'form':form})
+
+def listarVentas(request):
+    return render(request,'ventas/listVentas.html')
+
+def llenarTablaVentas(request):
+    query = detalle.objects.all().exclude(id_venta__estado=1)
+    return render(request, 'ventas/listVentas.html', {'datosVenta': query})

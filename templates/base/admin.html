@@ -3,10 +3,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
         {% block title %} Librería Cannaan {% endblock %}
     </title>
-    <link  rel="icon"   href="{% static 'media/favicon2.ico' %}" type="image/ico">
+    <link rel="icon" href="{% static 'media/favicon2.ico' %}" type="image/ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto:500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
@@ -56,7 +57,6 @@
             padding: 4px 0;
             cursor: pointer;
 
-
         }
 
         #car-venta i {
@@ -84,15 +84,16 @@
             color: white;
             background-color: rgb(93, 109, 122);
         }
-        .btn{
-            border-radius:.525rem;
+
+        .btn {
+            border-radius: .525rem;
         }
     </style>
 </head>
 
 <body onload="return mensaje();">
 {% block navbar %}
-    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-green">
+    <!--nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-green">
         <img src="{% static 'media/logo_libreria.png' %}">
         <button
                 class="navbar-toggler"
@@ -107,45 +108,29 @@
         </button>
 
         <div class="collapse navbar-collapse d-flex flex-column" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto mx-auto" style="margin-top: 14px">
-                <li class="nav-item {% block active1 %} {% endblock %}">
-                    <a class="nav-link2" href="{% url 'articulo:index' %}" >Inicio </a>
-                </li>
-                <li class="nav-item {% block active2 %} {% endblock %}">
-                    <a class="nav-link2" href="{% url 'articulo:articulo' %}"
-                    >Articulos</a
-                    >
-                </li>
-                <li class="nav-item {% block active3 %} {% endblock %}">
-                    <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
-                </li>
-                <li class="nav-item {% block active4 %} {% endblock %}">
-                    <a class="nav-link2" href="{% url 'articulo:inventario' %}"
-                    >Inventario</a
-                    >
-                </li>
+            <ul class="navbar-nav mr-auto mx-auto" style="margin-top: 14px; z-index: 1">
+
             </ul>
-            <!--form class="form-inline my-2 my-lg-0 ">
-                    <input id="search-lg" class=" form-control mr-sm-2 " type="search" placeholder="Buscar..."
-                           aria-label="Search">
-                    <button class="btn btn-light  my-2 my-sm-0" type="submit">buscar</button>
-                </form-->
+
             <ul class="navbar-nav ml-auto " style="margin-top: -57px" id="ulNav">
-                <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown  no-arrow ">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
 
                         <img class="img-profile rounded-circle" width="35" src="{% static 'media/hombre.png' %}">
                     </a>
-                    <!-- Dropdown - User Information -->
+
+
+
+
                     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                          style="margin: 0; padding: 0" aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header">
                             Administración de usuario
                         </h6>
 
-                        <a class="dropdown-item d-flex mx-0" style="min-width: 100%" href="{% url 'ventas:listVenta' %}">
+                        <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
+                           href="{% url 'ventas:listVenta' %}">
                             <div class="mr-3">
                                 <div class="icono">
                                     <i class="fas fa-book"></i>
@@ -156,7 +141,8 @@
                                 <span class="font-weight-bold">Restablezca sus ventas</span>
                             </div>
                         </a>
-                        <a class="dropdown-item d-flex mx-0" style="min-width: 100%" href="{% url 'articulo:generador' %}">
+                        <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
+                           href="{% url 'articulo:generador' %}">
                             <div class="mr-3">
                                 <div class="icono">
                                     <i class="fas fa-barcode"></i>
@@ -185,14 +171,144 @@
                 </li>
             </ul>
         </div>
+    </nav-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin: 0; padding: 0">
+        <img class="mx-2" src="{% static 'media/logo_libreria.png' %}" height="60px">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mx-auto" style="">
+                <li class="nav-item {% block active1 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:index' %}">Inicio </a>
+                </li>
+                <li class="nav-item {% block active2 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:articulo' %}">Articulos</a>
+                </li>
+                <li class="nav-item {% block active3 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
+                </li>
+                <li class="nav-item {% block active4 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:inventario' %}">Inventario</a>
+                </li>
+
+            </ul>
+
+
+        </div>
     </nav>
+    <div class="btn-group" id="user">
+        <a type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            <img class="img-profile rounded-circle" width="35" src="{% static 'media/hombre.png' %}">
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" style="width: 20rem;">
+            <h6 class="dropdown-header">
+                Administración de usuario
+            </h6>
+            <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
+               href="{% url 'ventas:listVenta' %}">
+                <div class="mr-3">
+                    <div class="icono">
+                        <i class="fas fa-book"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class=" small text-gray-500">Registro de ventas</div>
+                    <span class="font-weight-bold">Restablezca sus ventas</span>
+                </div>
+            </a>
+            <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
+               href="{% url 'articulo:generador' %}">
+                <div class="mr-3">
+                    <div class="icono">
+                        <i class="fas fa-barcode"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class=" small text-gray-500">Código de Barras</div>
+                    <span class="font-weight-bold">Crear su código de barras</span>
+                </div>
+            </a>
+            <a style="min-width: 100%" class="dropdown-item  mx-0" href="{% url 'logout' %}">
+                <div class="mr-3 ">
+                    <div class="icono">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="small text-gray-500">Salir</div>
+                    Cerrar su sesión
+                </div>
+            </a>
+
+            <a style="min-width: 100%" class="dropdown-item  mx-auto small text-gray-500" href="#"><span
+                    style="text-align: center">¡Conozca quién hizo el sistema!</span></a>
+
+        </div>
+    </div>
+
+
+    <!--div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+         style="margin: 0; padding: 0" aria-labelledby="alertsDropdown">
+        <h6 class="dropdown-header">
+            Administración de usuario
+        </h6>
+
+        <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
+           href="{% url 'ventas:listVenta' %}">
+            <div class="mr-3">
+                <div class="icono">
+                    <i class="fas fa-book"></i>
+                </div>
+            </div>
+            <div>
+                <div class=" small text-gray-500">Registro de ventas</div>
+                <span class="font-weight-bold">Restablezca sus ventas</span>
+            </div>
+        </a>
+        <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
+           href="{% url 'articulo:generador' %}">
+            <div class="mr-3">
+                <div class="icono">
+                    <i class="fas fa-barcode"></i>
+                </div>
+            </div>
+            <div>
+                <div class=" small text-gray-500">Código de Barras</div>
+                <span class="font-weight-bold">Crear su código de barras</span>
+            </div>
+        </a>
+        <a style="min-width: 100%" class="dropdown-item  mx-0" href="{% url 'logout' %}">
+            <div class="mr-3 ">
+                <div class="icono">
+                    <i class="fas fa-sign-out-alt"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">Salir</div>
+                Cerrar su sesión
+            </div>
+        </a>
+        <a style="min-width: 100%" class="dropdown-item  mx-auto small text-gray-500 " href="#"><span
+                style="text-align: center">¡Conozca quién hizo el sistema!</span></a>
+
+    </div-->
 
 {% endblock %}
 {% block car %}
 
     <div class="car">
         <a id="car-venta" onclick="return abrir_modal('{% url 'ventas:carShopping' %}')" class="btn-lg bg-purple2"><i
-                class="fas fa-shopping-cart"><span style="font-size: 1rem; color: white">{% if notify %}{{ notify }}{% else %} 0 {% endif %}</span></i></a>
+                class="fas fa-shopping-cart"><span style="font-size: 1rem; color: white">{% if notify %}
+            {{ notify }}{% else %} 0 {% endif %}</span></i></a>
     </div>
 
 

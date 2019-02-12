@@ -74,15 +74,21 @@ def inicio(request):
     return render(request, 'productos/index.html')
 
 def generador(request):
-    articulos = Articulo.objects.values_list('codigo_articulo', flat=True).order_by('pk')
-    print(articulos)
-    i = 0
-    while i == 0:
-        codigo = random.randrange(1000000, 99999999, 1)
-        articulos = Articulo.objects.filter(codigo_articulo=codigo).count()
-        print(articulos)
-        if articulos == 0:
-            return render(request, 'productos/generador.html', {'codigo': codigo})
-        else:
-            print("funciona")
+    try:
+        evaluation = request.POST.get('evaluation', '')
+        if evaluation:
+            articulos = Articulo.objects.values_list('codigo_articulo', flat=True).order_by('pk')
+            print(articulos)
             i = 0
+            while i == 0:
+                codigo = random.randrange(1000000, 99999999, 1)
+                articulos = Articulo.objects.filter(codigo_articulo=codigo).count()
+                print(articulos)
+                if articulos == 0:
+                    return render(request, 'productos/generador.html', {'codigo': codigo})
+                else:
+                    print("funciona")
+        else:
+            return render(request, 'productos/generador.html')
+    except:
+        return render(request, 'productos/generador.html')

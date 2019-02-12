@@ -17,6 +17,7 @@ from apps.ventas.models import detalle, Venta, Factura
 def prueba(request):
     return render(request, 'base/admin.html')
 
+
 def addCar(request, pk):
     cantidad = request.POST.get('cantidad', '')
     if request.session['ventaId'] == '':
@@ -125,7 +126,7 @@ def addCar(request, pk):
                 messages.warning(request, 'No hay suficientes existencias')
                 return redirect('articulo:articulo')
         else:
-            return render(request, 'ventas/addCar.html', {'pk':pk})
+            return render(request, 'ventas/addCar.html', {'pk': pk})
 
 
 def carShopping(request):
@@ -143,20 +144,27 @@ def carShopping(request):
     else:
         return render(request, 'ventas/carShopping.html')
 
+
 def shop(request):
-    ventaId = request.session['ventaId']
-    if ventaId:
-        query = detalle.objects.filter(id_venta=ventaId)
-        if query:
-            total = 0
-            for foo in query:
-                total += (foo.cantidad * foo.id_articulo.precio_unidad)
+    try:
+        ventaId = request.session['ventaId']
+        if ventaId:
+            query = detalle.objects.filter(id_venta=ventaId)
+            if query:
+                total = 0
+                for foo in query:
+                    total += (foo.cantidad * foo.id_articulo.precio_unidad)
+            else:
+                total = 0
+            print('ventaId 0', query)
+            return render(request, 'ventas/shop.html', {'query': query, 'total': total})
         else:
-            total = 0
-        print('ventaId 0', query)
-        return render(request, 'ventas/shop.html', {'query': query, 'total': total})
-    else:
+            request.session['ventaId'] = ""
+            return render(request, 'ventas/shop.html')
+    except:
+        request.session['ventaId'] = ""
         return render(request, 'ventas/shop.html')
+
 
 def venta(request):
     cantidad = request.POST.get('cantidad', '')
@@ -207,15 +215,15 @@ def venta(request):
             if int(cantidad) <= articulo.stock:
                 ventaId = request.session['ventaId']
                 try:
-                    existens=detalle.objects.filter(Q(id_venta=ventaId) & Q(id_articulo__codigo_articulo=codigo))
+                    existens = detalle.objects.filter(Q(id_venta=ventaId) & Q(id_articulo__codigo_articulo=codigo))
                     if existens:
-                        evaluador=1
+                        evaluador = 1
                         print('estamos aqui 3')
                     else:
                         evaluador = 0
                     print("Evaluador: " + str(evaluador))
                 except:
-                    evaluador=0
+                    evaluador = 0
                 if evaluador == 0:
                     subTotal = float(int(cantidad) * articulo.precio_unidad)
                     form2 = DetalleForm(
@@ -263,19 +271,19 @@ def venta(request):
             return redirect('ventas:shop')
 
 
-
 def eliminarDetalle(request, pk):
     detalles = detalle.objects.get(id=pk)
-    pk2=detalles.id_articulo.pk
+    pk2 = detalles.id_articulo.pk
     cantidad = detalles.cantidad
     if detalles:
         detalles.delete()
-        articulos=Articulo.objects.get(id=pk2)
+        articulos = Articulo.objects.get(id=pk2)
         if articulos:
             form3 = get_object_or_404(Articulo, pk=pk2)
             form3.stock += cantidad
             form3.save()
-            messages.success(request, 'Registro Eliminado correctamente, se agrego '+ str(cantidad) + " Unid a " + articulos.nombre_articulo)
+            messages.success(request, 'Registro Eliminado correctamente, se agrego ' + str(
+                cantidad) + " Unid a " + articulos.nombre_articulo)
             return redirect('ventas:shop')
         else:
             messages.warning(request, 'Error al sumar el STOCK')
@@ -293,7 +301,7 @@ def vender(request):
                 facturas = Factura.objects.latest('id')
             except:
                 print("estamos en 1")
-                facturas=""
+                facturas = ""
             if facturas != "":
                 print("estamos en 2")
                 detalles = detalle.objects.filter(id_venta=ventaId)
@@ -306,12 +314,13 @@ def vender(request):
                 efectivo = float(request.POST.get('cambio', ''))
                 if efectivo >= total:
                     print("estamos en 3")
-                    cambio = (efectivo-float(total))
+                    cambio = (efectivo - float(total))
                     numero = (facturas.numero + 1)
                     ventas = Venta.objects.get(id=ventaId)
                     print(ventas)
-                    form = FacturaForm({'venta': ventaId, 'total': total, 'cambio': cambio, 'fecha': ventas.fecha_venta, 'numero': numero, 'efectivo':efectivo})
-                    print("paso error" )
+                    form = FacturaForm({'venta': ventaId, 'total': total, 'cambio': cambio, 'fecha': ventas.fecha_venta,
+                                        'numero': numero, 'efectivo': efectivo})
+                    print("paso error")
                     if form.is_valid():
                         print("estamos en 4")
                         form.save()
@@ -342,14 +351,15 @@ def vender(request):
                         total += (foo.cantidad * foo.id_articulo.precio_unidad)
                 else:
                     total = 0
-                if efectivo>=total:
+                if efectivo >= total:
                     print("estamos en 7")
-                    cambio = (efectivo-float(total))
+                    cambio = (efectivo - float(total))
                     print(cambio)
                     numero = 1
                     ventas = Venta.objects.get(id=ventaId)
                     form = FacturaForm(
-                        {'venta': ventaId, 'total': total, 'cambio': float(cambio), 'fecha': ventas.fecha_venta, 'numero': numero, 'efectivo':efectivo})
+                        {'venta': ventaId, 'total': total, 'cambio': float(cambio), 'fecha': ventas.fecha_venta,
+                         'numero': numero, 'efectivo': efectivo})
                     if form.is_valid():
                         print("estamos en 8")
                         form.save()
@@ -378,6 +388,7 @@ def vender(request):
         messages.warning(request, "No existe ninguna venta activa")
         return redirect('ventas:shop')
 
+
 def ticket(request):
     ventaId = request.session['ventaId']
     try:
@@ -390,7 +401,7 @@ def ticket(request):
         return render(request, 'ventas/ticket.html')
 
 
-#Elimina la venta actual
+# Elimina la venta actual
 def drop(request):
     ventaId = request.session['ventaId']
 
@@ -424,15 +435,48 @@ def drop(request):
         messages.warning(request, "no existe ninguna venta")
         return redirect('ventas:shop')
 
+
 def editarShop(request, pk):
     detalles = detalle.objects.get(id=pk)
-    if request.method == "POST":
-        cantidad = request.POST.get('cantidad', '')
-        if int(cantidad):
-            form = get_object_or_404(detalle, pk=detalle.pk)
-            form.cantidad = int(cantidad)
-            form.save()
-            messages.success(request, "edicion con exito")
-            return redirect('ventas:shop')
+    if request.method == "GET":
+        form = detalles
     else:
-        return
+        cantidad = request.POST.get('cantidad', '')
+        codigo = int(request.POST.get('codigo', ''))
+        articulo = Articulo.objects.get(codigo_articulo=codigo)
+        if int(cantidad) <= articulo.stock:
+            try:
+                form = get_object_or_404(Articulo, pk=articulo.pk)
+                form.stock = articulo.stock + (detalles.cantidad - int(cantidad))
+                form.save()
+            except:
+                messages.warning(request, "error al cargar stock")
+                return redirect('ventas:shop')
+            try:
+                form = get_object_or_404(detalle, pk=detalles.pk)
+                form.cantidad = int(cantidad)
+                form.save()
+                messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")
+                return redirect('ventas:shop')
+            except:
+                messages.warning(request, "error al cargar nueva cantidad")
+                return redirect('ventas:shop')
+
+
+        else:
+            messages.warning(request, "No hay suficiente stock")
+            return redirect('ventas:shop')
+    ventaId = request.session['ventaId']
+    if ventaId:
+        query = detalle.objects.filter(id_venta=ventaId)
+        if query:
+            total = 0
+            for foo in query:
+                total += (foo.cantidad * foo.id_articulo.precio_unidad)
+        else:
+            total = 0
+        print('ventaId 0', query)
+        return render(request, 'ventas/shop.html', {'form':form, 'query': query, 'total': total})
+    else:
+        request.session['ventaId'] = ""
+        return render(request, 'ventas/shop.html', {'form':form})

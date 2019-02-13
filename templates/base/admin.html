@@ -88,13 +88,20 @@
         .btn {
             border-radius: .525rem;
         }
+
+        .hidden-xs {
+            display: none;
+        }
     </style>
+    <script>
+
+    </script>
 </head>
 
 <body onload="return mensaje();">
 {% block navbar %}
-    <!--nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-green">
-        <img src="{% static 'media/logo_libreria.png' %}">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin: 0; padding: 0">
+        <img class="mx-2" src="{% static 'media/logo_libreria.png' %}" height="60px">
         <button
                 class="navbar-toggler"
                 type="button"
@@ -102,33 +109,30 @@
                 data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent"
                 aria-expanded="false"
-                aria-label="Toggle navigation"
-        >
+                aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse d-flex flex-column" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto mx-auto" style="margin-top: 14px; z-index: 1">
-
-            </ul>
-
-            <ul class="navbar-nav ml-auto " style="margin-top: -57px" id="ulNav">
-                <li class="nav-item dropdown  no-arrow ">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-
-                        <img class="img-profile rounded-circle" width="35" src="{% static 'media/hombre.png' %}">
-                    </a>
-
-
-
-
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                         style="margin: 0; padding: 0" aria-labelledby="alertsDropdown">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mx-auto" style="">
+                <li class="nav-item {% block active1 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:index' %}">Inicio </a>
+                </li>
+                <li class="nav-item {% block active2 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:articulo' %}">Articulos</a>
+                </li>
+                <li class="nav-item {% block active3 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
+                </li>
+                <li class="nav-item {% block active4 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'articulo:inventario' %}">Inventario</a>
+                </li>
+                <li class="nav-item" style="display: none" id="salir">
+                    <a class="nav-link2 btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">configuraciones</a>
+                    <div class="dropdown-menu " style="width: 100%;">
                         <h6 class="dropdown-header">
                             Administración de usuario
                         </h6>
-
                         <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
                            href="{% url 'ventas:listVenta' %}">
                             <div class="mr-3">
@@ -164,39 +168,11 @@
                                 Cerrar su sesión
                             </div>
                         </a>
-                        <a style="min-width: 100%" class="dropdown-item  mx-auto small text-gray-500 " href="#"><span
+
+                        <a style="min-width: 100%" class="dropdown-item  mx-auto small text-gray-500" href="#"><span
                                 style="text-align: center">¡Conozca quién hizo el sistema!</span></a>
 
                     </div>
-                </li>
-            </ul>
-        </div>
-    </nav-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin: 0; padding: 0">
-        <img class="mx-2" src="{% static 'media/logo_libreria.png' %}" height="60px">
-        <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto mx-auto" style="">
-                <li class="nav-item {% block active1 %} {% endblock %}">
-                    <a class="nav-link2" href="{% url 'articulo:index' %}">Inicio </a>
-                </li>
-                <li class="nav-item {% block active2 %} {% endblock %}">
-                    <a class="nav-link2" href="{% url 'articulo:articulo' %}">Articulos</a>
-                </li>
-                <li class="nav-item {% block active3 %} {% endblock %}">
-                    <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
-                </li>
-                <li class="nav-item {% block active4 %} {% endblock %}">
-                    <a class="nav-link2" href="{% url 'articulo:inventario' %}">Inventario</a>
                 </li>
 
             </ul>
@@ -205,7 +181,7 @@
         </div>
     </nav>
     <div class="btn-group" id="user">
-        <a type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+        <a class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
             <img class="img-profile rounded-circle" width="35" src="{% static 'media/hombre.png' %}">
         </a>
@@ -254,59 +230,11 @@
 
         </div>
     </div>
-
-
-    <!--div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-         style="margin: 0; padding: 0" aria-labelledby="alertsDropdown">
-        <h6 class="dropdown-header">
-            Administración de usuario
-        </h6>
-
-        <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
-           href="{% url 'ventas:listVenta' %}">
-            <div class="mr-3">
-                <div class="icono">
-                    <i class="fas fa-book"></i>
-                </div>
-            </div>
-            <div>
-                <div class=" small text-gray-500">Registro de ventas</div>
-                <span class="font-weight-bold">Restablezca sus ventas</span>
-            </div>
-        </a>
-        <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
-           href="{% url 'articulo:generador' %}">
-            <div class="mr-3">
-                <div class="icono">
-                    <i class="fas fa-barcode"></i>
-                </div>
-            </div>
-            <div>
-                <div class=" small text-gray-500">Código de Barras</div>
-                <span class="font-weight-bold">Crear su código de barras</span>
-            </div>
-        </a>
-        <a style="min-width: 100%" class="dropdown-item  mx-0" href="{% url 'logout' %}">
-            <div class="mr-3 ">
-                <div class="icono">
-                    <i class="fas fa-sign-out-alt"></i>
-                </div>
-            </div>
-            <div>
-                <div class="small text-gray-500">Salir</div>
-                Cerrar su sesión
-            </div>
-        </a>
-        <a style="min-width: 100%" class="dropdown-item  mx-auto small text-gray-500 " href="#"><span
-                style="text-align: center">¡Conozca quién hizo el sistema!</span></a>
-
-    </div-->
-
 {% endblock %}
 {% block car %}
 
     <div class="car">
-        <a id="car-venta" onclick="return abrir_modal('{% url 'ventas:carShopping' %}')" class="btn-lg bg-purple2"><i
+        <a id="car-venta" onclick="return abrir_modal('{% url 'ventas:carShopping' %}')" class="btn-lg bg-blue"><i
                 class="fas fa-shopping-cart"><span style="font-size: 1rem; color: white">{% if notify %}
             {{ notify }}{% else %} 0 {% endif %}</span></i></a>
     </div>
@@ -328,8 +256,29 @@
 <script src="{% static 'js/bootstrap-material-design.js' %}"></script>
 <script>
     $(document).ready(function () {
+        usuario();
         $("body").bootstrapMaterialDesign();
+        $(window).resize(function () {
+            usuario();
+        });
+
     });
+
+    function usuario() {
+        var winwidth = document.all ? document.body.clientWidth : window.innerWidth;
+        var usu = document.getElementById("user");
+        var salir = document.getElementById("salir");
+        if (winwidth < 995) {
+            usu.style.display = "none";
+            salir.style.display = "block";
+        }
+        else {
+            usu.style.display = "block";
+            salir.style.display = "none";
+        }
+    }
+
+
 </script>
 <script src="{% static 'js/alertify.js' %}"></script>
 <script type="text/javascript">
@@ -340,6 +289,7 @@
     alertify.defaults.theme.input = "form-control";
 </script>
 <script>
+
     function abrir_modal(url) {
         $("#popup").load(url, function () {
             $(this).modal("show");
@@ -367,6 +317,7 @@
             });
         }
     }
+
 
 </script>
 </body>

@@ -1,6 +1,8 @@
 body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    height: 100%;
     overflow-x: hidden;
     font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 1rem;
@@ -94,6 +96,7 @@ body {
 }
 
 @media screen and (max-width: 1200px) {
+    /*noinspection ALL*/
     #car2 {
         color: rgb(0, 0, 0, 0.9);
     }
@@ -211,23 +214,25 @@ nav #search-lg {
         padding: 0;
     }
 }
+
+
 #user {
+    display: block;
     position: absolute;
     margin-top: -57px;
     margin-left: 93%;
-    z-index: 80000;
+    z-index: 1;
 
+}
+#salir a{
+    color: black;
 }
 @media screen and (max-width: 768px) {
     #user {
-    position: absolute;
-    margin-top: -57px;
-    margin-left: 52%;
-    z-index: 80000;
+        margin-left: 80%;
 
+    }
 }
-}
-
 .container .bg-purple {
     width: 100%;
     background-color: var(--purple);

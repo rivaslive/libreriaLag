@@ -1,8 +1,9 @@
 {% extends 'base/admin.html' %}
 {% load staticfiles %}
+
 {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-green" id="nav22">
-        <a class="navbar-brand" href="#">Libreria</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-green" id="nav22" style="margin: 0; padding: 0">
+        <a class="navbar-brand mx-2" href="#">Libreria CANAAN</a>
         <button
                 class="navbar-toggler"
                 type="button"
@@ -34,17 +35,107 @@
                     >Inventario</a
                     >
                 </li>
+                <li class="nav-item" style="display: block" id="salir">
+                    <a class="nav-link2 btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" style="color: white">configuraciones</a>
+                    <div class="dropdown-menu " style="width: 100%;">
+                        <h6 class="dropdown-header">
+                            Administración de usuario
+                        </h6>
+                        <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
+                           href="{% url 'ventas:listVenta' %}">
+                            <div class="mr-3">
+                                <div class="icono">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <div class=" small text-gray-500">Registro de ventas</div>
+                                <span class="font-weight-bold">Restablezca sus ventas</span>
+                            </div>
+                        </a>
+                        <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
+                           href="{% url 'articulo:generador' %}">
+                            <div class="mr-3">
+                                <div class="icono">
+                                    <i class="fas fa-barcode"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <div class=" small text-gray-500">Código de Barras</div>
+                                <span class="font-weight-bold">Crear su código de barras</span>
+                            </div>
+                        </a>
+                        <a style="min-width: 100%" class="dropdown-item  mx-0" href="{% url 'logout' %}">
+                            <div class="mr-3 ">
+                                <div class="icono">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="small text-gray-500">Salir</div>
+                                Cerrar su sesión
+                            </div>
+                        </a>
+
+                        <a style="min-width: 100%" class="dropdown-item  mx-auto small text-gray-500" href="#"><span
+                                style="text-align: center">¡Conozca quién hizo el sistema!</span></a>
+
+                    </div>
+                </li>
             </ul>
-            <!--form class="form-inline my-2 my-lg-0 ">
-                    <input id="search-lg" class=" form-control mr-sm-2 " type="search" placeholder="Buscar..."
-                           aria-label="Search">
-                    <button class="btn btn-light  my-2 my-sm-0" type="submit">buscar</button>
-                </form-->
+        </div>
+    </nav>
+    <div class="btn-group" id="user">
+        <a class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            <img class="img-profile rounded-circle" width="35" src="{% static 'media/hombre.png' %}">
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" style="width: 20rem;">
+            <h6 class="dropdown-header">
+                Administración de usuario
+            </h6>
+            <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
+               href="{% url 'ventas:listVenta' %}">
+                <div class="mr-3">
+                    <div class="icono">
+                        <i class="fas fa-book"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class=" small text-gray-500">Registro de ventas</div>
+                    <span class="font-weight-bold">Restablezca sus ventas</span>
+                </div>
+            </a>
+            <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
+               href="{% url 'articulo:generador' %}">
+                <div class="mr-3">
+                    <div class="icono">
+                        <i class="fas fa-barcode"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class=" small text-gray-500">Código de Barras</div>
+                    <span class="font-weight-bold">Crear su código de barras</span>
+                </div>
+            </a>
+            <a style="min-width: 100%" class="dropdown-item  mx-0" href="{% url 'logout' %}">
+                <div class="mr-3 ">
+                    <div class="icono">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="small text-gray-500">Salir</div>
+                    Cerrar su sesión
+                </div>
+            </a>
+
+            <a style="min-width: 100%" class="dropdown-item  mx-auto small text-gray-500" href="#"><span
+                    style="text-align: center">¡Conozca quién hizo el sistema!</span></a>
 
         </div>
-
-    </nav>
-
+    </div>
 {% endblock %}
 {% block car %}
 {% endblock %}
@@ -53,12 +144,30 @@
         body {
 
             background-image: url("../../static/media/img02.png");
+            background-attachment: fixed;
+            background-size: cover;
+            background-repeat: repeat-y;
+        }
 
-            background-size: 100%;
+        #buscar {
+            width: 65%;
+            background-color: rgb(60, 60, 60, 0.8)
+        }
+
+        @media screen and (max-width: 768px) {
+            #buscar {
+                margin-top: 30px;
+                width: 100%;
+                background-color: rgb(60, 60, 60)
+            }
+        }
+
+        #buscar h1 {
+            font-size: 3.5rem;
         }
     </style>
     <div class="container">
-        <div class="card mx-auto mt-lg-5" style="width: 35rem; background-color: rgb(60,60,60,0.8)">
+        <div class="card mx-auto mt-lg-5" id="buscar">
             <div class="card-body">
                 <div class="form-group col-md-12">
                     <h1 class="title-search mt-md-5" align="center">Búsqueda</h1>
@@ -66,10 +175,10 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <form class="form-inline my-2 my-lg-0" action="{% url 'articulo:buscar' %}" method="get">
-                            <input class="form-control mr-sm-2 col-md-9 mx-4" type="search" style="color: white"
+                            <input class="form-control mr-sm-2 col-sm-8 col-md-8 mx-4" type="search" style="color: white"
                                    placeholder="Ingrese el nombre o código del articulo" aria-label="Search"
                                    name="search">
-                            <button id="btn-search" class="btn  my-2 my-sm-0" type="submit">Buscar</button>
+                            <button id="btn-search" class="btn  my-2 my-sm-0  col-sm-auto col-md-3 col-lg-3" type="submit">Buscar</button>
                         </form>
                     </div>
                     <div class="form-group col-md-3"></div>
@@ -78,6 +187,4 @@
         </div>
     </div>
 
-{% endblock %}
-{% block modal %}
 {% endblock %}

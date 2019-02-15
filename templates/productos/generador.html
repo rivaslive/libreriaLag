@@ -5,7 +5,8 @@
 {% block car %}
 
     <div class="car">
-        <a style="text-align: center" id="car-venta" onclick="return abrir_modal('{% url 'ventas:carShopping' %}')" class="btn-lg bg-blue"><i
+        <a style="text-align: center" id="car-venta" href="javascript:window.print();"
+           class="btn-lg bg-blue"><i
                 class="icon-printer-1"></i></a>
     </div>
 
@@ -53,31 +54,59 @@
             background-color: #e9ecef;
             opacity: 1
         }
-    </style>
-    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow">
-        <div class="1h-100">
-            <h6 class="mb-0 text-white 1h-100">Generador de codigos</h6>
-            <small>Aleatorios</small>
-        </div>
+        #parte1{
+            display: none;
+        }
+        @media print {
+            #parte1 {
+                display: block;
+            }
 
+            #parte2 {
+                display: none;
+            }
+        }
+
+    </style>
+    <div id="parte1" class="generador" >
+        <h1 style="font-family: 'Libre Barcode 39 Text', cursive; font-size: 3.8rem">{{ codigo }}</h1>
     </div>
-    <div class="card mt-2 mx-auto" style="width: 100%; height: 26rem;">
-        <div class="card-body">
-            <div class="card mx-auto mt-4" style="width: 23rem; height: 17rem;">
-                <div class="card-body text-center">
-                    <h5 class="card-title" align="center">Generador de codigos de barras</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Codigos Aleatorio</h6>
-                    <form action="{% url 'articulo:generador' %}" method="post">
-                        {% csrf_token %}
-                        <input name="evaluation" type="hidden" value="1">
-                        <button type="submit" style="width: 80%" class="btn bg-blue  mx-auto">Generar</button>
-                    </form>
-                    <h1 style="font-family: 'Libre Barcode 39 Text', cursive; font-size: 3.8rem" >{{ codigo }}</h1>
-                </div>
+    <div id="parte2">
+        <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow">
+            <div class="1h-100">
+                <h6 class="mb-0 text-white 1h-100">Generador de codigos</h6>
+                <small>Aleatorios</small>
             </div>
 
-
+        </div>
+        <div class="card mt-2 mx-auto" style="width: 100%; height: 26rem;">
+            <div class="card-body">
+                <div class="card mx-auto mt-4" style="width: 23rem; height: 17rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" align="center">Generador de codigos de barras</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Codigos Aleatorio</h6>
+                        <form action="{% url 'articulo:generador' %}" method="post">
+                            {% csrf_token %}
+                            <input name="evaluation" type="hidden" value="1">
+                            <button type="submit" style="width: 80%" class="btn bg-blue  mx-auto">Generar</button>
+                        </form>
+                        <div class="generador">
+                            <h1 style="font-family: 'Libre Barcode 39 Text', cursive; font-size: 3.8rem">{{ codigo }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <script type="text/javascript">
+        function imprSelec() {
+            var ficha = document.getElementById('#generador');
+            var ventimp = window.open(' ', 'popimpr');
+            ventimp.document.write(ficha.innerHTML);
+            ventimp.document.close();
+            ventimp.print();
+            ventimp.close();
+        }
+    </script>
 {% endblock %}

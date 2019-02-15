@@ -1,5 +1,15 @@
 <!-- Modal -->
 <style>
+    #plus {
+        font-size: 18px;
+        border-radius: 50%;
+    }
+
+    #plus:hover {
+        background-color: rgb(33, 100, 200);
+        color: white;
+    }
+
     #plus-shopping {
         margin-top: -20px;
         font-size: 18px;
@@ -22,25 +32,9 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body mx-auto">
-            <!--form action="">
-                <div class="form-row">
-                    <div class="form-group col-md-6"></div>
-                    <div class="form-group col-md-5">
-                        <label for="IdCodigo">Codigo</label>
-                        <input type="text" id="IdCodigo" placeholder="Ingrese el codigo del producto" class="form-control">
-                    </div>
-                    <div class="form-group col-md-1">
-                        <a id="plus-shopping" class="btn mt-3"
-                           onclick="return abrir_modal('{% url 'articulo:crearArticulo' %}')"
-                           title="agregar producto">+</a>
-                    </div>
-                </div>
-            </form-->
-            <div>
-                <h4 align="center">Total: <strong>{{ total }}</strong></h4>
-            </div>
-            <a id="plus-shopping" style="margin-top: -55px" class="btn float-right"
+        <div class="modal-body ">
+            <h4 align="center">Total: <strong>{{ total }}</strong></h4>
+            <a id="plus" style="margin-top: -40px" class="btn bg-blue float-right"
                href="{% url 'ventas:shop' %}"
                title="agregar producto">+</a>
             <div class="table-responsive">
@@ -93,7 +87,6 @@
                     {% endif %}
                 </table>
             </div>
-
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -103,34 +96,3 @@
 </div>
 
 
-<!-- Modal Vuelto -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Efectivo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="vender" action="{% url 'ventas:vender' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-row col-md-12">
-                        <label for="Cambio">Ingrese monto con el que pagara</label>
-                        <input type="text" id="Cambio" name="cambio" class="form-control" placeholder="0.00"
-                               style="color: black" required>
-                    </div>
-                </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button target="_blank" form="vender" onclick="redireccionar()" type="submit"
-                        class="btn btn-success active">Vender
-                </button>
-            </div>
-        </div>
-    </div>
-</div>

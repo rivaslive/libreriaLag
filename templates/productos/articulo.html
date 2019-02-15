@@ -44,8 +44,28 @@
             background-color: #e9ecef;
             opacity: 1
         }
+
+        @media screen and (max-width: 768px) {
+            #contenedor h6 {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            #contenedor p {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            #contenedor a i {
+                font-size: 0.8rem;
+            }
+        }
+
+
     </style>
-    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow">
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow" style="z-index: 80000;">
         <div class="1h-100">
             <h6 class="mb-0 text-white 1h-100">Productos</h6>
             <small>Activos</small>
@@ -81,10 +101,12 @@
 
         {% if articulo %}
             {% for foo in articulo %}
-                <div class="media text-muted pt-3 bg-hover">
+
+                <div class="media text-muted pt-3 bg-hover col-sm-12 col-md-12">
                     <i class="icono icon-share"></i>
                     <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
-                        <div class="d-flex justify-content-between align-items-center w-100">
+                        <div class="d-flex justify-content-between align-items-center w-100" id="contenedor">
+
                             <div class="1h-100">
                                 <h6 class="larger">{{ foo.nombre_articulo }}</h6>
                                 <h6 class="smaller">
@@ -98,18 +120,26 @@
                             {% else %}
                                 <p>Stock: <strong>{{ foo.stock }}</strong></p>
                             {% endif %}
+
                             <p>
+
                                 <a title="Detalle Articulo"
                                    onclick="return abrir_modal('{% url 'articulo:articuloDetalle' foo.pk %}')"><i
-                                        class="btn btn-primary2 aling-right icon-eye shopping"><span
+                                        class="btn btn-primary2 aling-right icon-eye shopping "><span
                                         style="font-size: 20px"></span></i></a>
-                                <a title="vender" onclick="return abrir_modal('{% url 'ventas:addCar' foo.pk %}')"><i
-                                        class="btn btn-purple aling-right icon-basket shopping"><span
+
+
+                                <a title="vender"
+                                   onclick="return abrir_modal('{% url 'ventas:addCar' foo.pk %}')"><i
+                                        class="btn btn-purple aling-right icon-basket shopping "><span
                                         style="font-size: 20px">+</span></i></a>
+
+
                             </p>
                         </div>
                     </div>
                 </div>
+
             {% endfor %}
         {% else %}
             <h6>No hay registros hechos</h6>

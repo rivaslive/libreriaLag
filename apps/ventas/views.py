@@ -2,7 +2,7 @@ from datetime import datetime
 from unicodedata import decimal
 
 from django.contrib import messages
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
@@ -485,5 +485,6 @@ def listarVentas(request):
     return render(request,'ventas/listVentas.html')
 
 def llenarTablaVentas(request):
-    query = detalle.objects.all().exclude(id_venta__estado=1)
-    return render(request, 'ventas/listVentas.html', {'datosVenta': query})
+    query = Factura.objects.all().exclude(venta__estado=1)
+    suma = Factura.objects.all().aggregate(Sum('total'))
+    return render(request, 'ventas/listVentas.html', {'datosVenta': query, 'sumaTotal':suma})

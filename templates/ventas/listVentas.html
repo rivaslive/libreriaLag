@@ -21,11 +21,12 @@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">Id_Venta</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Sub_Total</th>
-                    <th scope="col">Articulo</th>
+                    <th scope="col">Total en $</th>
+                      <th scope="col">Efectivo en $</th>
+                    <th scope="col">Cambio en $</th>
                     <th scope="col">Fecha</th>
+
+                    <th scope="col">Estado</th>
 
                     <th scope="col">Acciones</th>
                 </tr>
@@ -35,11 +36,12 @@
                     {% for foo in datosVenta %}
                         <tr>
                         <td>{{ foo.id }}</td>
-                        <td>{{ foo.cantidad }}</td>
-                        <td>{{ foo.precio }}</td>
-                        <td>{{ foo.sub_total }}</td>
-                        <td>{{ foo.id_articulo.nombre_articulo }}</td>
-                        <td>{{ foo.id_venta }}</td>
+                        <td>{{ foo.total }}</td>
+                            <td>{{ foo.efectivo }}</td>
+                        <td>{{ foo.cambio }}</td>
+                        <td>{{ foo.fecha }}</td>
+
+                        <td>{{ foo.venta.estado}}</td>
 
                         <td> <button class="bnt btn-danger">X</button></td>
                         </tr>
@@ -49,7 +51,7 @@
                 {% endif %}
               </tbody>
             </table>
-
+                  <a>Total de compras ${{ sumaTotal }}</a>
 
             </div>
 

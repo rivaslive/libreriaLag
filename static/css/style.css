@@ -76,10 +76,11 @@ body {
 }
 
 .car {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     margin-left: 92%;
     font-size: 50px;
+    z-index: 900000;
 
 }
 

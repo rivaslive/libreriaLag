@@ -18,23 +18,22 @@ def articulo(request):
         if request.session['ventaId']:
             ventaId = request.session['ventaId']
             notify = detalle.objects.filter(id_venta=ventaId).count()
-            query = Articulo.objects.filter(is_activate=1).annotate(cant=F('stock') * F('stock_caja'))
+            query = Articulo.objects.filter(is_activate=1)
             return render(request, 'productos/articulo.html', {'articulo': query, 'notify':notify})
         else:
             request.session['ventaId'] = ''
-            query = Articulo.objects.filter(is_activate=1).annotate(cant=F('stock') * F('stock_caja'))
+            query = Articulo.objects.filter(is_activate=1)
             return render(request, 'productos/articulo.html', {'articulo': query})
     except:
         request.session['ventaId'] = ''
-        query = Articulo.objects.filter(is_activate=1).annotate(cant=F('stock') * F('stock_caja'))
+        query = Articulo.objects.filter(is_activate=1)
         return render(request, 'productos/articulo.html', {'articulo': query})
 # ver articulos
 def articuloDetalle(request, pk):
     query = Articulo.objects.get(id=pk)
     if query.stock_caja:
         cant = (query.stock * query.stock_caja)
-        precioCj = (query.stock * query.precio_unidad)
-        return render(request, 'productos/articuloDetalle.html', {'articulo': query, 'cant': cant, 'precioCj': precioCj})
+        return render(request, 'productos/articuloDetalle.html', {'articulo': query, 'cant': cant, })
     return render(request, 'productos/articuloDetalle.html', {'articulo': query})
 
 # crear articulos

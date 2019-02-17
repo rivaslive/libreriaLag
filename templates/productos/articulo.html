@@ -67,7 +67,7 @@
     </style>
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow" style="z-index: 80000;">
         <div class="1h-100">
-            <h6 class="mb-0 text-white 1h-100">Productos</h6>
+            <h6 class="mb-0 text-white 1h-100">Articulos</h6>
             <small>Activos</small>
         </div>
         <div class="col ">
@@ -108,15 +108,15 @@
                             <div class="1h-100">
                                 <h6 class="larger">{{ foo.nombre_articulo }}</h6>
                                 <h6 class="smaller">
-                                    <small>cod:</small>
+                                    <small>Código:</small>
                                     {{ foo.codigo_articulo }}
                                 </h6>
                             </div>
                             <p>Precio: <strong>${{ foo.precio_unidad }}</strong></p>
                             {% if foo.cant > 0 %}
-                                <p>Stock: <strong>{{ foo.cant }}</strong></p>
+                                <p>Unidades disponibles: <strong>{{ foo.cant }}</strong></p>
                             {% else %}
-                                <p>Stock: <strong>{{ foo.stock }}</strong></p>
+                                <p>Unidades disponibles: <strong>{{ foo.stock }}</strong></p>
                             {% endif %}
 
                             <p>
@@ -140,7 +140,7 @@
 
             {% endfor %}
         {% else %}
-            <h6>No hay registros hechos</h6>
+            <h6>No hay productos registrados</h6>
         {% endif %}
     </div>
 

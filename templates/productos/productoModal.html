@@ -26,38 +26,29 @@
                     <div class="form-group col-md-4">
                         <label for="Id_Presentacion">Presentación</label>
                         <select name="id_presentacion" required="" class="form-control" id="id_id_presentacion">
-                            <option value="" selected="">Seleccione una opción</option>
-                            <option value="1">Unidades</option>
-                            <option value="2">Cajas</option>
+                            <option value="1" selected="">Unidades</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="StockUni">Stock Unidades</label>
+                    <div class="form-group col-md-4">
+                        <label for="StockUni">Número de unidades disponibles</label>
                         {{ form.stock }}
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="id_precio_unidad">Precio Unidad</label>
+                    <div class="form-group col-md-4">
+                        <label for="id_precio_unidad">Precio de venta Unidad </label>
                         <input class="form-control" type="text" id="id_precio_unidad" name="precio_unidad"
                                required>
                     </div>
-                    <div id="inputCaja" style="display: none;" class="form-group col-md-3">
-                        <label for="StockBox">Stock Caja</label>
-                        {{ form.stock_caja }}
-                    </div>
-
-                    <div id="inputCaja2" style="display: none;" class="form-group mx-auto col-md-3">
-                        <label for="PriceCj">Precio Caja</label>
-                        <input id="PriceCj" class="form-control" name="precio_caja">
-                    </div>
-                </div>
-                <div class="form-row">
-
                     <div class="form-group col-md-4">
                         <label for="Codigo">Código de barras</label>
                         {{ form.codigo_articulo }}
                     </div>
+                    </div>
+
+
+                <div class="form-row">
+
                 </div>
                 <input type="hidden" name="is_activate" value="1">
                 {% csrf_token %}

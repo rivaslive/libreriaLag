@@ -17,7 +17,7 @@ class VentaForm(forms.ModelForm):
 class DetalleForm(forms.ModelForm):
     class Meta:
         model = detalle
-        fields = ['cantidad','precio','sub_total','id_articulo','id_venta']
+        fields = ['cantidad','precio','descuento','sub_total','id_articulo','id_venta']
     def __init__(self, *args, **kwargs):
         super(DetalleForm, self).__init__(*args, **kwargs)
         for field in iter(self.fields):
@@ -34,5 +34,6 @@ class FacturaForm(forms.ModelForm):
             'cambio',
             'fecha',
             'numero',
-            'efectivo'
+            'efectivo',
+            'descuentoTotal'
         ]

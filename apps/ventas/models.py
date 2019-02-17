@@ -8,13 +8,10 @@ class Venta(models.Model):
     def __str__(self):
         return '{}'.format(self.fecha_venta)
 
-class Descuento(models.Model):
-    descuento = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
-
 class detalle(models.Model):
     cantidad = models.IntegerField(null=False, blank=False)
     precio = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
-    descuento = models.OneToOneField(Descuento, null=True, blank=True, on_delete=models.CASCADE)
+    descuento = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
     sub_total = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
     id_articulo = models.ForeignKey(
         Articulo, on_delete=models.CASCADE, null=False, blank=False)
@@ -28,4 +25,4 @@ class Factura(models.Model):
     fecha = models.DateTimeField(null=False, blank=False)
     numero = models.IntegerField(default=00000000, null=False, blank=False)
     efectivo = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)
-    descuentoTotal = models.OneToOneField(Descuento, null=True, blank=True, on_delete=models.CASCADE)
+    descuentoTotal = models.DecimalField(max_digits=5, decimal_places=2, null=False, blank=False)

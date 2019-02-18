@@ -266,7 +266,10 @@ nav #search-lg {
 .btn-danger2 {
     color: orangered;
 }
-
+.btn-success2:hover {
+     background-color: green;
+    color: white;
+}
 .btn-danger2:hover {
     background-color: orangered;
     color: white;

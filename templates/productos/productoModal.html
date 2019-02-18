@@ -47,11 +47,9 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="id_precio_unidad"><b>Precio de venta Unidad</b></label>
-                        {% if articulo.precio_unidad %}
-                         <input class="form-control" type="text" id="id_precio_unidad" name="precio_unidad" value="{{ articulo.precio_unidad }}" required>
-                            {% else %}
-                              <input class="form-control" type="text" id="id_precio_unidad" name="precio_unidad"  required>
-                        {% endif %}
+
+
+                         {{ form.precio_unidad }}
 
                     </div>
                     <div class="form-group col-md-4">

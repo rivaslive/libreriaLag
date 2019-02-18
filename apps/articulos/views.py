@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from apps.articulos.models import Articulo
@@ -63,10 +63,10 @@ def inventario(request):
     #Buscar Articulos
 def buscar(request):
     buscar= request.GET.get('search','')
-    queryset = Articulo.objects.filter(Q(nombre_articulo__contains=buscar)|Q(codigo_articulo__contains=buscar)).exclude(is_activate=0).order_by('nombre_articulo')
-    print(buscar)
-    print(queryset)
-    return render(request,'productos/articulo.html',{'articulo':queryset, 'busqueda':buscar}) 
+    articulos = (Q(nombre_articulo__contains=buscar)|Q(codigo_articulo__contains=buscar)).exclude(is_activate=0).order_by('nombre_articulo')
+
+    queryset = Articulo.objects.filter(articulos)
+    return render(request,'productos/articulo.html',{'articulo':queryset, 'busqueda':buscar})
 
 def inicio(request):
     return render(request, 'productos/index.html')
@@ -100,12 +100,30 @@ def articulo_edi(request, pk):
         form = ArticuloForm(request.POST, instance=articulo)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Articulo editado correctamente')
         return redirect('articulo:inventario')
     return render(request, 'productos/productoModal.html', {'form': form, 'pk': pk, 'articulo':articulo})
 
 def actualizarEstado(request, pk):
    arti = Articulo.objects.get(id=pk)
-   arti.is_activate = 0
-   print(pk)
-   arti.save()
+   if request.method == 'POST':
+     respuesta = get_object_or_404(Articulo, pk=arti.pk)
+     respuesta.is_activate = 0
+     respuesta.save()
+     messages.success(request, 'Articulo deshabilitado')
+     return redirect('articulo:deshabilitado')
+   return render(request, 'productos/cambiarEstadoModal.html', {'arti': arti, 'pk':pk})
 
+def mostrarDeshabilitados(request):
+    query = Articulo.objects.filter(is_activate=0).order_by('id')
+    return  render(request,'productos/articuloDeshabilitado.html', {'inventario': query})
+
+def habilitarArticulo(request, pk):
+    arti = Articulo.objects.get(id=pk)
+    if request.method == 'POST':
+        respuesta = get_object_or_404(Articulo, pk=arti.pk)
+        respuesta.is_activate = 1
+        respuesta.save()
+        messages.success(request, 'Articulo Habilitado')
+        return redirect('articulo:inventario')
+    return render(request, 'productos/cambiarEstadoModal.html', {'articulo': arti, 'pka': pk})

@@ -67,8 +67,8 @@
     </style>
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow" style="z-index: 80000;">
         <div class="1h-100">
-            <h6 class="mb-0 text-white 1h-100">Articulos</h6>
-            <small>Activos</small>
+            <h6 class="mb-0 text-white 1h-100">Artículos</h6>
+            <small>Listos para vender</small>
         </div>
         <div class="col ">
             <div class="form-group col-md-8 mx-auto">
@@ -81,10 +81,10 @@
             </div>
         </div>
         <a id="aa" class="btn mx-auto" onclick="return abrir_modal('{% url 'articulo:crearArticulo' %}')"
-           title="agregar producto">+</a>
+           title="Agregar un artículo nuevo">+</a>
     </div>
     <div class="my-3 p-3 bg-white rounded box-shadow">
-        <h6 class="border-bottom border-gray pb-2 mb-0">Articulo</h6>
+        <h6 class="border-bottom border-gray pb-2 mb-0">Lista de artículos</h6>
         {% if messages %}
             {% for message in messages %}
                 {% if message.tags  == 'warning' %}

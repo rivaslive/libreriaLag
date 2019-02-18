@@ -12,7 +12,7 @@
                 <div class="row">
                     {% if articulo %}
                         <div class="col-md-6">
-                            <h5 class="card-title">{{ articulo.nombre_articulo }}</h5>
+                            <h5 class="card-title"> <b>{{ articulo.nombre_articulo }}</b></h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{ articulo.codigo_articulo }}</h6>
                             <p class="card-text">Categoria: <strong>{{ articulo.id_categoria }}</strong></p>
                             <p class="card-text">Precio Unidad: <strong>${{ articulo.precio_unidad }}</strong></p>

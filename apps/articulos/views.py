@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from apps.articulos.models import Articulo
@@ -29,11 +29,10 @@ def articulo(request):
         query = Articulo.objects.filter(is_activate=1)
         return render(request, 'productos/articulo.html', {'articulo': query})
 # ver articulos
+
 def articuloDetalle(request, pk):
     query = Articulo.objects.get(id=pk)
-    if query.stock_caja:
-        cant = (query.stock * query.stock_caja)
-        return render(request, 'productos/articuloDetalle.html', {'articulo': query, 'cant': cant, })
+
     return render(request, 'productos/articuloDetalle.html', {'articulo': query})
 
 # crear articulos
@@ -64,7 +63,7 @@ def inventario(request):
     #Buscar Articulos
 def buscar(request):
     buscar= request.GET.get('search','')
-    queryset = Articulo.objects.filter(Q(nombre_articulo__contains=buscar)|Q(codigo_articulo__contains=buscar)).order_by('nombre_articulo')
+    queryset = Articulo.objects.filter(Q(nombre_articulo__contains=buscar)|Q(codigo_articulo__contains=buscar)).exclude(is_activate=0).order_by('nombre_articulo')
     print(buscar)
     print(queryset)
     return render(request,'productos/articulo.html',{'articulo':queryset, 'busqueda':buscar}) 
@@ -91,3 +90,22 @@ def generador(request):
             return render(request, 'productos/generador.html')
     except:
         return render(request, 'productos/generador.html')
+
+def articulo_edi(request, pk):
+    articulo = Articulo.objects.get(id=pk)
+
+    if request.method == 'GET':
+        form = ArticuloForm(instance=articulo)
+    else:
+        form = ArticuloForm(request.POST, instance=articulo)
+        if form.is_valid():
+            form.save()
+        return redirect('articulo:inventario')
+    return render(request, 'productos/productoModal.html', {'form': form, 'pk': pk, 'articulo':articulo})
+
+def actualizarEstado(request, pk):
+   arti = Articulo.objects.get(id=pk)
+   arti.is_activate = 0
+   print(pk)
+   arti.save()
+

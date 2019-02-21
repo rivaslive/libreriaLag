@@ -3,20 +3,30 @@
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header bg-blue">
-            <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo Articulo</h5>
+            {% if pk %}
+             <h5 class="modal-title" id="exampleModalLabel">Editar Artículo</h5>
+            {% else %}
+             <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo Artículo</h5>
+            {% endif %}
+
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
+             {% if pk %}
+            <form id="form2" name="crearArt" action="{% url 'articulo:editarInventario' pk %}" method="post">
+            {% else %}
             <form id="form2" name="crearArt" action="{% url 'articulo:crearArticulo' %}" method="post">
+                {% endif %}
+
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="Name">Nombre del Articulo</label>
+                        <label for="Name"><b>Nombre del Artículo</b></label>
                         {{ form.nombre_articulo }}
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="Categoria">Categoria</label>
+                        <label for="Categoria"><b>Categoria</b></label>
                         <select name="id_categoria" required="" class="form-control" id="id_id_categoria">
                             <option value="" selected="">Seleccione una opción</option>
                             <option value="1">Libros</option>
@@ -24,7 +34,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="Id_Presentacion">Presentación</label>
+                        <label for="Id_Presentacion"><b>Presentación</b></label>
                         <select name="id_presentacion" required="" class="form-control" id="id_id_presentacion">
                             <option value="1" selected="">Unidades</option>
 
@@ -33,16 +43,18 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="StockUni">Número de unidades disponibles</label>
+                        <label for="StockUni"><b>Número de unidades disponibles</b></label>
                         {{ form.stock }}
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="id_precio_unidad">Precio de venta Unidad </label>
-                        <input class="form-control" type="text" id="id_precio_unidad" name="precio_unidad"
-                               required>
+                        <label for="id_precio_unidad"><b>Precio de venta Unidad</b></label>
+
+
+                         {{ form.precio_unidad }}
+
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="Codigo">Código de barras</label>
+                        <label for="Codigo"><b>Código de barras</b></label>
                         {{ form.codigo_articulo }}
                     </div>
                     </div>

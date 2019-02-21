@@ -1,0 +1,65 @@
+{% extends 'base/admin.html' %}
+{% block car %}
+
+{% endblock %}
+{% block active4 %}
+        activo
+    {% endblock %}
+{% block body %}
+    <!-- Producto sin existencias -->
+    {% if messages %}
+            {% for message in messages %}
+                {% if message.tags  == 'warning' %}
+                    <input id="msj" type="hidden" value="1">
+                    <input id="contenido" type="hidden" value="{{ message }}">
+                {% endif %}
+                {% if message.tags == 'success' %}
+                    <input id="msj" type="hidden" value="0">
+                    <input id="contenido" type="hidden" value="{{ message }}">
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+            <div class="d-flex align-items-center p-3 my-2 text-white-50 bg-warning rounded box-shadow">
+                <div class="1h-100">
+                    <h6 class="mb-0 text-white 1h-100">Articulos deshabilitados</h6>
+                    <small>No se puede vender estos artículos hasta habilitarlos</small>
+                </div>
+
+                </div>
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-0">Articulos sin existencias</h6>
+                {% if inventario %}
+                    {% for foo in inventario %}
+                <div class="media text-muted pt-3 bg-hover">
+                    <i class="icono icon-share"></i>
+                    <div class="media-body pb-3 mb-0 small 1h-125 border-bottom border-gray">
+                        <div class="d-flex justify-content-between align-items-center w-100">
+                            <div class="1h-100">
+                                <h6 class="larger">{{ foo.nombre_articulo }}</h6>
+                                <h6 class="smaller"><small>Código: </small>
+                                    {{ foo.codigo_articulo }}
+                                </h6>
+                            </div>
+                            <p>Categoria: <strong>{{ foo.id_categoria }}</strong></p>
+                            <p>Precio de venta: <strong>{{ foo.precio_unidad }}</strong></p>
+                            <p>Unidades disponibles: <strong style="color: orangered">{{ foo.stock }}</strong></p>
+                            <p>
+                                <a title="Eliminar producto" data-toggle="modal" data-target="#editar" onclick="return abrir_modal('{% url 'articulo:darAlta' foo.pk %}')"><i class="btn btn-success2 fas fa-check-circle"></i></a>
+                                <a title="agregar stock"  data-toggle="modal" data-target="#editar"  onclick="return abrir_modal('{% url 'articulo:editarInventario' foo.pk %}')" ><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                    {% endfor %}
+                {% else %}
+                    <h6>No tienes Arriculos sin unidades</h6>
+                {% endif %}
+
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+{% endblock %}

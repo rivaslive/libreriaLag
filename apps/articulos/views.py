@@ -3,10 +3,16 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from rest_framework import status, generics
+
 from apps.articulos.models import Articulo
 from apps.articulos.forms import ArticuloForm
-from django.db.models import Q, F
+from django.db.models import Q
 import random
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from apps.articulos.serializers import ArticuloSerializer
+
 
 
 # ver articulos
@@ -125,3 +131,20 @@ def habilitarArticulo(request, pk):
         messages.success(request, 'Articulo Habilitado')
         return redirect('articulo:inventario')
     return render(request, 'productos/cambiarEstadoModal.html', {'articulo': arti, 'pka': pk})
+
+@api_view(['GET', 'POST'])
+def articuloListJSON(request, format=None):
+    if request.method == 'GET':
+        articulos = Articulo.objects.all()
+        serializer = ArticuloSerializer(articulos, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = ArticuloSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ArticuloListClass(generics.ListCreateAPIView):
+    queryset = Articulo.objects.all()
+    serializer_class = ArticuloSerializer

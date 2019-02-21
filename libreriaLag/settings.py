@@ -12,10 +12,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -26,8 +24,7 @@ SECRET_KEY = 'up28fq3rabi+o6r56(rv+%um66&h7op137l$_ya9$oh9&55z5y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['138.68.1.124','localhost', '127.0.0.1', '192.168.0.101']
-
+ALLOWED_HOSTS = ['138.68.1.124', 'localhost', '127.0.0.1', '192.168.0.101']
 
 # Application definition
 
@@ -38,9 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'apps.ventas',
     'apps.articulos',
-
 ]
 
 MIDDLEWARE = [
@@ -73,7 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'libreriaLag.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -82,13 +78,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_libreria',
         'USER': 'root',
-        'PASSWORD':'cementerio123',
-        #'PASSWORD':'root',
+        'PASSWORD': 'cementerio123',
+        # 'PASSWORD':'root',
         'HOST': 'localhost',
         'PORT': '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -107,7 +102,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

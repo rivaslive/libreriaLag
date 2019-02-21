@@ -31,9 +31,6 @@ def articulo(request):
 # ver articulos
 def articuloDetalle(request, pk):
     query = Articulo.objects.get(id=pk)
-    if query.stock_caja:
-        cant = (query.stock * query.stock_caja)
-        return render(request, 'productos/articuloDetalle.html', {'articulo': query, 'cant': cant, })
     return render(request, 'productos/articuloDetalle.html', {'articulo': query})
 
 # crear articulos
@@ -43,7 +40,6 @@ class CrearArticulo(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('articulo:articulo')
-
     success_message = 'Operacion Exitosa'
 
 # Mostrar los productos sin stock

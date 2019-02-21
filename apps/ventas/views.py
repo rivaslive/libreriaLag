@@ -153,7 +153,7 @@ def shop(request):
             if query:
                 total = 0
                 for foo in query:
-                    total += (foo.cantidad * foo.id_articulo.precio_unidad)
+                    total += foo.sub_total
             else:
                 total = 0
             print('ventaId 0', query)
@@ -167,7 +167,7 @@ def shop(request):
 
 
 def venta(request):
-    presentacion = int(request.POST.get('id_presentacion', ''))
+    descuento = request.POST.get('desc', '')
     cantidad = request.POST.get('cantidad', '')
     codigo = request.POST.get('codigo', '')
     try:
@@ -178,195 +178,140 @@ def venta(request):
     if request.session['ventaId'] == '':
         dateNow = datetime.now()
         print(dateNow)
-        if presentacion == 1:
-            print("PRESENTACION EN UNIDADES")
-            if cantidad:
-                if int(cantidad) <= articulo.stock:
-                    print('estamos aqui')
-                    form = VentaForm({'fecha_venta': dateNow, 'estado': 1})
-                    if form.is_valid():
-                        obtener = form.save(commit=False)
-                        obtener.save()
-                        print('su id de venta es ', obtener.pk)
-                        request.session['ventaId'] = obtener.pk
-                        subTotal = float(int(cantidad) * articulo.precio_unidad)
-                        print('correcto')
-                        form2 = DetalleForm(
-                            {'cantidad': cantidad, 'precio': articulo.precio_unidad, 'sub_total': subTotal,
-                             'id_articulo': articulo.pk,
-                             'id_venta': request.session['ventaId']})
-                        if form2.is_valid():
-                            form2.save()
-                            form3 = get_object_or_404(Articulo, pk=articulo.pk)
-                            form3.stock = (articulo.stock - int(cantidad))
-                            form3.save()
-
-                            messages.success(request, 'Operacion Exitosa')
-                            return redirect('ventas:venta')
+        print("PRESENTACION EN UNIDADES")
+        if cantidad:
+            if int(cantidad) <= articulo.stock:
+                print("INTENTANDO APLICAR DESC DE: " + str(descuento))
+                form = VentaForm({'fecha_venta': dateNow, 'estado': 1})
+                if form.is_valid():
+                    obtener = form.save(commit=False)
+                    obtener.save()
+                    print('SU ID DE VENTA ES ', obtener.pk)
+                    request.session['ventaId'] = obtener.pk
+                    if descuento:
+                        #descuento sin porcentaje
+                        descuento = float(float(descuento) / 100)
+                        print("SU DESC ES: " + str(descuento))
+                        #valor del precio total
+                        valor = float(int(cantidad) * articulo.precio_unidad)
+                        #descuento al total el descuento
+                        subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                        descuentoValor = float("{0:.2f}".format(valor * descuento))
+                        print('EL SUBTOTAL ES: ' + str(subTotal))
                     else:
-                        messages.warning(request, 'Error en registro')
+                        valor = 0
+                        subTotal = float(int(cantidad) * articulo.precio_unidad)
+                        descuentoValor = 0
+                        print('EL SUBTOTAL ES: ' + str(subTotal))
+                    form2 = DetalleForm(
+                        {'cantidad': cantidad, 'precio': articulo.precio_unidad, 'descuento':descuentoValor,'sub_total': subTotal,
+                            'id_articulo': articulo.pk,
+                            'id_venta': request.session['ventaId']})
+                    if form2.is_valid():
+                        form2.save()
+                        form3 = get_object_or_404(Articulo, pk=articulo.pk)
+                        form3.stock = (articulo.stock - int(cantidad))
+                        form3.save()
+
+                        messages.success(request, 'Operacion Exitosa')
+                        return redirect('ventas:venta')
+
+                    else:
+                        messages.warning(request, 'Error en registro detalle')
                         return redirect('ventas:shop')
                 else:
-                    messages.warning(request, 'No hay suficientes existencias')
+                    messages.warning(request, 'Error en registro')
                     return redirect('ventas:shop')
             else:
-                messages.warning(request, 'Ingrese una cantidad')
+                messages.warning(request, 'No hay suficientes existencias')
                 return redirect('ventas:shop')
         else:
-            print("PRESENTACION EN CAJAS")
-            if cantidad:
-                if int(cantidad) <= articulo.stock:
-                    print('estamos aqui')
-                    form = VentaForm({'fecha_venta': dateNow, 'estado': 1})
-                    if form.is_valid():
-                        obtener = form.save(commit=False)
-                        obtener.save()
-                        print('su id de venta es ', obtener.pk)
-                        request.session['ventaId'] = obtener.pk
-                        subTotal = float(int(cantidad) * articulo.precio_caja)
-                        print('correcto')
-                        form2 = DetalleForm(
-                            {'cantidad': cantidad, 'precio': articulo.precio_unidad, 'sub_total': subTotal,
-                             'id_articulo': articulo.pk,
-                             'id_venta': request.session['ventaId']})
-                        if form2.is_valid():
-                            form2.save()
-                            form3 = get_object_or_404(Articulo, pk=articulo.pk)
-                            form3.stock = (articulo.stock - int(cantidad))
-                            form3.save()
-
-                            messages.success(request, 'Operacion Exitosa')
-                            return redirect('ventas:venta')
-                    else:
-                        messages.warning(request, 'Error en registro')
-                        return redirect('ventas:shop')
-                else:
-                    messages.warning(request, 'No hay suficientes existencias')
-                    return redirect('ventas:shop')
-            else:
-                messages.warning(request, 'Ingrese una cantidad')
-                return redirect('ventas:shop')
+            messages.warning(request, 'Ingrese una cantidad')
+            return redirect('ventas:shop')
     else:
         print('VENTA EXISTENTE ID NUMERO ', request.session['ventaId'])
-        if presentacion == 1:
-            if cantidad:
-                if int(cantidad) <= articulo.stock:
-                    ventaId = request.session['ventaId']
-                    try:
-                        existens = detalle.objects.filter(Q(id_venta=ventaId) & Q(id_articulo__codigo_articulo=codigo))
-                        if existens:
-                            evaluador = 1
-                            print('estamos aqui 3')
-                        else:
-                            evaluador = 0
-                        print("Evaluador: " + str(evaluador))
-                    except:
-                        evaluador = 0
-                    if evaluador == 0:
-                        subTotal = float(int(cantidad) * articulo.precio_unidad)
-                        form2 = DetalleForm(
-                            {
-                                'cantidad': cantidad,
-                                'precio': articulo.precio_unidad,
-                                'sub_total': subTotal,
-                                'id_articulo': articulo.pk,
-                                'id_venta': ventaId
-                            }
-                        )
-                        if form2.is_valid():
-                            form2.save()
-                            # Editar el registro ya existe de articulo para restar el stock
-                            form3 = get_object_or_404(Articulo, pk=articulo.pk)
-                            form3.stock = (articulo.stock - int(cantidad))
-                            form3.save()
-                            messages.success(request, 'Operacion Exitosa')
-                            return redirect('ventas:venta')
-                        else:
-                            messages.warning(request, 'Formulario no valido')
-                            return redirect('ventas:shop')
+        if cantidad:
+            if int(cantidad) <= articulo.stock:
+                ventaId = request.session['ventaId']
+                try:
+                    existens = detalle.objects.filter(Q(id_venta=ventaId) & Q(id_articulo__codigo_articulo=codigo))
+                    if existens:
+                        evaluador = 1
+                        print('estamos aqui 3')
                     else:
-                        print('estamos aqui 4')
+                        evaluador = 0
+                    print("Evaluador: " + str(evaluador))
+                except:
+                    evaluador = 0
+                if evaluador == 0:
+                    print("VENTA ACTIVA Y NO ARTICULO SIN COINCIDIR")
+                    if descuento:
+                        descuento = float(float(descuento) / 100)
+                        print("SU DESC ES: " + str(descuento))
+                        valor = float(int(cantidad) * articulo.precio_unidad)
+                        subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                        print('EL SUBTOTAL ES: ' + str(subTotal))
+                        descuentoValor = float("{0:.2f}".format(valor * descuento))
+                    else:
+                        valor = 0
                         subTotal = float(int(cantidad) * articulo.precio_unidad)
-                        detal = detalle.objects.get(Q(id_venta=ventaId) & Q(id_articulo__codigo_articulo=codigo))
-                        print(detal.pk)
-                        print("Paso AQUI")
-                        post = get_object_or_404(detalle, pk=detal.pk)
-                        post.cantidad = (detal.cantidad + int(cantidad))
-                        post.sub_total = (float(detal.sub_total) + subTotal)
-                        post.save()
+                        print('EL SUBTOTAL ES: ' + str(subTotal))
+                        descuentoValor = 0
+                    form2 = DetalleForm(
+                        {
+                            'cantidad': cantidad,
+                            'precio': articulo.precio_unidad,
+                            'descuento': descuentoValor,
+                            'sub_total': subTotal,
+                            'id_articulo': articulo.pk,
+                            'id_venta': ventaId
+                        }
+                    )
+                    if form2.is_valid():
+                        form2.save()
                         # Editar el registro ya existe de articulo para restar el stock
                         form3 = get_object_or_404(Articulo, pk=articulo.pk)
                         form3.stock = (articulo.stock - int(cantidad))
                         form3.save()
                         messages.success(request, 'Operacion Exitosa')
                         return redirect('ventas:venta')
-
+                    else:
+                        messages.warning(request, 'Formulario no valido')
+                        return redirect('ventas:shop')
                 else:
-                    messages.warning(request, 'No hay suficientes existencias')
-                    return redirect('ventas:shop')
+                    print('ARTICULO YA EXISTENTE EN LA VENTA')
+                    if descuento:
+                        descuento = float(float(descuento) / 100)
+                        print("SU DESC ES: " + str(descuento))
+                        valor = float(int(cantidad) * articulo.precio_unidad)
+                        subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                        print('EL SUBTOTAL ES: ' + str(subTotal))
+                        descuentoValor = float("{0:.2f}".format(valor * descuento))
+                    else:
+                        valor = 0
+                        subTotal = float(int(cantidad) * articulo.precio_unidad)
+                        print('EL SUBTOTAL ES: ' + str(subTotal))
+                        descuentoValor = 0
+                    detal = detalle.objects.get(Q(id_venta=ventaId) & Q(id_articulo__codigo_articulo=codigo))
+                    print(detal.pk)
+                    print("DETALLE VENTA NUMERO: " + str(detal.pk))
+                    post = get_object_or_404(detalle, pk=detal.pk)
+                    post.cantidad = (detal.cantidad + int(cantidad))
+                    post.descuento = float(float(detal.descuento) + descuentoValor)
+                    post.sub_total = (float(detal.sub_total) + subTotal)
+                    post.save()
+                    # Editar el registro ya existe de articulo para restar el stock
+                    form3 = get_object_or_404(Articulo, pk=articulo.pk)
+                    form3.stock = (articulo.stock - int(cantidad))
+                    form3.save()
+                    messages.success(request, 'Operacion Exitosa')
+                    return redirect('ventas:venta')
             else:
-                messages.warning(request, 'Ingrese una Cantidad')
+                messages.warning(request, 'No hay suficientes existencias')
                 return redirect('ventas:shop')
         else:
-            if cantidad:
-                if int(cantidad) <= articulo.stock:
-                    ventaId = request.session['ventaId']
-                    try:
-                        existens = detalle.objects.filter(Q(id_venta=ventaId) & Q(id_articulo__codigo_articulo=codigo))
-                        if existens:
-                            evaluador = 1
-                            print('estamos aqui 3')
-                        else:
-                            evaluador = 0
-                        print("Evaluador: " + str(evaluador))
-                    except:
-                        evaluador = 0
-                    if evaluador == 0:
-                        cantidad = int(cantidad) * articulo.stock
-                        subTotal = float(int(cantidad) * articulo.precio_caja)
-                        form2 = DetalleForm(
-                            {
-                                'cantidad': cantidad,
-                                'precio': articulo.precio_unidad,
-                                'sub_total': subTotal,
-                                'id_articulo': articulo.pk,
-                                'id_venta': ventaId
-                            }
-                        )
-                        if form2.is_valid():
-                            form2.save()
-                            # Editar el registro ya existe de articulo para restar el stock
-                            form3 = get_object_or_404(Articulo, pk=articulo.pk)
-                            form3.stock = (articulo.stock - int(cantidad))
-                            form3.save()
-                            messages.success(request, 'Operacion Exitosa')
-                            return redirect('ventas:venta')
-                        else:
-                            messages.warning(request, 'Formulario no valido')
-                            return redirect('ventas:shop')
-                    else:
-                        print('estamos aqui 4')
-                        subTotal = float(int(cantidad) * articulo.precio_unidad)
-                        detal = detalle.objects.get(Q(id_venta=ventaId) & Q(id_articulo__codigo_articulo=codigo))
-                        print(detal.pk)
-                        print("Paso AQUI")
-                        post = get_object_or_404(detalle, pk=detal.pk)
-                        post.cantidad = (detal.cantidad + int(cantidad))
-                        post.sub_total = (float(detal.sub_total) + subTotal)
-                        post.save()
-                        # Editar el registro ya existe de articulo para restar el stock
-                        form3 = get_object_or_404(Articulo, pk=articulo.pk)
-                        form3.stock = (articulo.stock - int(cantidad))
-                        form3.save()
-                        messages.success(request, 'Operacion Exitosa')
-                        return redirect('ventas:venta')
-
-                else:
-                    messages.warning(request, 'No hay suficientes existencias')
-                    return redirect('ventas:shop')
-            else:
-                messages.warning(request, 'Ingrese una Cantidad')
-                return redirect('ventas:shop')
+            messages.warning(request, 'Ingrese una Cantidad')
+            return redirect('ventas:shop')
 
 
 def eliminarDetalle(request, pk):
@@ -535,9 +480,12 @@ def drop(request):
 
 def editarShop(request, pk):
     detalles = detalle.objects.get(id=pk)
+
     if request.method == "GET":
+        desc = ''
         form = detalles
     else:
+        descuento = request.POST.get('desc', '')
         cantidad = request.POST.get('cantidad', '')
         codigo = int(request.POST.get('codigo', ''))
         articulo = Articulo.objects.get(codigo_articulo=codigo)
@@ -550,16 +498,31 @@ def editarShop(request, pk):
                 messages.warning(request, "error al cargar stock")
                 return redirect('ventas:shop')
             try:
+                print("ESTO ES 1")
+                if descuento:
+                    # descuento sin porcentaje
+                    descuento = float(float(descuento) / 100)
+                    print("SU DESC ES: " + str(descuento))
+                    # valor del precio total
+                    valor = float(int(cantidad) * detalles.id_articulo.precio_unidad)
+                    # descuento al total el descuento
+                    subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                    descuentoValor = float("{0:.2f}".format(valor * descuento))
+                    print('EL SUBTOTAL ES: ' + str(subTotal))
+                else:
+                    subTotal = float(int(cantidad) * detalles.id_articulo.precio_unidad)
+                    descuentoValor = 0
+                    print('EL SUBTOTAL ES: ' + str(subTotal))
                 form = get_object_or_404(detalle, pk=detalles.pk)
                 form.cantidad = int(cantidad)
+                form.descuento = float(descuentoValor)
+                form.sub_total = subTotal
                 form.save()
                 messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")
                 return redirect('ventas:shop')
             except:
                 messages.warning(request, "error al cargar nueva cantidad")
                 return redirect('ventas:shop')
-
-
         else:
             messages.warning(request, "No hay suficiente stock")
             return redirect('ventas:shop')
@@ -573,10 +536,11 @@ def editarShop(request, pk):
         else:
             total = 0
         print('ventaId 0', query)
-        return render(request, 'ventas/shop.html', {'form':form, 'query': query, 'total': total})
+
+        return render(request, 'ventas/shop.html', {'form':form, 'query': query, 'total': total, 'desc': desc})
     else:
         request.session['ventaId'] = ""
-        return render(request, 'ventas/shop.html', {'form':form})
+        return render(request, 'ventas/shop.html', {'form':form, 'desc': desc})
 
 def listarVentas(request):
     return render(request,'ventas/listVentas.html')

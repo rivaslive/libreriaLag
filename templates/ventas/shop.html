@@ -155,20 +155,8 @@
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="id_cantidad">Presentacion</label>
-                                    <select name="id_presentacion" required="" class="form-control"
-                                            id="id_id_presentacion">
-
-                                            {% if form.id_articulo.id_presentacion == 0 %}
-                                                <option value="">----Seleccione una opcion----</option>
-                                                <option value="1" selected="">Unidades</option>
-                                                <option value="2">Cajas</option>
-                                                {% else %}
-                                                    <option value="">----Seleccione una opcion----</option>
-                                                    <option value="1" selected="">Unidades</option>
-                                                    <option value="2">Cajas</option>
-                                            {% endif %}
-                                    </select>
+                                    <label for="id_Desc">Descuento en porcentaje</label>
+                                    <input type="text" id="id_Desc" class="form-control" placeholder="% Descuento(Opcional)" name="desc" value="{{ desc }}">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="id_cantidad">Cantidad</label>
@@ -205,9 +193,9 @@
                     <th scope="col">N°</th>
                     <th scope="col">Codigo</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Presentacion</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio Venta</th>
+                    <th scope="col">Desc</th>
                     <th scope="col">Sub-Total</th>
                     <th scope="col">Acciones</th>
                 </tr>
@@ -219,9 +207,9 @@
                             <th scope="row">{{ forloop.counter }}</th>
                             <td>{{ foo.id_articulo.codigo_articulo }}</td>
                             <td>{{ foo.id_articulo.nombre_articulo }}</td>
-                            <td>{{ foo.id_articulo.id_presentacion }}</td>
                             <td>{{ foo.cantidad }}</td>
                             <td>${{ foo.id_articulo.precio_unidad }}</td>
+                            <td>${{ foo.descuento }}</td>
                             <td>${{ foo.sub_total }}</td>
                             <td>
                                 <a href="{% url 'ventas:deleteDetail' foo.pk %}" class=""><i
@@ -250,17 +238,18 @@
                 <div class="modal-body">
                     <form id="vender" action="{% url 'ventas:vender' %}" method="POST">
                         {% csrf_token %}
-                        <div class="form-row col-md-12">
+                        <div class="col-md-12">
+                            <h1>Total: {{ total }}</h1>
                             <label for="Cambio">Ingrese monto con el que pagara</label>
-                            <input type="text" id="Cambio" name="cambio" class="form-control" placeholder="0.00"
-                                   style="color: black" required>
+                            <input type="text" id="Cambio" name="cambio" class="form-control"  placeholder="0.00"
+                                   style="color: black;" required>
                         </div>
                     </form>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button target="_blank" form="vender" type="submit" class="btn btn-success active">Vender</button>
+                    <button form="vender" type="submit" class="btn btn-success active">Vender</button>
                 </div>
             </div>
         </div>

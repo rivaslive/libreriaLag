@@ -1,5 +1,5 @@
 from datetime import datetime
-from unicodedata import decimal
+
 
 from django.contrib import messages
 from django.db.models import Q, Sum
@@ -7,9 +7,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 
-
-from apps.articulos.forms import ArticuloForm
 from apps.articulos.models import Articulo
+
 from apps.ventas.forms import VentaForm, DetalleForm, FacturaForm
 from apps.ventas.models import detalle, Venta, Factura
 
@@ -546,6 +545,15 @@ def listarVentas(request):
     return render(request,'ventas/listVentas.html')
 
 def llenarTablaVentas(request):
-    query = Factura.objects.all().exclude(venta__estado=1)
-    suma = Factura.objects.all().aggregate(Sum('total'))
-    return render(request, 'ventas/listVentas.html', {'datosVenta': query, 'sumaTotal':suma})
+    codigo = request.POST.get('codigo', '')
+    if codigo == "1234":
+        query = Factura.objects.all().exclude(venta__estado=1)
+        suma = Factura.objects.all().aggregate(Sum('total'))
+        return render(request, 'ventas/listVentas.html', {'datosVenta': query, 'sumaTotal':suma})
+    else:
+        if codigo:
+            messages.warning(request, 'Codigo Incorrecto')
+            return redirect('articulo:articulo')
+        return render(request, 'base/codigo.html', {'listVenta':1})
+
+

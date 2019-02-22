@@ -124,56 +124,9 @@
                     <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
                 </li>
                 <li class="nav-item {% block active4 %} {% endblock %}">
-                    <a class="nav-link2" href="{% url 'articulo:inventario' %}">Inventario</a>
+                    <a class="nav-link2" onclick="return abrir_modal('{% url 'articulo:inventario'%}')" style="color:black">Inventario</a>
                 </li>
-                <li class="nav-item" style="display: none" id="salir">
-                    <a class="nav-link2 btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">configuraciones</a>
-                    <div class="dropdown-menu " style="width: 100%;">
-                        <h6 class="dropdown-header">
-                            Administración de usuario
-                        </h6>
-                        <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
-                           href="{% url 'ventas:listVenta' %}">
-                            <div class="mr-3">
-                                <div class="icono">
-                                    <i class="fas fa-book"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class=" small text-gray-500">Registro de ventas</div>
-                                <span class="font-weight-bold">Restablezca sus ventas</span>
-                            </div>
-                        </a>
-                        <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
-                           href="{% url 'articulo:generador' %}">
-                            <div class="mr-3">
-                                <div class="icono">
-                                    <i class="fas fa-barcode"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class=" small text-gray-500">Código de Barras</div>
-                                <span class="font-weight-bold">Crear su código de barras</span>
-                            </div>
-                        </a>
-                        <a style="min-width: 100%" class="dropdown-item  mx-0" href="{% url 'logout' %}">
-                            <div class="mr-3 ">
-                                <div class="icono">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">Salir</div>
-                                Cerrar su sesión
-                            </div>
-                        </a>
-
-                        <a style="min-width: 100%" class="dropdown-item  mx-auto small text-gray-500" href="#"><span
-                                style="text-align: center">¡Conozca quién hizo el sistema!</span></a>
-
-                    </div>
-                </li>
+            
 
             </ul>
 
@@ -190,7 +143,7 @@
                 Administración de usuario
             </h6>
             <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
-               href="{% url 'ventas:listVenta' %}">
+               onclick="return abrir_modal('{% url 'ventas:listVenta'%}')">
                 <div class="mr-3">
                     <div class="icono">
                         <i class="fas fa-book"></i>
@@ -227,6 +180,7 @@
 
             <a style="min-width: 100%" class="dropdown-item  mx-auto small text-gray-500" href="#"><span
                     style="text-align: center">¡Conozca quién hizo el sistema!</span></a>
+            
 
         </div>
     </div>

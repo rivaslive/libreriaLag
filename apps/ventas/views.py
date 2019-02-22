@@ -545,8 +545,15 @@ def listarVentas(request):
     return render(request,'ventas/listVentas.html')
 
 def llenarTablaVentas(request):
-    query = Factura.objects.all().exclude(venta__estado=1)
-    suma = Factura.objects.all().aggregate(Sum('total'))
-    return render(request, 'ventas/listVentas.html', {'datosVenta': query, 'sumaTotal':suma})
+    codigo = request.POST.get('codigo', '')
+    if codigo == "1234":
+        query = Factura.objects.all().exclude(venta__estado=1)
+        suma = Factura.objects.all().aggregate(Sum('total'))
+        return render(request, 'ventas/listVentas.html', {'datosVenta': query, 'sumaTotal':suma})
+    else:
+        if codigo:
+            messages.warning(request, 'Codigo Incorrecto')
+            return redirect('articulo:articulo')
+        return render(request, 'base/codigo.html', {'listVenta':1})
 
 

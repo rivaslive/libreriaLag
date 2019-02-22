@@ -1,0 +1,37 @@
+<!-- Modal -->
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="card" style="width: 100%;">
+            <div class="car-header2">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h5 class="card-title">Ingrese el codigo de Seguridad</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Administrador</h6>
+                        
+                    </div>
+                    
+                </div>
+                {% if listVenta %}
+                    <form method="POST" action="{% url 'ventas:listVenta' %}" id="codig">
+                {% else %}
+                    <form method="POST" action="{% url 'articulo:inventario' %}" id="codig">
+                {% endif %}
+                
+                        {% csrf_token %}
+                        <input type="password" name="codigo" placeholder="Ingrese su codigo" class="form-control"/> 
+                    </form>
+                
+                <button class="btn btn-danger active mx-2 float-right" type="submit" form="codig">Autenticar</button>
+                <a class="btn btn-outline-dark active float-right" data-dismiss="modal">Cerrar</a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+

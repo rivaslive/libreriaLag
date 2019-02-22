@@ -125,3 +125,4 @@ def habilitarArticulo(request, pk):
         messages.success(request, 'Articulo Habilitado')
         return redirect('articulo:inventario')
     return render(request, 'productos/cambiarEstadoModal.html', {'articulo': arti, 'pka': pk})
+

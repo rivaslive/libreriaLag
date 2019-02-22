@@ -18,6 +18,7 @@ from apps.ventas.models import detalle
 
 
 
+
 def articulo(request):
     try:
         if request.session['ventaId']:

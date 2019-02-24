@@ -549,11 +549,16 @@ def llenarTablaVentas(request):
     if codigo == "1234":
         query = Factura.objects.all().exclude(venta__estado=1)
         suma = Factura.objects.all().aggregate(Sum('total'))
-        return render(request, 'ventas/listVentas.html', {'datosVenta': query, 'sumaTotal':suma})
+        return render(request, 'ventas/listVentas.html', {'datosVenta': query})
     else:
         if codigo:
             messages.warning(request, 'Codigo Incorrecto')
             return redirect('articulo:articulo')
         return render(request, 'base/codigo.html', {'listVenta':1})
 
-
+def detalleVenta(request, pk, ):
+    total = 0
+    ventaDetalle = detalle.objects.filter(id_venta=pk)
+    for sumaTotal in ventaDetalle:
+        total += sumaTotal.sub_total
+    return render(request, 'ventas/detalleVenta.html', {'detalleVenta': ventaDetalle, 'pk': pk, "total":total})

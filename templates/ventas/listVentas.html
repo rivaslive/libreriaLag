@@ -16,34 +16,31 @@
                 <a id="aa" class="btn mx-auto" data-toggle="modal" data-target="#exampleModal">+</a>
             </div>
             <div class="my-3 p-3 bg-white rounded box-shadow">
-                <h6 class="border-bottom border-gray pb-2 mb-0">Ventas realizadas</h6>
-            <table class="table">
-                <thead class="thead-dark">
+                <h4 class="border-bottom border-gray pb-2 mb-0">Ventas realizadas</h4>
+                <p class="border-bottom border-gray pb-2 mb-0">El estado 0 significa que la venta finalizó y está cancelada.</p>
+            <table class="table table-sm">
+                <thead class="thead-light">
                 <tr>
-                    <th scope="col">Id_Venta</th>
-                    <th scope="col">Total en $</th>
-                      <th scope="col">Efectivo en $</th>
-                    <th scope="col">Cambio en $</th>
                     <th scope="col">Fecha</th>
-
                     <th scope="col">Estado</th>
-
-                    <th scope="col">Acciones</th>
+                      <th scope="col">Acciones</th>
                 </tr>
                 </thead>
             <tbody>
                   {% if datosVenta %}
                     {% for foo in datosVenta %}
                         <tr>
-                        <td>{{ foo.id }}</td>
-                        <td>{{ foo.total }}</td>
-                            <td>{{ foo.efectivo }}</td>
-                        <td>{{ foo.cambio }}</td>
-                        <td>{{ foo.fecha }}</td>
+
+                        <td scope="row">{{ foo.fecha }}</td>
 
                         <td>{{ foo.venta.estado}}</td>
 
-                        <td> <button class="bnt btn-danger">X</button></td>
+                        <td>
+                            <a title="Eliminar venta" href="#" class=""><i class="icon-minus-circle btn btn-danger2"></i></a>
+                            <a onclick="return abrir_modal('{% url 'ventas:detalleVenta' foo.pk %}')" title="Detalles de las ventas" class=""><i
+                                        class="btn btn-primary2 aling-right icon-eye shopping "><span
+                                        style="font-size: 20px"></span></i></a>
+                        </td>
                         </tr>
                     {% endfor %}
                 {% else %}
@@ -51,7 +48,7 @@
                 {% endif %}
               </tbody>
             </table>
-                  <a>Total de compras ${{ sumaTotal }}</a>
+
 
             </div>
 

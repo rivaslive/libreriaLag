@@ -1,0 +1,78 @@
+<!-- Modal -->
+<style>
+    #plus {
+        font-size: 18px;
+        border-radius: 50%;
+    }
+
+    #plus:hover {
+        background-color: rgb(33, 100, 200);
+        color: white;
+    }
+
+    #plus-shopping {
+        margin-top: -20px;
+        font-size: 18px;
+        border-radius: 50%;
+        background-color: rgb(33, 150, 243, 0.7);
+        color: white;
+    }
+
+    #plus-shopping:hover {
+        text-decoration: none;
+        color: white;
+        background-color: rgb(33, 150, 243);
+    }
+</style>
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel2">Detalle de la venta</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body ">
+            <h4 align="center">Total: <strong>${{ total }}</strong></h4>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-gray">
+                    <tr>
+                        <th>#</th>
+                        <th scope="col">Artículo</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Descuento (Si aplica)</th>
+                        <th scope="col">Sub Total</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if pk %}
+                        {% for foo in detalleVenta %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+
+                                <td>{{ foo.id_articulo.nombre_articulo }}</td>
+                                <td>{{ foo.cantidad}}</td>
+
+                                <td>${{ foo.precio }}</td>
+                                <td>${{ foo.descuento }}</td>
+                                <td>${{ foo.sub_total }}</td>
+
+
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <a class="rounded btn btn-info active text-white" data-toggle="modal" data-target="#exampleModal">Regresar Venta</a>
+        </div>
+    </div>
+</div>

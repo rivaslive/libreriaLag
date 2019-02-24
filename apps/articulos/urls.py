@@ -14,6 +14,7 @@ urlpatterns = [
     path(r'^editarInventario/(?P<pk>\d+)/$', login_required(articulo_edi), name="editarInventario"),
     path(r'^darBaja/(?P<pk>\d+)/$', login_required(actualizarEstado), name="darBaja"),
     path(r'^darAlta/(?P<pk>\d+)/$', login_required(habilitarArticulo), name="darAlta"),
+
     path('crearArticulo/', login_required(CrearArticulo.as_view()), name="crearArticulo"),
     path('inventario/', login_required(inventario), name="inventario"),
     path('deshabilitado/', login_required(mostrarDeshabilitados), name="deshabilitado"),

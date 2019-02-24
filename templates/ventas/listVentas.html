@@ -13,7 +13,7 @@
                     <small>Detalle de las ventas</small>
                 </div>
                 <div class="col"></div>
-                <a id="aa" class="btn mx-auto" data-toggle="modal" data-target="#exampleModal">+</a>
+
             </div>
             <div class="my-3 p-3 bg-white rounded box-shadow">
                 <h4 class="border-bottom border-gray pb-2 mb-0">Ventas realizadas</h4>
@@ -31,13 +31,13 @@
                     {% for foo in datosVenta %}
                         <tr>
 
-                        <td scope="row">{{ foo.fecha }}</td>
+                        <td scope="row">{{ foo.fecha_venta }}</td>
 
-                        <td>{{ foo.venta.estado}}</td>
+                        <td>{{ foo.estado}}</td>
 
                         <td>
-                            <a title="Eliminar venta" href="#" class=""><i class="icon-minus-circle btn btn-danger2"></i></a>
-                            <a onclick="return abrir_modal('{% url 'ventas:detalleVenta' foo.pk %}')" title="Detalles de las ventas" class=""><i
+                            <a title="Regresar Venta" href="{% url 'ventas:regresarVentas' foo.pk %}" class="btn btn-info active">Regresar Venta</a>
+                            <a onclick="return abrir_modal('{% url 'ventas:detalleVenta' foo.pk %}')" title="Detalles de las ventas" class="mx-3"><i
                                         class="btn btn-primary2 aling-right icon-eye shopping "><span
                                         style="font-size: 20px"></span></i></a>
                         </td>

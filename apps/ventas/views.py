@@ -566,13 +566,30 @@ def listarVentas(request):
 def llenarTablaVentas(request):
     codigo = request.POST.get('codigo', '')
     if codigo == "1234":
-        query = Factura.objects.all().exclude(venta__estado=1)
-        suma = Factura.objects.all().aggregate(Sum('total'))
-        return render(request, 'ventas/listVentas.html', {'datosVenta': query, 'sumaTotal':suma})
+        query = Venta.objects.all().exclude(estado=1)
+
+        return render(request, 'ventas/listVentas.html', {'datosVenta': query})
     else:
         if codigo:
             messages.warning(request, 'Codigo Incorrecto')
             return redirect('articulo:articulo')
         return render(request, 'base/codigo.html', {'listVenta':1})
 
+def detalleVenta(request, pk ):
+    total = 0
+    ventaDetalle = detalle.objects.filter(id_venta=pk)
+    for sumaTotal in ventaDetalle:
+        total += sumaTotal.sub_total
+    return render(request, 'ventas/detalleVenta.html', {'detalleVenta': ventaDetalle, 'pk': pk, "total":total})
 
+def regresarVentas(request,pk):
+    vntas = Venta.objects.get(id=pk)
+    print(vntas)
+    if vntas:
+     res = get_object_or_404(Venta, pk=vntas.pk)
+     res.estado = 1
+     res.save()
+     request.session['ventaId'] = pk
+     messages.success(request, 'Venta Recuperada')
+     return redirect('ventas:shop')
+    return render(request, 'ventas/listVentas.html', {'pkV': pk, 'ventas':vntas})

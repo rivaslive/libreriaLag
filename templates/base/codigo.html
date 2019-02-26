@@ -24,7 +24,7 @@
                 {% endif %}
                 
                         {% csrf_token %}
-                        <input type="password" name="codigo" placeholder="Ingrese su codigo" class="form-control"/> 
+                        <input type="password" name="codigo" placeholder="Ingrese su codigo" class="form-control" required/>
                     </form>
                 
                 <button class="btn btn-danger active mx-2 float-right" type="submit" form="codig">Autenticar</button>

@@ -90,9 +90,41 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <a class="rounded btn btn-info active text-white" data-toggle="modal" data-target="#exampleModal">vender</a>
+            <div class="col-md-2">
+                <a class="rounded btn btn-vender text-white" data-toggle="modal" data-target="#exampleModal">vender</a>
+            </div>
         </div>
     </div>
 </div>
+<!-- Modal Vuelto -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Efectivo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="vender" action="{% url 'ventas:vender' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-12">
+                            <h1>Total: {{ total }}</h1>
+                            <label for="Cambio">Ingrese monto con el que pagara</label>
+                            <input type="text" id="Cambio" name="cambio" class="form-control"  placeholder="0.00"
+                                   style="color: black;" required>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button form="vender" type="submit" class="btn btn-success active">Vender</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 

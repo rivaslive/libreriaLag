@@ -77,9 +77,8 @@ def inventario(request):
     #Buscar Articulos
 def buscar(request):
     buscar= request.GET.get('search','')
-    articulos = (Q(nombre_articulo__contains=buscar)|Q(codigo_articulo__contains=buscar)).exclude(is_activate=0).order_by('nombre_articulo')
+    queryset = Articulo.objects.filter(Q(nombre_articulo__icontains=buscar)|Q(codigo_articulo__contains=buscar)).exclude(is_activate=0).order_by('nombre_articulo')
 
-    queryset = Articulo.objects.filter(articulos)
     return render(request,'productos/articulo.html',{'articulo':queryset, 'busqueda':buscar})
 
 

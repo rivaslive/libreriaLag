@@ -16,7 +16,7 @@ from apps.ventas.models import detalle, Venta, Factura
 def prueba(request):
     return render(request, 'base/admin.html')
 
-
+"""
 def addCar(request, pk):
     cantidad = request.POST.get('cantidad', '')
     if request.session['ventaId'] == '':
@@ -126,7 +126,7 @@ def addCar(request, pk):
                 return redirect('articulo:articulo')
         else:
             return render(request, 'ventas/addCar.html', {'pk': pk})
-
+"""
 
 def carShopping(request):
     ventaId = request.session['ventaId']
@@ -188,15 +188,20 @@ def venta(request):
                     print('SU ID DE VENTA ES ', obtener.pk)
                     request.session['ventaId'] = obtener.pk
                     if descuento:
-                        #descuento sin porcentaje
-                        descuento = float(float(descuento) / 100)
-                        print("SU DESC ES: " + str(descuento))
-                        #valor del precio total
-                        valor = float(int(cantidad) * articulo.precio_unidad)
-                        #descuento al total el descuento
-                        subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
-                        descuentoValor = float("{0:.2f}".format(valor * descuento))
-                        print('EL SUBTOTAL ES: ' + str(subTotal))
+                        if float(descuento) <= 100:
+                            #descuento sin porcentaje
+                            descuento = float(float(descuento) / 100)
+                            print("SU DESC ES: " + str(descuento))
+                            #valor del precio total
+                            valor = float(int(cantidad) * articulo.precio_unidad)
+                            #descuento al total el descuento
+                            subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                            descuentoValor = float("{0:.2f}".format(valor * descuento))
+                            print('EL SUBTOTAL ES: ' + str(subTotal))
+                        else:
+                            messages.warning(request, "ingrese un descuento menor del 100%")
+                            return redirect('ventas:shop')
+
                     else:
                         valor = 0
                         subTotal = float(int(cantidad) * articulo.precio_unidad)
@@ -245,12 +250,16 @@ def venta(request):
                 if evaluador == 0:
                     print("VENTA ACTIVA Y NO ARTICULO SIN COINCIDIR")
                     if descuento:
-                        descuento = float(float(descuento) / 100)
-                        print("SU DESC ES: " + str(descuento))
-                        valor = float(int(cantidad) * articulo.precio_unidad)
-                        subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
-                        print('EL SUBTOTAL ES: ' + str(subTotal))
-                        descuentoValor = float("{0:.2f}".format(valor * descuento))
+                        if float(descuento) <= 100:
+                            descuento = float(float(descuento) / 100)
+                            print("SU DESC ES: " + str(descuento))
+                            valor = float(int(cantidad) * articulo.precio_unidad)
+                            subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                            print('EL SUBTOTAL ES: ' + str(subTotal))
+                            descuentoValor = float("{0:.2f}".format(valor * descuento))
+                        else:
+                            messages.warning(request, "ingrese un descuento menor del 100%")
+                            return redirect('ventas:shop')
                     else:
                         valor = 0
                         subTotal = float(int(cantidad) * articulo.precio_unidad)
@@ -280,12 +289,18 @@ def venta(request):
                 else:
                     print('ARTICULO YA EXISTENTE EN LA VENTA')
                     if descuento:
-                        descuento = float(float(descuento) / 100)
-                        print("SU DESC ES: " + str(descuento))
-                        valor = float(int(cantidad) * articulo.precio_unidad)
-                        subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
-                        print('EL SUBTOTAL ES: ' + str(subTotal))
-                        descuentoValor = float("{0:.2f}".format(valor * descuento))
+                        if float(descuento) <= 100:
+                            descuento = float(float(descuento) / 100)
+                            print("SU DESC ES: " + str(descuento))
+                            valor = float(int(cantidad) * articulo.precio_unidad)
+                            subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                            print('EL SUBTOTAL ES: ' + str(subTotal))
+                            descuentoValor = float("{0:.2f}".format(valor * descuento))
+
+                        else:
+                            messages.warning(request, "ingrese un descuento menor del 100%")
+                            return redirect('ventas:shop')
+
                     else:
                         valor = 0
                         subTotal = float(int(cantidad) * articulo.precio_unidad)
@@ -499,15 +514,19 @@ def editarShop(request, pk):
             try:
                 print("ESTO ES 1")
                 if descuento:
-                    # descuento sin porcentaje
-                    descuento = float(float(descuento) / 100)
-                    print("SU DESC ES: " + str(descuento))
-                    # valor del precio total
-                    valor = float(int(cantidad) * detalles.id_articulo.precio_unidad)
-                    # descuento al total el descuento
-                    subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
-                    descuentoValor = float("{0:.2f}".format(valor * descuento))
-                    print('EL SUBTOTAL ES: ' + str(subTotal))
+                    if float(descuento) <= 100:
+                        # descuento sin porcentaje
+                        descuento = float(float(descuento) / 100)
+                        print("SU DESC ES: " + str(descuento))
+                        # valor del precio total
+                        valor = float(int(cantidad) * detalles.id_articulo.precio_unidad)
+                        # descuento al total el descuento
+                        subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                        descuentoValor = float("{0:.2f}".format(valor * descuento))
+                        print('EL SUBTOTAL ES: ' + str(subTotal))
+                    else:
+                        messages.warning(request, "ingrese un descuento menor del 100%")
+                        return redirect('ventas:shop')
                 else:
                     subTotal = float(int(cantidad) * detalles.id_articulo.precio_unidad)
                     descuentoValor = 0

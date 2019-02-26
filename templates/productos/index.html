@@ -31,9 +31,9 @@
                     <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
                 </li>
                 <li class="nav-item {% block active4 %} {% endblock %}">
-                    <a class="nav-link2" onclick="return abrir_modal('{% url 'articulo:inventario'%}')">Inventario</a>
+                    <a class="nav-link2" onclick="return abrir_modal('{% url 'articulo:inventario' %}')">Inventario</a>
                 </li>
-               
+
             </ul>
         </div>
     </nav>
@@ -47,7 +47,7 @@
                 Administración de usuario
             </h6>
             <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
-               onclick="return abrir_modal('{% url 'ventas:listVenta'%}')">
+               onclick="return abrir_modal('{% url 'ventas:listVenta' %}')">
                 <div class="mr-3">
                     <div class="icono">
                         <i class="fas fa-book"></i>
@@ -118,6 +118,7 @@
         }
     </style>
     <div class="container">
+
         <div class="card mx-auto mt-lg-5" id="buscar">
             <div class="card-body">
                 <div class="form-group col-md-12">
@@ -126,10 +127,13 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <form class="form-inline my-2 my-lg-0" action="{% url 'articulo:buscar' %}" method="get">
-                            <input class="form-control mr-sm-2 col-sm-8 col-md-8 mx-4" type="search" style="color: white"
+                            <input class="form-control mr-sm-2 col-sm-8 col-md-8 mx-4" type="search"
+                                   style="color: white"
                                    placeholder="Ingrese el nombre o código del articulo" aria-label="Search"
                                    name="search">
-                            <button id="btn-search" class="btn  my-2 my-sm-0  col-sm-auto col-md-3 col-lg-3" type="submit">Buscar</button>
+                            <button id="btn-search" class="btn  my-2 my-sm-0  col-sm-auto col-md-3 col-lg-3"
+                                    type="submit">Buscar
+                            </button>
                         </form>
                     </div>
                     <div class="form-group col-md-3"></div>
@@ -137,5 +141,80 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6  mx-auto mt-4">
+            <canvas style="background-color: white; border-radius: .5rem" id="myChart"></canvas>
 
+        </div>
+        <div class="col-md-6  mx-auto mt-4">
+            <canvas style="background-color: white; border-radius: .5rem" id="myChart2"></canvas>
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(100, 99, 132, 0.2)',
+
+                    ],
+                    borderColor: [
+                        'rgba(100,99,132,1)',
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        var ctx2 = document.getElementById("myChart2").getContext('2d');
+        var myChart2 = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ["Red", "Blue", "Yellow"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)',
+
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
 {% endblock %}

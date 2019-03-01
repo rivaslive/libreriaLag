@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.ventas',
     'apps.articulos',
-    'chartjs',
+
 ]
 
 MIDDLEWARE = [

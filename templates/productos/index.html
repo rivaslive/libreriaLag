@@ -189,7 +189,7 @@
         });
     </script>
     <script type="text/javascript">
-        $.get('{% url 'articulo:LineChartJSONView' %}', function (data) {
+        $.get('', function (data) {
             var ctx = $("#myChart").get(0).getContext("2d");
             new Chart(ctx, {
                 type: 'line', data: data

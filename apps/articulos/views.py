@@ -86,41 +86,9 @@ def buscar(request):
 
 
 def inicio(request):
-    queryset = Articulo.objects.all()[3]
-    serializer = ArticuloSerializer(queryset, many=True)
 
-    return render(request, 'productos/index.html', {'data':serializer})
+    return render(request, 'productos/index.html')
 
-class LineChartJSONView(BaseLineChartView):
-    dataset = detalle.objects.values('id_articulo__nombre_articulo').exclude(id_venta__estado=1).annotate(
-        total=Sum('cantidad')).order_by('total')
-    dataset2 = detalle.objects.values('id_articulo__nombre_articulo').exclude(id_venta__estado=1).annotate(
-        total=Sum('cantidad')).order_by('-total')
-
-    articulos = list()
-    stock = list()
-
-    for entry in dataset:
-        articulos.append(entry['id_articulo__nombre_articulo'],)
-        stock.append(entry['total'],)
-
-
-    def get_labels(self):
-        """Return 7 labels for the x-axis."""
-        return self.articulos
-
-    def get_providers(self):
-        """Return names of datasets."""
-        return self.articulos
-
-    def get_data(self):
-        """Return 3 datasets to plot."""
-
-        return [self.stock]
-
-
-line_chart = TemplateView.as_view(template_name='index.html')
-line_chart_json = LineChartJSONView.as_view()
 
 def generador(request):
     try:

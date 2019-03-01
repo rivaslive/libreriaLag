@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from apps.articulos.views import articulo, habilitarArticulo, mostrarDeshabilitados ,inventario, CrearArticulo, ArticuloListClass, articuloListJSON,articuloDetalle, buscar, inicio, generador, articulo_edi, actualizarEstado
+from apps.articulos.views import articulo, habilitarArticulo, LineChartJSONView,mostrarDeshabilitados ,inventario, CrearArticulo, ArticuloListClass, articuloListJSON,articuloDetalle, buscar, inicio, generador, articulo_edi, actualizarEstado
 from django.contrib.auth.decorators import login_required
 from  rest_framework.urlpatterns import format_suffix_patterns
 
@@ -20,6 +20,7 @@ urlpatterns = [
     path('deshabilitado/', login_required(mostrarDeshabilitados), name="deshabilitado"),
     path('articulo_list_json/', articuloListJSON, name="articulo_list_json"),
     path('articulo_list/', ArticuloListClass.as_view(), name="articuloList"),
+    path('LineChartJSONView/', LineChartJSONView.as_view(), name="LineChartJSONView"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

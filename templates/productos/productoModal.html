@@ -101,11 +101,7 @@
                             $("#id_nombre_articulo").addClass("error");
                             alertify.alert("Error de Campos", "Nombre no puede ser nulo");
                             return false;
-                        } else if (codigo === null || !codigo.match(onlyInt)) {
-                            e.preventDefault();
-                            $("#id_codigo_articulo").addClass("error");
-                            alertify.alert("Error de Campos", "el codigo solo puede ser numerico");
-                            return false;
+                        }
                         } else if (price === null || !price.match(onlyDecimal)) {
                             e.preventDefault();
                             $("#id_precio_unidad").addClass("error");

@@ -28,6 +28,7 @@
 {% if factura %}
 <div class="oculto-impresion">
     <h1 align="center" >EFECTIVO: ${{ factura.efectivo }}</h1>
+    <h1 align="center" >TOTAL: <span style="color: #3f51b5; font-size: 40px">${{ factura.total }}</span></h1>
     <h1 align="center" >CAMBIO: <span style="color:red; font-size: 40px">${{ factura.cambio }}</span></h1>
     <a href="" onclick="window.print()" class="boton-imprimir">IMPRIMIR</a>
     <a href="{% url 'ventas:shop' %}" class="boton-regresar">REGRESAR</a>
@@ -90,12 +91,13 @@
 
             <div class="totales">
                 <p>TOTAL..............................................................................................$ {{ factura.total }}</p>
+                <p>DESCUENTO..................................................................................$ {{ factura.descuentoTotal }}</p>
                 <p>EFECTIVO.......................................................................................$ {{ factura.efectivo }}</p>
                 <p>CAMBIO...........................................................................................$ {{ factura.cambio }}</p>
             </div>
         ========================================================
-            <p align="justify" style="margin-left: 10px">"yo he venido para que tengan vida, y para que la tengan en
-                abundancia Juan 10:10"</p>
+            <p align="justify" style="margin-left: 40px">"Con Dios está la sabiduría; suyo es el consejo y la inteligencia"</p>
+            <p align="center" style="margin-left: 10px">Job 12:13</p>
             <p align="center">GRACIAS POR PREFERIRNOS!</p>
 
         </div>

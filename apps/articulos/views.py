@@ -7,7 +7,7 @@ from rest_framework import status, generics
 
 from apps.articulos.models import Articulo
 from apps.articulos.forms import ArticuloForm
-from django.db.models import Q
+from django.db.models import Sum, Q
 import random
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -15,7 +15,9 @@ from apps.articulos.serializers import ArticuloSerializer
 
 # ver articulos
 from apps.ventas.models import detalle
-
+import json
+from chartjs.views.lines import BaseLineChartView
+from django.views.generic import TemplateView
 
 
 
@@ -24,11 +26,11 @@ def articulo(request):
         if request.session['ventaId']:
             ventaId = request.session['ventaId']
             notify = detalle.objects.filter(id_venta=ventaId).count()
-            query = Articulo.objects.filter(is_activate=1)
+            query = Articulo.objects.filter(is_activate=1).order_by('-pk')
             return render(request, 'productos/articulo.html', {'articulo': query, 'notify':notify})
         else:
             request.session['ventaId'] = ''
-            query = Articulo.objects.filter(is_activate=1)
+            query = Articulo.objects.filter(is_activate=1).order_by('-pk')
             return render(request, 'productos/articulo.html', {'articulo': query})
     except:
         request.session['ventaId'] = ''
@@ -84,9 +86,41 @@ def buscar(request):
 
 
 def inicio(request):
-    return render(request, 'productos/index.html')
+    queryset = Articulo.objects.all()[3]
+    serializer = ArticuloSerializer(queryset, many=True)
+
+    return render(request, 'productos/index.html', {'data':serializer})
+
+class LineChartJSONView(BaseLineChartView):
+    dataset = detalle.objects.values('id_articulo__nombre_articulo').exclude(id_venta__estado=1).annotate(
+        total=Sum('cantidad')).order_by('total')
+    dataset2 = detalle.objects.values('id_articulo__nombre_articulo').exclude(id_venta__estado=1).annotate(
+        total=Sum('cantidad')).order_by('-total')
+
+    articulos = list()
+    stock = list()
+
+    for entry in dataset:
+        articulos.append(entry['id_articulo__nombre_articulo'],)
+        stock.append(entry['total'],)
 
 
+    def get_labels(self):
+        """Return 7 labels for the x-axis."""
+        return self.articulos
+
+    def get_providers(self):
+        """Return names of datasets."""
+        return self.articulos
+
+    def get_data(self):
+        """Return 3 datasets to plot."""
+
+        return [self.stock]
+
+
+line_chart = TemplateView.as_view(template_name='index.html')
+line_chart_json = LineChartJSONView.as_view()
 
 def generador(request):
     try:
@@ -148,7 +182,7 @@ def habilitarArticulo(request, pk):
         respuesta.is_activate = 1
         respuesta.save()
         messages.success(request, 'Articulo Habilitado')
-        return redirect('articulo:inventario')
+        return redirect('articulo:articulo')
     return render(request, 'productos/cambiarEstadoModal.html', {'articulo': arti, 'pka': pk})
 
 
@@ -158,6 +192,7 @@ def articuloListJSON(request, format=None):
     if request.method == 'GET':
         articulos = Articulo.objects.all()
         serializer = ArticuloSerializer(articulos, many=True)
+        datos = json.dumps(serializer.data)
         return Response(serializer.data)
     elif request.method == 'POST':
         serializer = ArticuloSerializer(data=request.data)
@@ -171,3 +206,4 @@ def articuloListJSON(request, format=None):
 class ArticuloListClass(generics.ListCreateAPIView):
     queryset = Articulo.objects.all()
     serializer_class = ArticuloSerializer
+

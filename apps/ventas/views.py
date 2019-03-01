@@ -1,6 +1,5 @@
 from datetime import datetime
 
-
 from django.contrib import messages
 from django.db.models import Q, Sum
 from django.shortcuts import render, redirect, get_object_or_404
@@ -15,6 +14,7 @@ from apps.ventas.models import detalle, Venta, Factura
 
 def prueba(request):
     return render(request, 'base/admin.html')
+
 
 """
 def addCar(request, pk):
@@ -128,6 +128,7 @@ def addCar(request, pk):
             return render(request, 'ventas/addCar.html', {'pk': pk})
 """
 
+
 def carShopping(request):
     ventaId = request.session['ventaId']
     if ventaId:
@@ -189,12 +190,12 @@ def venta(request):
                     request.session['ventaId'] = obtener.pk
                     if descuento:
                         if float(descuento) <= 100:
-                            #descuento sin porcentaje
+                            # descuento sin porcentaje
                             descuento = float(float(descuento) / 100)
                             print("SU DESC ES: " + str(descuento))
-                            #valor del precio total
+                            # valor del precio total
                             valor = float(int(cantidad) * articulo.precio_unidad)
-                            #descuento al total el descuento
+                            # descuento al total el descuento
                             subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
                             descuentoValor = float("{0:.2f}".format(valor * descuento))
                             print('EL SUBTOTAL ES: ' + str(subTotal))
@@ -208,9 +209,10 @@ def venta(request):
                         descuentoValor = 0
                         print('EL SUBTOTAL ES: ' + str(subTotal))
                     form2 = DetalleForm(
-                        {'cantidad': cantidad, 'precio': articulo.precio_unidad, 'descuento':descuentoValor,'sub_total': subTotal,
-                            'id_articulo': articulo.pk,
-                            'id_venta': request.session['ventaId']})
+                        {'cantidad': cantidad, 'precio': articulo.precio_unidad, 'descuento': descuentoValor,
+                         'sub_total': subTotal,
+                         'id_articulo': articulo.pk,
+                         'id_venta': request.session['ventaId']})
                     if form2.is_valid():
                         form2.save()
                         form3 = get_object_or_404(Articulo, pk=articulo.pk)
@@ -364,24 +366,28 @@ def vender(request):
                 detalles = detalle.objects.filter(id_venta=ventaId)
                 if detalles:
                     total = 0
+                    descuentoTotal = 0
                     for foo in detalles:
-                        total += (foo.cantidad * foo.id_articulo.precio_unidad)
+                        total += foo.sub_total
+                        descuentoTotal += foo.descuento
                 else:
                     total = 0
+                    descuentoTotal = 0
                 efectivo = float(request.POST.get('cambio', ''))
                 if efectivo >= total:
                     print("estamos en 3")
-                    cambio = (efectivo - float(total))
+                    cambio = float("{0:.2f}".format(efectivo - float(total)))
                     numero = (facturas.numero + 1)
                     ventas = Venta.objects.get(id=ventaId)
                     print(ventas)
                     form = FacturaForm({'venta': ventaId, 'total': total, 'cambio': cambio, 'fecha': ventas.fecha_venta,
-                                        'numero': numero, 'efectivo': efectivo})
+                                        'numero': numero, 'efectivo': float(efectivo), 'descuentoTotal':descuentoTotal})
+                    print(form)
                     print("paso error")
                     if form.is_valid():
                         print("estamos en 4")
                         form.save()
-
+                        print("estamos en 4")
                         if ventas:
                             print("estamos en 5")
                             form = get_object_or_404(Venta, pk=ventas.pk)
@@ -404,19 +410,22 @@ def vender(request):
                 detalles = detalle.objects.filter(id_venta=ventaId)
                 if detalles:
                     total = 0
+                    descuentoTotal = 0
                     for foo in detalles:
-                        total += (foo.cantidad * foo.id_articulo.precio_unidad)
+                        total += foo.sub_total
+                        descuentoTotal += foo.descuento
                 else:
                     total = 0
+                    descuentoTotal = 0
                 if efectivo >= total:
                     print("estamos en 7")
-                    cambio = (efectivo - float(total))
+                    cambio = float("{0:.2f}".format(efectivo - float(total)))
                     print(cambio)
                     numero = 1
                     ventas = Venta.objects.get(id=ventaId)
                     form = FacturaForm(
                         {'venta': ventaId, 'total': total, 'cambio': float(cambio), 'fecha': ventas.fecha_venta,
-                         'numero': numero, 'efectivo': efectivo})
+                         'numero': numero, 'efectivo': efectivo, 'descuentoTotal': descuentoTotal})
                     if form.is_valid():
                         print("estamos en 8")
                         form.save()
@@ -501,49 +510,133 @@ def editarShop(request, pk):
     else:
         descuento = request.POST.get('desc', '')
         cantidad = request.POST.get('cantidad', '')
-        codigo = int(request.POST.get('codigo', ''))
+        codigo = request.POST.get('codigo', '')
         articulo = Articulo.objects.get(codigo_articulo=codigo)
-        if int(cantidad) <= articulo.stock:
-            try:
-                form = get_object_or_404(Articulo, pk=articulo.pk)
-                form.stock = articulo.stock + (detalles.cantidad - int(cantidad))
-                form.save()
-            except:
-                messages.warning(request, "error al cargar stock")
-                return redirect('ventas:shop')
-            try:
-                print("ESTO ES 1")
-                if descuento:
-                    if float(descuento) <= 100:
-                        # descuento sin porcentaje
-                        descuento = float(float(descuento) / 100)
-                        print("SU DESC ES: " + str(descuento))
-                        # valor del precio total
-                        valor = float(int(cantidad) * detalles.id_articulo.precio_unidad)
-                        # descuento al total el descuento
-                        subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
-                        descuentoValor = float("{0:.2f}".format(valor * descuento))
-                        print('EL SUBTOTAL ES: ' + str(subTotal))
-                    else:
-                        messages.warning(request, "ingrese un descuento menor del 100%")
+        if articulo.stock == 0:
+            if int(cantidad) <= detalles.cantidad:
+                try:
+                    form = get_object_or_404(Articulo, pk=articulo.pk)
+                    form.stock = articulo.stock + (detalles.cantidad - int(cantidad))
+                    form.save()
+                    try:
+                        print("ESTO ES 1")
+                        if descuento:
+                            if float(descuento) <= 100:
+                                # descuento sin porcentaje
+                                descuento = float(float(descuento) / 100)
+                                print("SU DESC ES: " + str(descuento))
+                                # valor del precio total
+                                valor = float(int(cantidad) * detalles.id_articulo.precio_unidad)
+                                # descuento al total el descuento
+                                subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                                descuentoValor = float("{0:.2f}".format(valor * descuento))
+                                print('EL SUBTOTAL ES: ' + str(subTotal))
+                            else:
+                                messages.warning(request, "ingrese un descuento menor del 100%")
+                                return redirect('ventas:shop')
+                        else:
+                            subTotal = float(int(cantidad) * detalles.id_articulo.precio_unidad)
+                            descuentoValor = 0
+                            print('EL SUBTOTAL ES: ' + str(subTotal))
+                        form = get_object_or_404(detalle, pk=detalles.pk)
+                        form.cantidad = int(cantidad)
+                        form.descuento = float(descuentoValor)
+                        form.sub_total = subTotal
+                        form.save()
+                        messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")
                         return redirect('ventas:shop')
-                else:
-                    subTotal = float(int(cantidad) * detalles.id_articulo.precio_unidad)
-                    descuentoValor = 0
-                    print('EL SUBTOTAL ES: ' + str(subTotal))
-                form = get_object_or_404(detalle, pk=detalles.pk)
-                form.cantidad = int(cantidad)
-                form.descuento = float(descuentoValor)
-                form.sub_total = subTotal
-                form.save()
-                messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")
-                return redirect('ventas:shop')
-            except:
-                messages.warning(request, "error al cargar nueva cantidad")
+                    except:
+                        messages.warning(request, "error al cargar nueva cantidad")
+                        return redirect('ventas:shop')
+                except:
+                    messages.warning(request, "error al cargar stock")
+                    return redirect('ventas:shop')
+            else:
+                messages.warning(request, "error stock insuficiente")
                 return redirect('ventas:shop')
         else:
-            messages.warning(request, "No hay suficiente stock")
-            return redirect('ventas:shop')
+            if int(cantidad) == detalles.cantidad:
+                try:
+                    print("ESTO ES 1")
+                    try:
+                        form = get_object_or_404(Articulo, pk=articulo.pk)
+                        form.stock = articulo.stock + (detalles.cantidad - int(cantidad))
+                        form.save()
+                    except:
+                        messages.warning(request, "error al cargar stock")
+                        return redirect('ventas:shop')
+                    if descuento:
+
+                        if float(descuento) <= 100:
+                            # descuento sin porcentaje
+                            descuento = float(float(descuento) / 100)
+                            print("SU DESC ES: " + str(descuento))
+                            # valor del precio total
+                            valor = float(int(cantidad) * detalles.id_articulo.precio_unidad)
+                            # descuento al total el descuento
+                            subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                            descuentoValor = float("{0:.2f}".format(valor * descuento))
+                            print('EL SUBTOTAL ES: ' + str(subTotal))
+                        else:
+                            messages.warning(request, "ingrese un descuento menor del 100%")
+                            return redirect('ventas:shop')
+                    else:
+                        subTotal = float(int(cantidad) * detalles.id_articulo.precio_unidad)
+                        descuentoValor = 0
+                        print('EL SUBTOTAL ES: ' + str(subTotal))
+                    form = get_object_or_404(detalle, pk=detalles.pk)
+                    form.cantidad = int(cantidad)
+                    form.descuento = float(descuentoValor)
+                    form.sub_total = subTotal
+                    form.save()
+                    messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")
+                    return redirect('ventas:shop')
+                except:
+                    messages.warning(request, "error al cargar nueva cantidad")
+                    return redirect('ventas:shop')
+
+            else:
+                if (int(cantidad) - detalles.cantidad) <= articulo.stock :
+                    try:
+                        print("ESTO ES 1")
+                        try:
+                            form = get_object_or_404(Articulo, pk=articulo.pk)
+                            form.stock = articulo.stock + (detalles.cantidad - int(cantidad))
+                            form.save()
+                        except:
+                            messages.warning(request, "error al cargar stock")
+                            return redirect('ventas:shop')
+                        if descuento:
+                            if float(descuento) <= 100:
+                                # descuento sin porcentaje
+                                descuento = float(float(descuento) / 100)
+                                print("SU DESC ES: " + str(descuento))
+                                # valor del precio total
+                                valor = float(int(cantidad) * detalles.id_articulo.precio_unidad)
+                                # descuento al total el descuento
+                                subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                                descuentoValor = float("{0:.2f}".format(valor * descuento))
+                                print('EL SUBTOTAL ES: ' + str(subTotal))
+                            else:
+                                messages.warning(request, "ingrese un descuento menor del 100%")
+                                return redirect('ventas:shop')
+                        else:
+                            subTotal = float(int(cantidad) * detalles.id_articulo.precio_unidad)
+                            descuentoValor = 0
+                            print('EL SUBTOTAL ES: ' + str(subTotal))
+                        form = get_object_or_404(detalle, pk=detalles.pk)
+                        form.cantidad = int(cantidad)
+                        form.descuento = float(descuentoValor)
+                        form.sub_total = subTotal
+                        form.save()
+                        messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")
+                        return redirect('ventas:shop')
+                    except:
+                        messages.warning(request, "error al cargar nueva cantidad")
+                        return redirect('ventas:shop')
+                else:
+                    messages.warning(request, "No hay suficiente stock")
+                    return redirect('ventas:shop')
     ventaId = request.session['ventaId']
     if ventaId:
         query = detalle.objects.filter(id_venta=ventaId)
@@ -555,41 +648,45 @@ def editarShop(request, pk):
             total = 0
         print('ventaId 0', query)
 
-        return render(request, 'ventas/shop.html', {'form':form, 'query': query, 'total': total, 'desc': desc})
+        return render(request, 'ventas/shop.html', {'form': form, 'query': query, 'total': total, 'desc': desc})
     else:
         request.session['ventaId'] = ""
-        return render(request, 'ventas/shop.html', {'form':form, 'desc': desc})
+        return render(request, 'ventas/shop.html', {'form': form, 'desc': desc})
+
 
 def listarVentas(request):
-    return render(request,'ventas/listVentas.html')
+    return render(request, 'ventas/listVentas.html')
+
 
 def llenarTablaVentas(request):
     codigo = request.POST.get('codigo', '')
     if codigo == "1234":
-        query = Venta.objects.all().exclude(estado=1)
+        query = Venta.objects.all().exclude(estado=1).order_by('-fecha_venta')
 
         return render(request, 'ventas/listVentas.html', {'datosVenta': query})
     else:
         if codigo:
             messages.warning(request, 'Codigo Incorrecto')
             return redirect('articulo:articulo')
-        return render(request, 'base/codigo.html', {'listVenta':1})
+        return render(request, 'base/codigo.html', {'listVenta': 1})
 
-def detalleVenta(request, pk ):
+
+def detalleVenta(request, pk):
     total = 0
     ventaDetalle = detalle.objects.filter(id_venta=pk)
     for sumaTotal in ventaDetalle:
         total += sumaTotal.sub_total
-    return render(request, 'ventas/detalleVenta.html', {'detalleVenta': ventaDetalle, 'pk': pk, "total":total})
+    return render(request, 'ventas/detalleVenta.html', {'detalleVenta': ventaDetalle, 'pk': pk, "total": total})
 
-def regresarVentas(request,pk):
+
+def regresarVentas(request, pk):
     vntas = Venta.objects.get(id=pk)
     print(vntas)
     if vntas:
-     res = get_object_or_404(Venta, pk=vntas.pk)
-     res.estado = 1
-     res.save()
-     request.session['ventaId'] = pk
-     messages.success(request, 'Venta Recuperada')
-     return redirect('ventas:shop')
-    return render(request, 'ventas/listVentas.html', {'pkV': pk, 'ventas':vntas})
+        res = get_object_or_404(Venta, pk=vntas.pk)
+        res.estado = 1
+        res.save()
+        request.session['ventaId'] = pk
+        messages.success(request, 'Venta Recuperada')
+        return redirect('ventas:shop')
+    return render(request, 'ventas/listVentas.html', {'pkV': pk, 'ventas': vntas})

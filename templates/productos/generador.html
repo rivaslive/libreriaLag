@@ -1,4 +1,6 @@
+
 {% extends 'base/admin.html' %}
+{% load staticfiles %}
 {% block active2 %}
     activo
 {% endblock %}
@@ -13,6 +15,7 @@
 
 {% endblock %}
 {% block body %}
+    <link rel="stylesheet" href="{% static 'fonts/fonts.css' %}" type="text/css" charset="utf-8">
     <style>
         #plus-shopping {
             margin-top: -20px;
@@ -79,7 +82,7 @@
 
     </style>
     <div id="parte1" class="generador">
-        <h1 style="font-family: 'Libre Barcode 39 Text', cursive; font-size: 3.8rem">{{ codigo }}</h1>
+        <h1 style="font-family: 'Conv_Code39r', sans-serif; font-size: 3.8rem">{{ codigo }}</h1>
     </div>
     <div id="parte2">
         <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow">

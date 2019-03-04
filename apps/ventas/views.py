@@ -698,3 +698,17 @@ def regresarVentas(request, pk):
         messages.success(request, 'Venta Recuperada')
         return redirect('ventas:shop')
     return render(request, 'ventas/listVentas.html', {'pkV': pk, 'ventas': vntas})
+
+def arqueoCaja(request):
+    fechaNow =  datetime.now()
+    query = detalle.objects.filter(id_venta__fecha_venta=fechaNow.date()).exclude(id_venta__estado=1)
+
+    fecha = ""
+    total = 0
+    for q in query:
+        total += q.sub_total
+        fecha = q.id_venta.fecha_venta
+    return render(request, 'ventas/arqueo.html', {'query':query, 'total':total, 'fecha':fecha})
+
+
+

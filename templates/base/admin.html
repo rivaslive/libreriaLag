@@ -37,6 +37,7 @@
             font-family: IDAutomationHC39M;
             src: url('{% static 'fonts/barcode/IDAutomationHC39M.woff' %}');
         }
+
         .error {
             border: none;
             border-bottom: 2px solid orangered;
@@ -134,6 +135,9 @@
                 <li class="nav-item {% block active4 %} {% endblock %}">
                     <a class="nav-link2" onclick="return abrir_modal('{% url 'articulo:inventario' %}')"
                        style="color:black">Inventario</a>
+                </li>
+                <li class="nav-item {% block active5 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'ventas:arqueo_caja' %}">Reportes</a>
                 </li>
 
 

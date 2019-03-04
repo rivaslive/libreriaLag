@@ -120,7 +120,7 @@
         <div class="row bg-hover mt-4"
              style="background-color: rgb(83, 109, 122); border-radius:.525rem; color: white;">
             <div class="col-md-12 mt-2">
-                <h3 class="card-title" style="font-weight: 500">Vender Productos</h3>
+                <h3 class="card-title" style="font-weight: 500">Venta de Artículos</h3>
                 <h5 class="card-subtitle " style="color: rgb(200,200,200)">Formulario</h5>
             </div>
             {% if messages %}
@@ -156,17 +156,17 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="id_Desc">Descuento en porcentaje</label>
-                                    <input type="text" id="id_Desc" class="form-control" placeholder="% Descuento(Opcional)" name="desc" value="{{ desc }}">
+                                    <input type="text" id="id_Desc" class="form-control" placeholder="% Descuento (Opcional)" name="desc" value="{{ desc }}">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="id_cantidad">Cantidad</label>
-                                    <input placeholder="Cantidad" type="text" id="id_cantidad" name="cantidad"
+                                    <label for="id_cantidad">Cantidad de unidades a vender</label>
+                                    <input placeholder="Ejemplo: 10" type="text" id="id_cantidad" name="cantidad"
                                            class="form-control" value="{% if form.cantidad %}{{ form.cantidad }}{% endif %}">
                                 </div>
 
                                 <div class="form-group col-md-11">
-                                    <label for="id_codigo_articulo">Codigo</label>
-                                    <input placeholder="Codigo" type="text" id="id_codigo_articulo" name="codigo"
+                                    <label for="id_codigo_articulo">Código del Artículo</label>
+                                    <input placeholder="Ejemplo: 098473612" type="text" id="id_codigo_articulo" name="codigo"
                                            required value="{% if form.id_articulo.codigo_articulo %}{{ form.id_articulo.codigo_articulo }}{% endif %}"
                                            class="form-control">
                                 </div>
@@ -191,7 +191,7 @@
                 <thead>
                 <tr>
                     <th scope="col">N°</th>
-                    <th scope="col">Codigo</th>
+                    <th scope="col">Código</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio Venta</th>
@@ -240,7 +240,7 @@
                         {% csrf_token %}
                         <div class="col-md-12">
                             <h1>Total: {{ total }}</h1>
-                            <label for="Cambio">Ingrese monto con el que pagara</label>
+                            <label for="Cambio">Ingrese el efectivo con el que pagará su cliente</label>
                             <input type="text" id="Cambio" name="cambio" class="form-control"  placeholder="0.00"
                                    style="color: black;" required>
                         </div>

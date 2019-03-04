@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from rest_framework import status, generics
 
-from apps.articulos.models import Articulo
+from apps.articulos.models import Articulo, Categoria
 from apps.articulos.forms import ArticuloForm
 from django.db.models import Sum, Q
 import random
@@ -152,7 +152,8 @@ def generador(request):
 
 def articulo_edi(request, pk):
     articulo = Articulo.objects.get(id=pk)
-
+    cat = Categoria.objects.all()
+    catName = request.POST.get('id_categoria')
     if request.method == 'GET':
         form = ArticuloForm(instance=articulo)
     else:
@@ -163,7 +164,7 @@ def articulo_edi(request, pk):
             return redirect('articulo:inventario')
         messages.warning(request, 'error al editar articulo')
         return redirect('articulo:inventario')
-    return render(request, 'productos/productoModal.html', {'form': form, 'pk': pk, 'articulo':articulo})
+    return render(request, 'productos/productoModal.html', {'form': form, 'pk': pk, 'articulo':articulo,'categorias':cat})
 
 
 
@@ -214,4 +215,6 @@ def articuloListJSON(request, format=None):
 class ArticuloListClass(generics.ListCreateAPIView):
     queryset = Articulo.objects.all()
     serializer_class = ArticuloSerializer
+
+
 

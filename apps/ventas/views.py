@@ -701,7 +701,8 @@ def regresarVentas(request, pk):
 
 def arqueoCaja(request):
     fechaNow =  datetime.now()
-    query = detalle.objects.filter(id_venta__fecha_venta=fechaNow.date()).exclude(id_venta__estado=1)
+    print (fechaNow)
+    query = detalle.objects.filter(id_venta__fecha_venta=fechaNow).exclude(id_venta__estado=1)
 
     fecha = ""
     total = 0

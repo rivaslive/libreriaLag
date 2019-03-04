@@ -12,7 +12,7 @@
             <form id="cambio" action="{% url 'ventas:vender' %}" method="POST">
                 {% csrf_token %}
                 <div class="form-row">
-                    <label for="Cambio">Ingrese monto con el que pagara</label>
+                    <label for="Cambio">Ingrese el efectivo con el que pagará su cliente</label>
                     <input type="text" id="Cambio" name="cambio" class="form-control" placeholder="0.00" required>
                 </div>
             </form>

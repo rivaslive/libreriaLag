@@ -27,10 +27,14 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="Categoria"><b>Categoria</b></label>
-                        <select name="id_categoria" required="" class="form-control" id="id_id_categoria">
-                            <option value="" selected="">Seleccione una opción</option>
-                            <option value="1">Libros</option>
-                            <option value="2">Utiles</option>
+
+                        <select name="id_categoria" required=""  class="form-control" id="id_id_categoria">
+
+                            {% for categoria in categorias %}
+                             <option value="{{ categoria.pk }}" selected="">{{ categoria.nombre_Categoria }}</option>
+                            {% endfor %}
+
+
                         </select>
                     </div>
                     <div class="form-group col-md-4">
@@ -73,9 +77,16 @@
         </div>
         <div class="modal-footer">
             <div class="espacio">
-                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Cerrar</button>
+                {% if pk %}
+                     <button type="button" class="btn  btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" form="form2" class="btn btn-raised bg-blue" id="subm">Actualizar
+                </button>
+                {% else %}
+                     <button type="button" class="btn  btn-secondary" data-dismiss="modal">Cerrar</button>
                 <button type="submit" form="form2" class="btn btn-raised bg-blue" id="subm">Registrar
                 </button>
+                {% endif %}
+
             </div>
             <script>
                 $(function () {

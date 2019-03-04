@@ -3,7 +3,7 @@ from apps.articulos.models import Articulo
 
 # Create your models here.
 class Venta(models.Model):
-    fecha_venta = models.DateField(null=False, blank=False)
+    fecha_venta = models.DateTimeField(null=False, blank=False)
     estado = models.IntegerField(null=False, blank=False)
     def __str__(self):
         return '{}'.format(self.fecha_venta)

@@ -16,7 +16,7 @@ from apps.articulos.serializers import ArticuloSerializer
 # ver articulos
 from apps.ventas.models import detalle
 import json
-from chartjs.views.lines import BaseLineChartView
+#from chartjs.views.lines import BaseLineChartView
 from django.views.generic import TemplateView
 
 

@@ -23,6 +23,13 @@ from django.views.generic import TemplateView
 
 def articulo(request):
     try:
+        if request.session['codigo']:
+            request.session['codigo']= ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
+    try:
         if request.session['ventaId']:
             ventaId = request.session['ventaId']
             notify = detalle.objects.filter(id_venta=ventaId).count()
@@ -60,15 +67,26 @@ class CrearArticulo(SuccessMessageMixin, CreateView):
 # Mostrar los productos sin stock
 def inventario(request):
     codigo = request.POST.get('codigo', '')
-    if codigo == "1234":
+    try:
+        if codigo:
+            request.session['codigo'] = codigo
+            codigoSession = codigo
+            print ("EL CODIGO ES: "+codigoSession)
+        else:
+            codigoSession = request.session['codigo']
+    except:
+        codigoSession = '0'
+    if codigoSession =="1234" or codigo == "1234":
         # Articulos con estado activo, con stock mayor que 1 pero menores que 10
         query = Articulo.objects.filter(Q(stock__gt=0) & Q(stock__lt=11)).exclude(is_activate=0).order_by('stock')
         # Articulos con 0 existencias
         query_ar = Articulo.objects.filter(stock=0).exclude(is_activate=0).order_by('stock')
-        # Todos los demás articulos mayores ue 10
+        # Todos los demás articulos mayores que 10
         query_are = Articulo.objects.filter(stock__gt=10).exclude(is_activate=0).order_by('stock')
+        print("CODIGO SESSION: "+request.session['codigo'])
         return render(request, 'productos/inventario.html', {'inventario1': query, 'inventario': query_ar, 'inventariop': query_are})
     else:
+        request.session['codigo'] = ''
         if codigo:
             messages.warning(request, 'Codigo Incorrecto')
             return redirect('articulo:articulo')
@@ -78,6 +96,13 @@ def inventario(request):
 
     #Buscar Articulos
 def buscar(request):
+    try:
+        if request.session['codigo']:
+            request.session['codigo']= ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
     buscar= request.GET.get('search','')
     queryset = Articulo.objects.filter(Q(nombre_articulo__icontains=buscar)|Q(codigo_articulo__contains=buscar)).exclude(is_activate=0).order_by('nombre_articulo')
 
@@ -86,11 +111,24 @@ def buscar(request):
 
 
 def inicio(request):
-
+    try:
+        if request.session['codigo']:
+            request.session['codigo']= ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
     return render(request, 'productos/index.html')
 
 
 def generador(request):
+    try:
+        if request.session['codigo']:
+            request.session['codigo']= ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
     try:
         evaluation = request.POST.get('evaluation', '')
         if evaluation:
@@ -123,6 +161,8 @@ def articulo_edi(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'Articulo editado correctamente')
+            return redirect('articulo:inventario')
+        messages.warning(request, 'error al editar articulo')
         return redirect('articulo:inventario')
     return render(request, 'productos/productoModal.html', {'form': form, 'pk': pk, 'articulo':articulo,'categorias':cat})
 

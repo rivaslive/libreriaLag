@@ -1,11 +1,11 @@
 {% extends 'base/admin.html' %}
 {% load staticfiles %}
-{% block active2 %}
+{% block active5 %}
     activo
 {% endblock %}
 {% block car %}
 
-    <div class="car">
+    <div class="car guardar">
         <a style="text-align: center" id="car-venta" href="javascript:window.print();"
            class="btn-lg bg-blue"><i
                 class="icon-printer-1"></i></a>
@@ -63,13 +63,14 @@
         }
 
         @media print {
-            #parte1 {
+            #parte2 {
                 display: block;
             }
-
-            #parte2 {
+            .guardar{
                 display: none;
             }
+
+
         }
 
         #generar {
@@ -86,30 +87,48 @@
 
     </style>
 
-    <div id="parte2">
-        <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow">
-            <div class="1h-100">
-                <h6 class="mb-0 text-white 1h-100">Generador de codigos</h6>
-                <small>Aleatorios</small>
-            </div>
+    <div id="parte2" style="width: 90%; margin: 0 5%">
+    <div class="header text-center ">
+        <h1 align="center" class="mt-2">Arqueo de caja</h1>
+        <h1 align="center" class="mt-2">"Libreria CANAAN"</h1>
+        <h5 align="justify" class="mt-4"><span>Fecha: {{ fecha }} </span><span class="float-right">Total del dia: ${{ total }}</span> </h5>
+    </div>
+        <div class=" mt-2" >
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-gray">
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Codigo</th>
 
-        </div>
-        <div class="card mt-2 mx-auto" style="width: 100%; height: 26rem;">
-            <div class="card-body">
-                <div id="generar" class="card mx-auto mt-4" style="">
-                    <div class="card-body text-center">
-                        <h5 class="card-title" align="center">Generador de codigos de barras</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Codigos Aleatorio</h6>
-                        <form action="{% url 'articulo:generador' %}" method="post">
-                            {% csrf_token %}
-                            <input name="evaluation" type="hidden" value="1">
-                            <button type="submit" style="width: 80%" class="btn bg-blue  mx-auto">Generar</button>
-                        </form>
-                        <div class="generador">
-                            <p class="mt-4" style="font-family: 'IDAutomationHC39M', sans-serif; font-size: 1.2rem">({{ codigo }})</p>
-                        </div>
-                    </div>
-                </div>
+                        <th scope="col">Articulo</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio c/u</th>
+                        <th scope="col">Desc $</th>
+                        <th scope="col">Des %</th>
+                        <th scope="col">Sub-Total</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if query %}
+                        {% for foo in query %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ foo.id_articulo.codigo_articulo }}</td>
+                                <td>{{ foo.id_articulo.nombre_articulo }}</td>
+                                <td>{{ foo.cantidad }}</td>
+                                <td>${{ foo.id_articulo.precio_unidad }}</td>
+                                <td>${{ foo.descuento }} </td>
+                                <td>{{ foo.descuentoPorcentual }}0%</td>
+                                <td>${{ foo.sub_total }}</td>
+
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    {% endif %}
+                </table>
             </div>
         </div>
     </div>

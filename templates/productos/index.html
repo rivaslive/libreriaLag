@@ -2,9 +2,8 @@
 {% load staticfiles %}
 
 
-
 {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-green" id="nav22" style="margin: 0; padding: 0">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-green" id="nav22" style="margin: 0; padding: 0;">
         <a class="navbar-brand mx-2" href="#">Libreria CANAAN</a>
         <button
                 class="navbar-toggler"
@@ -31,6 +30,9 @@
                 </li>
                 <li class="nav-item {% block active3 %} {% endblock %}">
                     <a class="nav-link2" href="{% url 'ventas:shop' %}">Ventas</a>
+                </li>
+                <li class="nav-item {% block active5 %} {% endblock %}">
+                    <a class="nav-link2" href="{% url 'ventas:shop' %}">Reportes</a>
                 </li>
                 <li class="nav-item {% block active4 %} {% endblock %}">
                     <a class="nav-link2" onclick="return abrir_modal('{% url 'articulo:inventario' %}')">Inventario</a>
@@ -121,7 +123,7 @@
     </style>
     <div class="container">
 
-        <div class="card mx-auto mt-lg-5" id="buscar">
+        <div class="card mx-auto " style="margin: 12%;" id="buscar">
             <div class="card-body">
                 <div class="form-group col-md-12">
                     <h1 class="title-search mt-md-5" align="center">Búsqueda</h1>
@@ -143,7 +145,7 @@
             </div>
         </div>
     </div>
-    <div class="row" style="margin-top: 300px; margin-left: -10%; width: 120%; background-color: white">
+    <div class="row" style="margin-top: 300px; margin-left: -10%; width: 120%; height: 60%; background-color: white; ">
         <div class="col-md-12 mt-4">
             <h1 align="center" class="text-primary">Estadisticas de Libreria CANAAN</h1>
         </div>
@@ -157,9 +159,7 @@
             <div id="container" style="width:100%; height:400px;"></div>
         </div>
     </div>
-    <div style=" margin-left: -10%; width: 120%; background-color: white; height: 200px">
 
-    </div>
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {

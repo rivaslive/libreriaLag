@@ -99,8 +99,8 @@
                     <thead class="bg-gray">
                     <tr>
                         <th scope="col">N°</th>
+                        <th scope="col">Hora</th>
                         <th scope="col">Codigo</th>
-
                         <th scope="col">Articulo</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col">Precio c/u</th>
@@ -115,6 +115,7 @@
                         {% for foo in query %}
                             <tr>
                                 <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ foo.id_articulo.horaVenta }}</td>
                                 <td>{{ foo.id_articulo.codigo_articulo }}</td>
                                 <td>{{ foo.id_articulo.nombre_articulo }}</td>
                                 <td>{{ foo.cantidad }}</td>

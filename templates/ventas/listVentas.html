@@ -22,6 +22,7 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">Fecha</th>
+                    <th scope="col">Hora</th>
                     <th scope="col">Estado</th>
                       <th scope="col">Acciones</th>
                 </tr>
@@ -30,7 +31,7 @@
                   {% if datosVenta %}
                     {% for foo in datosVenta %}
                         <tr>
-
+                        <td>{{ foo.horaVenta }}</td>
                         <td scope="row">{{ foo.fecha_venta }}</td>
 
                         <td>{{ foo.estado}}</td>

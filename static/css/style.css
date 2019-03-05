@@ -77,7 +77,7 @@ body {
 }
 
 .car {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     margin-left: 92%;
     font-size: 50px;

@@ -20,55 +20,6 @@
             display: none;
         }
 
-        .block {
-            display: block;
-        }
-
-        #plus-shopping {
-            margin-top: -20px;
-            font-size: 18px;
-            border-radius: 50%;
-            background-color: rgb(33, 150, 243, 0.7);
-            color: white;
-        }
-
-        #plus-shopping:hover {
-            text-decoration: none;
-            color: white;
-            background-color: rgb(33, 150, 243);
-        }
-
-        #search {
-            color: white;
-        }
-
-        #search::-ms-expand {
-            background-color: transparent;
-            border: 0
-        }
-
-        #search:focus, #search:focus {
-            color: white;
-            background-color: transparent;
-            border-color: white;
-            outline: 0;
-            box-shadow: none, 0 0 0 .2rem rgba(255, 255, 255, 255)
-        }
-
-        #search::placeholder, #search::placeholder {
-            color: rgb(170, 170, 170);
-            opacity: 1
-        }
-
-        #search:disabled, #search:disabled, #search[readonly], [readonly].custom-file-control {
-            background-color: #e9ecef;
-            opacity: 1
-        }
-
-        #parte1 {
-            display: none;
-        }
-
         @media print {
             #parte2 {
                 display: block;
@@ -84,23 +35,14 @@
 
         }
 
-        #generar {
-            width: 35%;
-            height: 17rem;
-        }
-
-        @media screen and (max-width: 768px) {
-            #generar {
-                width: 100%;
-                height: 17rem;
-            }
-        }
-
         .sub-navbar {
             width: 100%;
             padding: 10px 50px 50px 50px;
-            border: 1px solid rgb(108, 117, 125);
+            border: 1px solid rgb(150, 150, 150);
             border-radius: .5rem;
+            -webkit-box-shadow: 10px 8px 21px -9px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: 10px 8px 21px -9px rgba(0, 0, 0, 0.75);
+            box-shadow: 10px 8px 21px -9px rgba(0, 0, 0, 0.75);
             background: rgb(108, 80, 125, 0.2);
         }
 
@@ -198,7 +140,7 @@
             </div>
             <div class=" mt-2">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table text-center">
                         <thead class="bg-gray">
                         <tr>
                             <th scope="col">N°</th>
@@ -243,11 +185,11 @@
                 <h1 align="center" class="mt-2">Reporte del mes</h1>
                 <h1 align="center" class="mt-2">"Libreria CANAAN"</h1>
                 <p align="justify" class="mt-4"><span>Desde: {{ fecha2.date }} </span> <span style="margin-left: 20%">Hasta: {{ fecha.date }}</span><span
-                        class="float-right">Total del dia: ${{ total2 }}</span></p>
+                        class="float-right">Total del mes: ${{ total2 }}</span></p>
             </div>
             <div class=" mt-2">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table text-center">
                         <thead class="bg-gray">
                         <tr>
                             <th scope="col">N°</th>
@@ -297,7 +239,7 @@
             </div>
             <div class=" mt-2">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table text-center">
                         <thead class="bg-gray">
                         <tr>
                             <th scope="col">N°</th>
@@ -346,11 +288,13 @@
             $("#reporte_articulo").addClass("none");
             $("#arqueo_caja").removeClass("none");
         }
+
         function reportVenta() {
             $("#reporte_articulo").addClass("none");
             $("#arqueo_caja").addClass("none");
             $("#reporte_venta").removeClass("none");
         }
+
         function reporttArt() {
             $("#reporte_venta").addClass("none");
             $("#arqueo_caja").addClass("none");

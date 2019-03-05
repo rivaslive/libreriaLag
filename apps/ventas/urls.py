@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from apps.ventas.views import prueba, carShopping,regresarVentas, arqueoCaja, shop,venta, eliminarDetalle, vender, ticket, drop, editarShop, llenarTablaVentas, detalleVenta
+from apps.ventas.views import prueba, carShopping,regresarVentas, reporte, shop,venta, eliminarDetalle, vender, ticket, drop, editarShop, llenarTablaVentas, detalleVenta
 from django.contrib.auth.decorators import login_required
 app_name = 'ventas'
 
@@ -17,5 +17,5 @@ urlpatterns = [
     path('shop/',  login_required(shop), name="shop"),
     path('venta/',  login_required(venta), name="venta"),
     path('listventa/', login_required(llenarTablaVentas), name="listVenta"),
-    path('arqueo_caja/', login_required(arqueoCaja), name="arqueo_caja")
+    path('reporte/', login_required(reporte), name="reporte")
 ]

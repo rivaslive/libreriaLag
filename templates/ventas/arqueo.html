@@ -20,6 +20,10 @@
             display: none;
         }
 
+        .block {
+            display: block;
+        }
+
         #plus-shopping {
             margin-top: -20px;
             font-size: 18px;
@@ -92,6 +96,14 @@
             }
         }
 
+        .sub-navbar {
+            width: 100%;
+            padding: 10px 50px 50px 50px;
+            border: 1px solid rgb(108, 117, 125);
+            border-radius: .5rem;
+            background: rgb(108, 80, 125, 0.2);
+        }
+
         .sub-navbar .card {
             cursor: pointer;
             background: transparent;
@@ -104,11 +116,25 @@
             background-size: cover;
             transition: all 500ms;
         }
+
         .sub-navbar .card2 {
-            background-image: url('{% static 'media/img08.jpeg' %}'), linear-gradient(red, blue);
+            background-image: url('{% static 'media/img10.jpg' %}'), linear-gradient(red, blue);
             background-size: cover;
             transition: all 500ms;
             color: white;
+        }
+
+        .sub-navbar .card2 .card-title {
+            color: rgb(50, 60, 80);
+        }
+
+        .sub-navbar .card2:hover .card-title {
+            color: rgb(255, 195, 0);
+        }
+
+        .sub-navbar .card3 .card-title {
+            font-weight: 700;
+            color: rgb(235, 91, 55);
         }
 
         .sub-navbar .card3 {
@@ -117,11 +143,10 @@
             transition: all 500ms;
         }
 
-
         .sub-navbar .card:hover {
             cursor: pointer;
             background-image: none;
-            background: rgb(47, 79, 79);
+            background: rgb(22, 22, 22);
             transition: all 900ms;
             color: white;
         }
@@ -129,80 +154,179 @@
     </style>
 
     <div class="sub-navbar row mt-4">
+        <h1 class="col-md-12 text-center text-muted">Acciones que puede realizar</h1>
         <div class="card card1 mx-auto" style="">
-            <div class="card-body">
-                <h5 class="card-title">Arqueo de Caja</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Reporte de Hoy</h6>
-                <p class="card-text">Visualice e imprima las ventas del dia de hoy, puede hacer recuento de caja
-                    tambien.</p>
-
-            </div>
+            <a onclick="arqueo()" title="Arqueo de caja">
+                <div class="card-body">
+                    <h5 class="card-title">Arqueo de Caja</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Reporte de Hoy</h6>
+                    <p class="card-text">Visualice e imprima las ventas del dia de hoy, puede hacer recuento de caja
+                        tambien.</p>
+                </div>
+            </a>
         </div>
         <div class="card card2 mx-auto" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Reporte de ventas ultimos 30 dias</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Ventas Mensuales</h6>
-                <p class="card-text">Visualice e imprima un reporte de las ventas durante los ultimos 30 dias.</p>
+            <a onclick="reportVenta()" title="Reporte de ventas">
+                <div class="card-body">
+                    <h5 class="card-title">Reporte de ventas ultimos 30 dias</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Ventas Mensuales</h6>
+                    <p class="card-text">Visualice e imprima un reporte de las ventas durante los ultimos 30 dias.</p>
 
-            </div>
+                </div>
+            </a>
         </div>
         <div class="card card3 mx-auto" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Articulos en inventario</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Reporte Articulos</h6>
-                <p class="card-text">Un reporte con todos los articulos y sus existencias en inventario</p>
+            <a onclick="reporttArt()" title="Inventario">
+                <div class="card-body">
+                    <h5 class="card-title">Articulos inventario</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Reporte Articulos</h6>
+                    <p class="card-text">Un reporte con todos los articulos y sus existencias en inventario</p>
 
-            </div>
+                </div>
+            </a>
         </div>
 
     </div>
 
-    <div id="parte2" class="none" style="width: 90%; margin: 0 5%">
-        <div class="header text-center ">
-            <h1 align="center" class="mt-2">Arqueo de caja</h1>
-            <h1 align="center" class="mt-2">"Libreria CANAAN"</h1>
-            <h5 align="justify" class="mt-4"><span>Fecha: {{ fecha }} </span><span
-                    class="float-right">Total del dia: ${{ total }}</span></h5>
+    <div id="parte2" style="width: 90%; margin: 0 5%">
+        <div id="arqueo_caja" class="none">
+            <div class="header text-center ">
+                <h1 align="center" class="mt-2">Arqueo de caja</h1>
+                <h1 align="center" class="mt-2">"Libreria CANAAN"</h1>
+                <h5 align="justify" class="mt-4"><span>Fecha: {{ fecha }} </span><span
+                        class="float-right">Total del dia: ${{ total }}</span></h5>
+            </div>
+            <div class=" mt-2">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-gray">
+                        <tr>
+                            <th scope="col">N°</th>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Codigo Venta</th>
+                            <th scope="col">Codigo Art</th>
+                            <th scope="col">Articulo</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Precio c/u</th>
+                            <th scope="col">Desc $</th>
+                            <th scope="col">Des %</th>
+                            <th scope="col">Sub-Total</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if query %}
+                            {% for foo in query %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ foo.id_venta.horaVenta }}</td>
+                                    <td>{{ foo.id_venta.pk }}</td>
+                                    <td>{{ foo.id_articulo.codigo_articulo }}</td>
+                                    <td>{{ foo.id_articulo.nombre_articulo }}</td>
+                                    <td>{{ foo.cantidad }}</td>
+                                    <td>${{ foo.id_articulo.precio_unidad }}</td>
+                                    <td>${{ foo.descuento }} </td>
+                                    <td>{{ foo.descuentoPorcentual }}%</td>
+                                    <td>${{ foo.sub_total }}</td>
+
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class=" mt-2">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="bg-gray">
-                    <tr>
-                        <th scope="col">N°</th>
-                        <th scope="col">Hora</th>
-                        <th scope="col">Codigo Venta</th>
-                        <th scope="col">Codigo Art</th>
-                        <th scope="col">Articulo</th>
-                        <th scope="col">Cantidad</th>
-                        <th scope="col">Precio c/u</th>
-                        <th scope="col">Desc $</th>
-                        <th scope="col">Des %</th>
-                        <th scope="col">Sub-Total</th>
+        <div id="reporte_venta" class="none">
+            <div class="header text-center ">
+                <h1 align="center" class="mt-2">Reporte del mes</h1>
+                <h1 align="center" class="mt-2">"Libreria CANAAN"</h1>
+                <p align="justify" class="mt-4"><span>Desde: {{ fecha2.date }} </span> <span style="margin-left: 20%">Hasta: {{ fecha.date }}</span><span
+                        class="float-right">Total del dia: ${{ total2 }}</span></p>
+            </div>
+            <div class=" mt-2">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-gray">
+                        <tr>
+                            <th scope="col">N°</th>
+                            <th scope="col">Dia</th>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Codigo Venta</th>
+                            <th scope="col">Codigo Art</th>
+                            <th scope="col">Articulo</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Precio c/u</th>
+                            <th scope="col">Desc $</th>
+                            <th scope="col">Des %</th>
+                            <th scope="col">Sub-Total</th>
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% if query %}
-                        {% for foo in query %}
-                            <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
-                                <td>{{ foo.id_venta.horaVenta }}</td>
-                                <td>{{ foo.id_venta.pk }}</td>
-                                <td>{{ foo.id_articulo.codigo_articulo }}</td>
-                                <td>{{ foo.id_articulo.nombre_articulo }}</td>
-                                <td>{{ foo.cantidad }}</td>
-                                <td>${{ foo.id_articulo.precio_unidad }}</td>
-                                <td>${{ foo.descuento }} </td>
-                                <td>{{ foo.descuentoPorcentual }}%</td>
-                                <td>${{ foo.sub_total }}</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if query2 %}
+                            {% for foo in query2 %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ foo.id_venta.fecha_venta }}</td>
+                                    <td>{{ foo.id_venta.horaVenta }}</td>
+                                    <td>{{ foo.id_venta.pk }}</td>
+                                    <td>{{ foo.id_articulo.codigo_articulo }}</td>
+                                    <td>{{ foo.id_articulo.nombre_articulo }}</td>
+                                    <td>{{ foo.cantidad }}</td>
+                                    <td>${{ foo.id_articulo.precio_unidad }}</td>
+                                    <td>${{ foo.descuento }} </td>
+                                    <td>{{ foo.descuentoPorcentual }}%</td>
+                                    <td>${{ foo.sub_total }}</td>
 
-                            </tr>
+                                </tr>
 
-                        {% endfor %}
-                        </tbody>
-                    {% endif %}
-                </table>
+                            {% endfor %}
+                            </tbody>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="reporte_articulo" class="none">
+            <div class="header text-center ">
+                <h1 align="center" class="mt-2">Reporte de Articulos</h1>
+                <h1 align="center" class="mt-2">"Libreria CANAAN"</h1>
+                <h5 align="justify" class="mt-4"><span>Fecha: {{ fecha }} </span></h5>
+            </div>
+            <div class=" mt-2">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="bg-gray">
+                        <tr>
+                            <th scope="col">N°</th>
+                            <th scope="col">Codigo Articulo</th>
+                            <th scope="col">Articulo</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Precio c/u</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if query3 %}
+                            {% for foo in query3 %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ foo.codigo_articulo }}</td>
+                                    <td>{{ foo.nombre_articulo }}</td>
+                                    <td>{{ foo.id_categoria }}</td>
+                                    <td>{{ foo.stock }}</td>
+                                    <td>{{ foo.precio_unidad }}</td>
+
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        {% endif %}
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -215,6 +339,22 @@
             ventimp.document.close();
             ventimp.print();
             ventimp.close();
+        }
+
+        function arqueo() {
+            $("#reporte_venta").addClass("none");
+            $("#reporte_articulo").addClass("none");
+            $("#arqueo_caja").removeClass("none");
+        }
+        function reportVenta() {
+            $("#reporte_articulo").addClass("none");
+            $("#arqueo_caja").addClass("none");
+            $("#reporte_venta").removeClass("none");
+        }
+        function reporttArt() {
+            $("#reporte_venta").addClass("none");
+            $("#arqueo_caja").addClass("none");
+            $("#reporte_articulo").removeClass("none");
         }
     </script>
 {% endblock %}

@@ -86,7 +86,9 @@
 
     </style>
     <div id="parte1">
-        <p class="mt-4" style="font-family: 'IDAutomationHC39M', sans-serif; font-size: 1.2rem">({{ codigo }})</p>
+        <p class="mt-4" style="font-family: 'IDAutomationHC39M', sans-serif; font-size: 1.2rem">{% if codigo %}
+            ({{ codigo }})
+        {% endif %}</p>
     </div>
     <div id="parte2">
         <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple2 rounded box-shadow">
@@ -108,7 +110,10 @@
                             <button type="submit" style="width: 80%" class="btn bg-blue  mx-auto">Generar</button>
                         </form>
                         <div class="generador">
-                            <p class="mt-4" style="font-family: 'IDAutomationHC39M', sans-serif; font-size: 1.2rem">({{ codigo }})</p>
+                            <p class="mt-4" style="font-family: 'IDAutomationHC39M', sans-serif; font-size: 1.2rem">
+                                {% if codigo %}
+                                    ({{ codigo }})
+                                {% endif %}</p>
                         </div>
                     </div>
                 </div>

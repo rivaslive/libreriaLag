@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.contrib import messages
 from django.db.models import Q, Sum
@@ -705,17 +705,22 @@ def regresarVentas(request, pk):
         return redirect('ventas:shop')
     return render(request, 'ventas/listVentas.html', {'pkV': pk, 'ventas': vntas})
 
-def arqueoCaja(request):
+def reporte(request):
     fechaNow =  datetime.now()
     print (fechaNow)
     query = detalle.objects.filter(id_venta__fecha_venta=fechaNow).exclude(id_venta__estado=1)
-
-    fecha = ""
     total = 0
+    total2 = 0
     for q in query:
         total += q.sub_total
-        fecha = q.id_venta.fecha_venta
-    return render(request, 'ventas/arqueo.html', {'query':query, 'total':total, 'fecha':fecha})
+
+    fechaAfter = fechaNow - timedelta(days=30)
+    query2 = detalle.objects.filter(id_venta__fecha_venta__gte=fechaAfter).exclude(id_venta__estado=1)
+    for q in query2:
+        total2 += q.sub_total
+    query3 = Articulo.objects.all().exclude(is_activate=0)
+
+    return render(request, 'ventas/arqueo.html', {'query':query,'query2':query2,'query3':query3, 'total':total, 'fecha':fechaNow,'total2':total2, 'fecha2':fechaAfter})
 
 
 

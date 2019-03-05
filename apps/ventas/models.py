@@ -5,7 +5,7 @@ from django.utils.timezone import now
 # Create your models here.
 class Venta(models.Model):
     fecha_venta = models.DateField(null=False, blank=False)
-    horaVenta= models.TimeField(default=now,null=False,blank=False)
+    horaVenta= models.TimeField(auto_now_add=True,null=False,blank=False)
     estado = models.IntegerField(null=False, blank=False)
     def __str__(self):
         return '{}'.format(self.fecha_venta)

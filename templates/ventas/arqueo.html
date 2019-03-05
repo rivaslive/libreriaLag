@@ -16,6 +16,9 @@
 {% block body %}
 
     <style>
+        .none {
+            display: none;
+        }
 
         #plus-shopping {
             margin-top: -20px;
@@ -66,10 +69,14 @@
             #parte2 {
                 display: block;
             }
-            .guardar{
+
+            .guardar {
                 display: none;
             }
 
+            .sub-navbar {
+                display: none;
+            }
 
         }
 
@@ -85,22 +92,87 @@
             }
         }
 
+        .sub-navbar .card {
+            cursor: pointer;
+            background: transparent;
+            transition: all 500ms;
+            width: 18rem;
+        }
+
+        .sub-navbar .card1 {
+            background-image: url('{% static 'media/img07.jpeg' %}'), linear-gradient(red, blue);
+            background-size: cover;
+            transition: all 500ms;
+        }
+        .sub-navbar .card2 {
+            background-image: url('{% static 'media/img08.jpeg' %}'), linear-gradient(red, blue);
+            background-size: cover;
+            transition: all 500ms;
+            color: white;
+        }
+
+        .sub-navbar .card3 {
+            background-image: url('{% static 'media/img09.jpeg' %}'), linear-gradient(red, blue);
+            background-size: cover;
+            transition: all 500ms;
+        }
+
+
+        .sub-navbar .card:hover {
+            cursor: pointer;
+            background-image: none;
+            background: rgb(47, 79, 79);
+            transition: all 900ms;
+            color: white;
+        }
+
     </style>
 
-    <div id="parte2" style="width: 90%; margin: 0 5%">
-    <div class="header text-center ">
-        <h1 align="center" class="mt-2">Arqueo de caja</h1>
-        <h1 align="center" class="mt-2">"Libreria CANAAN"</h1>
-        <h5 align="justify" class="mt-4"><span>Fecha: {{ fecha }} </span><span class="float-right">Total del dia: ${{ total }}</span> </h5>
+    <div class="sub-navbar row mt-4">
+        <div class="card card1 mx-auto" style="">
+            <div class="card-body">
+                <h5 class="card-title">Arqueo de Caja</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Reporte de Hoy</h6>
+                <p class="card-text">Visualice e imprima las ventas del dia de hoy, puede hacer recuento de caja
+                    tambien.</p>
+
+            </div>
+        </div>
+        <div class="card card2 mx-auto" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Reporte de ventas ultimos 30 dias</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Ventas Mensuales</h6>
+                <p class="card-text">Visualice e imprima un reporte de las ventas durante los ultimos 30 dias.</p>
+
+            </div>
+        </div>
+        <div class="card card3 mx-auto" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Articulos en inventario</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Reporte Articulos</h6>
+                <p class="card-text">Un reporte con todos los articulos y sus existencias en inventario</p>
+
+            </div>
+        </div>
+
     </div>
-        <div class=" mt-2" >
+
+    <div id="parte2" class="none" style="width: 90%; margin: 0 5%">
+        <div class="header text-center ">
+            <h1 align="center" class="mt-2">Arqueo de caja</h1>
+            <h1 align="center" class="mt-2">"Libreria CANAAN"</h1>
+            <h5 align="justify" class="mt-4"><span>Fecha: {{ fecha }} </span><span
+                    class="float-right">Total del dia: ${{ total }}</span></h5>
+        </div>
+        <div class=" mt-2">
             <div class="table-responsive">
                 <table class="table">
                     <thead class="bg-gray">
                     <tr>
                         <th scope="col">N°</th>
                         <th scope="col">Hora</th>
-                        <th scope="col">Codigo</th>
+                        <th scope="col">Codigo Venta</th>
+                        <th scope="col">Codigo Art</th>
                         <th scope="col">Articulo</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col">Precio c/u</th>
@@ -115,13 +187,14 @@
                         {% for foo in query %}
                             <tr>
                                 <th scope="row">{{ forloop.counter }}</th>
-                                <td>{{ foo.id_articulo.horaVenta }}</td>
+                                <td>{{ foo.id_venta.horaVenta }}</td>
+                                <td>{{ foo.id_venta.pk }}</td>
                                 <td>{{ foo.id_articulo.codigo_articulo }}</td>
                                 <td>{{ foo.id_articulo.nombre_articulo }}</td>
                                 <td>{{ foo.cantidad }}</td>
                                 <td>${{ foo.id_articulo.precio_unidad }}</td>
                                 <td>${{ foo.descuento }} </td>
-                                <td>{{ foo.descuentoPorcentual }}0%</td>
+                                <td>{{ foo.descuentoPorcentual }}%</td>
                                 <td>${{ foo.sub_total }}</td>
 
                             </tr>

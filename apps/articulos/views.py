@@ -30,6 +30,7 @@ def articulo(request):
         request.session['codigo'] = ''
         print ("CODIGO ADMIN RESETEADO")
     try:
+
         if request.session['ventaId']:
             ventaId = request.session['ventaId']
             notify = detalle.objects.filter(id_venta=ventaId).count()

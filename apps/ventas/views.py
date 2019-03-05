@@ -191,13 +191,13 @@ def venta(request):
                     if descuento:
                         if float(descuento) <= 100:
                             # descuento sin porcentaje
-                            descuento = float(float(descuento) / 100)
-                            print("SU DESC ES: " + str(descuento))
+                            descuento2 = float(float(descuento) / 100)
+                            print("SU DESC ES: " + str(descuento2))
                             # valor del precio total
                             valor = float(int(cantidad) * articulo.precio_unidad)
                             # descuento al total el descuento
-                            subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
-                            descuentoValor = float("{0:.2f}".format(valor * descuento))
+                            subTotal = float("{0:.2f}".format(valor - (valor * descuento2)))
+                            descuentoValor = float("{0:.2f}".format(valor * descuento2))
                             print('EL SUBTOTAL ES: ' + str(subTotal))
                         else:
                             messages.warning(request, "ingrese un descuento menor del 100%")
@@ -211,6 +211,7 @@ def venta(request):
                     form2 = DetalleForm(
                         {'cantidad': cantidad, 'precio': articulo.precio_unidad, 'descuento': descuentoValor,
                          'sub_total': subTotal,
+                         'descuentoPorcentual': descuento,
                          'id_articulo': articulo.pk,
                          'id_venta': request.session['ventaId']})
                     if form2.is_valid():
@@ -253,12 +254,12 @@ def venta(request):
                     print("VENTA ACTIVA Y NO ARTICULO SIN COINCIDIR")
                     if descuento:
                         if float(descuento) <= 100:
-                            descuento = float(float(descuento) / 100)
-                            print("SU DESC ES: " + str(descuento))
+                            descuento2 = float(float(descuento) / 100)
+                            print("SU DESC ES: " + str(descuento2))
                             valor = float(int(cantidad) * articulo.precio_unidad)
-                            subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                            subTotal = float("{0:.2f}".format(valor - (valor * descuento2)))
                             print('EL SUBTOTAL ES: ' + str(subTotal))
-                            descuentoValor = float("{0:.2f}".format(valor * descuento))
+                            descuentoValor = float("{0:.2f}".format(valor * descuento2))
                         else:
                             messages.warning(request, "ingrese un descuento menor del 100%")
                             return redirect('ventas:shop')
@@ -273,6 +274,7 @@ def venta(request):
                             'precio': articulo.precio_unidad,
                             'descuento': descuentoValor,
                             'sub_total': subTotal,
+                            'descuentoPorcentual': descuento,
                             'id_articulo': articulo.pk,
                             'id_venta': ventaId
                         }
@@ -292,12 +294,12 @@ def venta(request):
                     print('ARTICULO YA EXISTENTE EN LA VENTA')
                     if descuento:
                         if float(descuento) <= 100:
-                            descuento = float(float(descuento) / 100)
-                            print("SU DESC ES: " + str(descuento))
+                            descuento2 = float(float(descuento) / 100)
+                            print("SU DESC ES: " + str(descuento2))
                             valor = float(int(cantidad) * articulo.precio_unidad)
-                            subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
+                            subTotal = float("{0:.2f}".format(valor - (valor * descuento2)))
                             print('EL SUBTOTAL ES: ' + str(subTotal))
-                            descuentoValor = float("{0:.2f}".format(valor * descuento))
+                            descuentoValor = float("{0:.2f}".format(valor * descuento2))
 
                         else:
                             messages.warning(request, "ingrese un descuento menor del 100%")
@@ -314,6 +316,7 @@ def venta(request):
                     post = get_object_or_404(detalle, pk=detal.pk)
                     post.cantidad = (detal.cantidad + int(cantidad))
                     post.descuento = float(float(detal.descuento) + descuentoValor)
+                    post.descuentoPorcentual = descuento
                     post.sub_total = (float(detal.sub_total) + subTotal)
                     post.save()
                     # Editar el registro ya existe de articulo para restar el stock
@@ -374,7 +377,7 @@ def vender(request):
                     total = 0
                     descuentoTotal = 0
                 efectivo = float(request.POST.get('cambio', ''))
-                if efectivo >= total:
+                if efectivo >= float(total):
                     print("estamos en 3")
                     cambio = float("{0:.2f}".format(efectivo - float(total)))
                     numero = (facturas.numero + 1)
@@ -417,7 +420,7 @@ def vender(request):
                 else:
                     total = 0
                     descuentoTotal = 0
-                if efectivo >= total:
+                if efectivo >= float(total):
                     print("estamos en 7")
                     cambio = float("{0:.2f}".format(efectivo - float(total)))
                     print(cambio)
@@ -523,13 +526,13 @@ def editarShop(request, pk):
                         if descuento:
                             if float(descuento) <= 100:
                                 # descuento sin porcentaje
-                                descuento = float(float(descuento) / 100)
-                                print("SU DESC ES: " + str(descuento))
+                                descuento2 = float(float(descuento) / 100)
+                                print("SU DESC ES: " + str(descuento2))
                                 # valor del precio total
                                 valor = float(int(cantidad) * detalles.id_articulo.precio_unidad)
                                 # descuento al total el descuento
-                                subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
-                                descuentoValor = float("{0:.2f}".format(valor * descuento))
+                                subTotal = float("{0:.2f}".format(valor - (valor * descuento2)))
+                                descuentoValor = float("{0:.2f}".format(valor * descuento2))
                                 print('EL SUBTOTAL ES: ' + str(subTotal))
                             else:
                                 messages.warning(request, "ingrese un descuento menor del 100%")
@@ -541,6 +544,7 @@ def editarShop(request, pk):
                         form = get_object_or_404(detalle, pk=detalles.pk)
                         form.cantidad = int(cantidad)
                         form.descuento = float(descuentoValor)
+                        form.descuentoPorcentual = descuento
                         form.sub_total = subTotal
                         form.save()
                         messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")
@@ -569,13 +573,13 @@ def editarShop(request, pk):
 
                         if float(descuento) <= 100:
                             # descuento sin porcentaje
-                            descuento = float(float(descuento) / 100)
-                            print("SU DESC ES: " + str(descuento))
+                            descuento2 = float(float(descuento) / 100)
+                            print("SU DESC ES: " + str(descuento2))
                             # valor del precio total
                             valor = float(int(cantidad) * detalles.id_articulo.precio_unidad)
                             # descuento al total el descuento
-                            subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
-                            descuentoValor = float("{0:.2f}".format(valor * descuento))
+                            subTotal = float("{0:.2f}".format(valor - (valor * descuento2)))
+                            descuentoValor = float("{0:.2f}".format(valor * descuento2))
                             print('EL SUBTOTAL ES: ' + str(subTotal))
                         else:
                             messages.warning(request, "ingrese un descuento menor del 100%")
@@ -588,6 +592,7 @@ def editarShop(request, pk):
                     form.cantidad = int(cantidad)
                     form.descuento = float(descuentoValor)
                     form.sub_total = subTotal
+                    form.descuentoPorcentual = descuento
                     form.save()
                     messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")
                     return redirect('ventas:shop')
@@ -609,13 +614,13 @@ def editarShop(request, pk):
                         if descuento:
                             if float(descuento) <= 100:
                                 # descuento sin porcentaje
-                                descuento = float(float(descuento) / 100)
-                                print("SU DESC ES: " + str(descuento))
+                                descuento2 = float(float(descuento) / 100)
+                                print("SU DESC ES: " + str(descuento2))
                                 # valor del precio total
                                 valor = float(int(cantidad) * detalles.id_articulo.precio_unidad)
                                 # descuento al total el descuento
-                                subTotal = float("{0:.2f}".format(valor - (valor * descuento)))
-                                descuentoValor = float("{0:.2f}".format(valor * descuento))
+                                subTotal = float("{0:.2f}".format(valor - (valor * descuento2)))
+                                descuentoValor = float("{0:.2f}".format(valor * descuento2))
                                 print('EL SUBTOTAL ES: ' + str(subTotal))
                             else:
                                 messages.warning(request, "ingrese un descuento menor del 100%")
@@ -627,6 +632,7 @@ def editarShop(request, pk):
                         form = get_object_or_404(detalle, pk=detalles.pk)
                         form.cantidad = int(cantidad)
                         form.descuento = float(descuentoValor)
+                        form.descuentoPorcentual = descuento
                         form.sub_total = subTotal
                         form.save()
                         messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")

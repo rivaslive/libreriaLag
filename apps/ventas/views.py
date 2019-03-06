@@ -567,13 +567,15 @@ def editarShop(request, pk):
                                 messages.warning(request, "ingrese un descuento menor del 100%")
                                 return redirect('ventas:shop')
                         else:
+                            descuento=0
                             subTotal = float(int(cantidad) * detalles.id_articulo.precio_unidad)
                             descuentoValor = 0
                             print('EL SUBTOTAL ES: ' + str(subTotal))
-                        form = get_object_or_404(detalle, pk=detalles.pk)
+
+                        form = get_object_or_404(detalle, pk=pk)
                         form.cantidad = int(cantidad)
                         form.descuento = float(descuentoValor)
-                        form.descuentoPorcentual = descuento
+                        form.descuentoPorcentual = float(descuento)
                         form.sub_total = subTotal
                         form.save()
                         messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")
@@ -590,7 +592,7 @@ def editarShop(request, pk):
         else:
             if int(cantidad) == detalles.cantidad:
                 try:
-                    print("ESTO ES 1")
+                    print("ESTO ES 2")
                     try:
                         form = get_object_or_404(Articulo, pk=articulo.pk)
                         form.stock = articulo.stock + (detalles.cantidad - int(cantidad))
@@ -614,6 +616,7 @@ def editarShop(request, pk):
                             messages.warning(request, "ingrese un descuento menor del 100%")
                             return redirect('ventas:shop')
                     else:
+                        descuento = 0
                         subTotal = float(int(cantidad) * detalles.id_articulo.precio_unidad)
                         descuentoValor = 0
                         print('EL SUBTOTAL ES: ' + str(subTotal))
@@ -621,7 +624,7 @@ def editarShop(request, pk):
                     form.cantidad = int(cantidad)
                     form.descuento = float(descuentoValor)
                     form.sub_total = subTotal
-                    form.descuentoPorcentual = descuento
+                    form.descuentoPorcentual = float(descuento)
                     form.save()
                     messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")
                     return redirect('ventas:shop')
@@ -655,13 +658,14 @@ def editarShop(request, pk):
                                 messages.warning(request, "ingrese un descuento menor del 100%")
                                 return redirect('ventas:shop')
                         else:
+                            descuento = 0
                             subTotal = float(int(cantidad) * detalles.id_articulo.precio_unidad)
                             descuentoValor = 0
                             print('EL SUBTOTAL ES: ' + str(subTotal))
                         form = get_object_or_404(detalle, pk=detalles.pk)
                         form.cantidad = int(cantidad)
                         form.descuento = float(descuentoValor)
-                        form.descuentoPorcentual = descuento
+                        form.descuentoPorcentual = float(descuento)
                         form.sub_total = subTotal
                         form.save()
                         messages.success(request, "Operacion exitosa se sumaron " + str(cantidad) + " al stock")

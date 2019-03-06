@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from rest_framework import status, generics
@@ -16,15 +16,14 @@ from apps.articulos.serializers import ArticuloSerializer
 # ver articulos
 from apps.ventas.models import detalle
 import json
-#from chartjs.views.lines import BaseLineChartView
+# from chartjs.views.lines import BaseLineChartView
 from django.views.generic import TemplateView
-
 
 
 def articulo(request):
     try:
         if request.session['codigo']:
-            request.session['codigo']= ''
+            request.session['codigo'] = ''
             print ("CODIGO ADMIN RESETEADO")
     except:
         request.session['codigo'] = ''
@@ -35,7 +34,7 @@ def articulo(request):
             ventaId = request.session['ventaId']
             notify = detalle.objects.filter(id_venta=ventaId).count()
             query = Articulo.objects.filter(is_activate=1).order_by('-pk')
-            return render(request, 'productos/articulo.html', {'articulo': query, 'notify':notify})
+            return render(request, 'productos/articulo.html', {'articulo': query, 'notify': notify})
         else:
             request.session['ventaId'] = ''
             query = Articulo.objects.filter(is_activate=1).order_by('-pk')
@@ -44,14 +43,14 @@ def articulo(request):
         request.session['ventaId'] = ''
         query = Articulo.objects.filter(is_activate=1)
         return render(request, 'productos/articulo.html', {'articulo': query})
-# ver articulos
 
+
+# ver articulos
 
 
 def articuloDetalle(request, pk):
     query = Articulo.objects.get(id=pk)
     return render(request, 'productos/articuloDetalle.html', {'articulo': query})
-
 
 
 # crear articulos
@@ -61,8 +60,20 @@ class CrearArticulo(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('articulo:inventario')
+
     success_message = 'Operacion Exitosa'
 
+
+def inventario_response(request):
+    # Articulos con estado activo, con stock mayor que 1 pero menores que 10
+    query = Articulo.objects.filter(Q(stock__gt=0) & Q(stock__lt=11)).exclude(is_activate=0).order_by('stock')
+    # Articulos con 0 existencias
+    query_ar = Articulo.objects.filter(stock=0).exclude(is_activate=0).order_by('stock')
+
+    query_are = Articulo.objects.filter(stock__gt=10).exclude(is_activate=0).order_by('stock')
+    print("CODIGO SESSION: " + request.session['codigo'])
+    return render(request,'productos/inventario.html',
+                  {'inventario1': query, 'inventario': query_ar, 'inventariop': query_are, 'correcto':'1'})
 
 
 # Mostrar los productos sin stock
@@ -72,49 +83,43 @@ def inventario(request):
         if codigo:
             request.session['codigo'] = codigo
             codigoSession = codigo
-            print ("EL CODIGO ES: "+codigoSession)
+            print ("EL CODIGO ES: " + codigoSession)
         else:
             codigoSession = request.session['codigo']
     except:
         codigoSession = '0'
-    if codigoSession =="1234" or codigo == "1234":
-        # Articulos con estado activo, con stock mayor que 1 pero menores que 10
-        query = Articulo.objects.filter(Q(stock__gt=0) & Q(stock__lt=11)).exclude(is_activate=0).order_by('stock')
-        # Articulos con 0 existencias
-        query_ar = Articulo.objects.filter(stock=0).exclude(is_activate=0).order_by('stock')
-        # Todos los demás articulos mayores que 10
-        query_are = Articulo.objects.filter(stock__gt=10).exclude(is_activate=0).order_by('stock')
-        print("CODIGO SESSION: "+request.session['codigo'])
-        return render(request, 'productos/inventario.html', {'inventario1': query, 'inventario': query_ar, 'inventariop': query_are})
+    if codigoSession == "1234" or codigo == "1234":
+        return inventario_response(request)
     else:
         request.session['codigo'] = ''
         if codigo:
             messages.warning(request, 'Codigo Incorrecto')
             return redirect('articulo:articulo')
         return render(request, 'base/codigo.html')
-        
+
+    # Buscar Articulos
 
 
-    #Buscar Articulos
 def buscar(request):
     try:
         if request.session['codigo']:
-            request.session['codigo']= ''
+            request.session['codigo'] = ''
             print ("CODIGO ADMIN RESETEADO")
     except:
         request.session['codigo'] = ''
         print ("CODIGO ADMIN RESETEADO")
-    buscar= request.GET.get('search','')
-    queryset = Articulo.objects.filter(Q(nombre_articulo__icontains=buscar)|Q(codigo_articulo__contains=buscar)).exclude(is_activate=0).order_by('nombre_articulo')
+    buscar = request.GET.get('search', '')
+    queryset = Articulo.objects.filter(
+        Q(nombre_articulo__icontains=buscar) | Q(codigo_articulo__contains=buscar)).exclude(is_activate=0).order_by(
+        'nombre_articulo')
 
-    return render(request,'productos/articulo.html',{'articulo':queryset, 'busqueda':buscar})
-
+    return render(request, 'productos/articulo.html', {'articulo': queryset, 'busqueda': buscar})
 
 
 def inicio(request):
     try:
         if request.session['codigo']:
-            request.session['codigo']= ''
+            request.session['codigo'] = ''
             print ("CODIGO ADMIN RESETEADO")
     except:
         request.session['codigo'] = ''
@@ -125,7 +130,7 @@ def inicio(request):
 def generador(request):
     try:
         if request.session['codigo']:
-            request.session['codigo']= ''
+            request.session['codigo'] = ''
             print ("CODIGO ADMIN RESETEADO")
     except:
         request.session['codigo'] = ''
@@ -150,7 +155,6 @@ def generador(request):
         return render(request, 'productos/generador.html')
 
 
-
 def articulo_edi(request, pk):
     articulo = Articulo.objects.get(id=pk)
     cat = Categoria.objects.all()
@@ -165,25 +169,32 @@ def articulo_edi(request, pk):
             return redirect('articulo:inventario')
         messages.warning(request, 'error al editar articulo')
         return redirect('articulo:inventario')
-    return render(request, 'productos/productoModal.html', {'form': form, 'pk': pk, 'articulo':articulo,'categorias':cat})
-
+    return render(request, 'productos/productoModal.html',
+                  {'form': form, 'pk': pk, 'articulo': articulo, 'categorias': cat})
 
 
 def actualizarEstado(request, pk):
-   arti = Articulo.objects.get(id=pk)
-   if request.method == 'POST':
-     respuesta = get_object_or_404(Articulo, pk=arti.pk)
-     respuesta.is_activate = 0
-     respuesta.save()
-     messages.success(request, 'Articulo deshabilitado')
-     return redirect('articulo:deshabilitado')
-   return render(request, 'productos/cambiarEstadoModal.html', {'arti': arti, 'pk':pk})
-
+    arti = Articulo.objects.get(id=pk)
+    if request.method == 'POST':
+        respuesta = get_object_or_404(Articulo, pk=arti.pk)
+        respuesta.is_activate = 0
+        respuesta.save()
+        messages.success(request, 'Articulo deshabilitado')
+        return redirect('articulo:deshabilitado')
+    return render(request, 'productos/cambiarEstadoModal.html', {'arti': arti, 'pk': pk})
 
 
 def mostrarDeshabilitados(request):
+    try:
+        if request.session['codigo']:
+            request.session['codigo'] = ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
     query = Articulo.objects.filter(is_activate=0).order_by('id')
-    return  render(request,'productos/articuloDeshabilitado.html', {'inventario': query})
+    return render(request, 'productos/articuloDeshabilitado.html', {'inventario': query})
+
 
 def habilitarArticulo(request, pk):
     arti = Articulo.objects.get(id=pk)
@@ -194,7 +205,6 @@ def habilitarArticulo(request, pk):
         messages.success(request, 'Articulo Habilitado')
         return redirect('articulo:articulo')
     return render(request, 'productos/cambiarEstadoModal.html', {'articulo': arti, 'pka': pk})
-
 
 
 @api_view(['GET', 'POST'])
@@ -212,10 +222,6 @@ def articuloListJSON(request, format=None):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ArticuloListClass(generics.ListCreateAPIView):
     queryset = Articulo.objects.all()
     serializer_class = ArticuloSerializer
-
-
-

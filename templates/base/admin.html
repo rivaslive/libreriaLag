@@ -135,7 +135,7 @@
                     <a class="nav-link2" href="{% url 'ventas:reporte' %}">Reportes</a>
                 </li>
                 <li class="nav-item {% block active4 %} {% endblock %}">
-                    <a class="nav-link2" href=" {% url 'articulo:inventario' %}"
+                    <a class="nav-link2" {% if correcto == '1' %} href=" {% url 'articulo:inventario' %} {% else %} onclick="return abrir_modal('{% url 'articulo:inventario' %}')" {% endif %}"
                        style="color:black">Inventario</a>
                 </li>
 
@@ -155,7 +155,7 @@
                 Administración de usuario
             </h6>
             <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
-               href=" {% url 'ventas:listVenta' %}">
+               {% if correcto == '1' %} href=" {% url 'articulo:inventario' %} {% else %} onclick="return abrir_modal('{% url 'articulo:inventario' %}')" {% endif %}">
                 <div class="mr-3">
                     <div class="icono">
                         <i class="fas fa-book"></i>

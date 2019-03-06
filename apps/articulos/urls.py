@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from apps.articulos.views import articulo, habilitarArticulo,mostrarDeshabilitados,inventario, CrearArticulo, ArticuloListClass, articuloListJSON,articuloDetalle, buscar, inicio, generador, articulo_edi, actualizarEstado
+from apps.articulos.views import articulo, inventario_response, habilitarArticulo,mostrarDeshabilitados,inventario, CrearArticulo, ArticuloListClass, articuloListJSON,articuloDetalle, buscar, inicio, generador, articulo_edi, actualizarEstado
 from django.contrib.auth.decorators import login_required
 from  rest_framework.urlpatterns import format_suffix_patterns
 from apps.ventas.views import graficas
@@ -18,6 +18,7 @@ urlpatterns = [
 
     path('crearArticulo/', login_required(CrearArticulo.as_view()), name="crearArticulo"),
     path('inventario/', login_required(inventario), name="inventario"),
+    path('inventario_response/', login_required(inventario_response), name="inventario_response"),
     path('deshabilitado/', login_required(mostrarDeshabilitados), name="deshabilitado"),
     path('articulo_list_json/', articuloListJSON, name="articulo_list_json"),
     path('articulo_list/', ArticuloListClass.as_view(), name="articuloList"),

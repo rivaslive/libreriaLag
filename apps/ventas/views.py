@@ -148,6 +148,13 @@ def carShopping(request):
 
 def shop(request):
     try:
+        if request.session['codigo']:
+            request.session['codigo'] = ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
+    try:
         ventaId = request.session['ventaId']
         if ventaId:
             query = detalle.objects.filter(id_venta=ventaId)
@@ -357,6 +364,13 @@ def eliminarDetalle(request, pk):
 
 
 def vender(request):
+    try:
+        if request.session['codigo']:
+            request.session['codigo'] = ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
     ventaId = request.session['ventaId']
     if ventaId != "":
         if request.method == "POST":
@@ -460,6 +474,13 @@ def vender(request):
 
 
 def ticket(request):
+    try:
+        if request.session['codigo']:
+            request.session['codigo'] = ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
     ventaId = request.session['ventaId']
     try:
         facturas = Factura.objects.get(venta_id=ventaId)
@@ -506,6 +527,13 @@ def drop(request):
 
 
 def editarShop(request, pk):
+    try:
+        if request.session['codigo']:
+            request.session['codigo'] = ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
     detalles = detalle.objects.get(id=pk)
 
     if request.method == "GET":
@@ -666,6 +694,7 @@ def listarVentas(request):
 
 
 def llenarTablaVentas(request):
+
     codigo = request.POST.get('codigo', '')
     try:
         if codigo:
@@ -677,8 +706,9 @@ def llenarTablaVentas(request):
     except:
         codigoSession = '0'
     if codigoSession == "1234" or codigo == "1234":
+
         query = Venta.objects.all().exclude(estado=1).order_by('-fecha_venta')
-        return render(request, 'ventas/listVentas.html', {'datosVenta': query})
+        return render(request, 'ventas/listVentas.html', {'datosVenta': query, 'correcto':'1'})
     else:
         if codigo:
             messages.warning(request, 'Codigo Incorrecto')
@@ -707,6 +737,13 @@ def regresarVentas(request, pk):
     return render(request, 'ventas/listVentas.html', {'pkV': pk, 'ventas': vntas})
 
 def reporte(request):
+    try:
+        if request.session['codigo']:
+            request.session['codigo'] = ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
     fechaNow =  datetime.now()
     print (fechaNow)
     query = detalle.objects.filter(id_venta__fecha_venta=fechaNow).exclude(id_venta__estado=1)
@@ -725,6 +762,13 @@ def reporte(request):
 
 
 def graficas(request):
+    try:
+        if request.session['codigo']:
+            request.session['codigo'] = ''
+            print ("CODIGO ADMIN RESETEADO")
+    except:
+        request.session['codigo'] = ''
+        print ("CODIGO ADMIN RESETEADO")
     dataset = detalle.objects.values('id_articulo__nombre_articulo').exclude(id_venta__estado=1).annotate(
         total=Sum('cantidad')).order_by('-sub_total')[:5]
     print (dataset)

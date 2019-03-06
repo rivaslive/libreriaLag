@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('nombre_articulo', models.CharField(max_length=45)),
                 ('codigo_articulo', models.CharField(max_length=45)),
                 ('stock', models.IntegerField(blank=True, null=True)),
-                ('precio_unidad', models.DecimalField(decimal_places=2, max_digits=5)),
+                ('precio_unidad', models.FloatField()),
                 ('is_activate', models.IntegerField()),
             ],
         ),

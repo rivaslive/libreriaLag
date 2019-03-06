@@ -39,11 +39,12 @@
                 <table class="table">
                     <thead class="bg-gray">
                     <tr>
-                        <th>#</th>
+                        <th>Código</th>
                         <th scope="col">Artículo</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col">Precio</th>
-                        <th scope="col">Descuento (Si aplica)</th>
+                        <th scope="col">Descuento en $</th>
+                        <th scope="col">Descuento en %</th>
                         <th scope="col">Sub Total</th>
 
                     </tr>
@@ -52,20 +53,18 @@
                     {% if pk %}
                         {% for foo in detalleVenta %}
                             <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
-
-                                <td>{{ foo.id_articulo.nombre_articulo }}</td>
+                                <th scope="row">{{ foo.id_articulo.codigo_articulo }}</th>
+                                <td scope="row">{{ foo.id_articulo.nombre_articulo }}</td>
                                 <td>{{ foo.cantidad}}</td>
-
                                 <td>${{ foo.precio }}</td>
                                 <td>${{ foo.descuento }}</td>
+                                <td>{{ foo.descuentoPorcentual }}%</td>
                                 <td>${{ foo.sub_total }}</td>
-
-
                             </tr>
 
                         {% endfor %}
                         </tbody>
+
                     {% endif %}
                 </table>
             </div>

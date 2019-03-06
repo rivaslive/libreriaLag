@@ -60,7 +60,7 @@ class CrearArticulo(SuccessMessageMixin, CreateView):
     form_class = ArticuloForm
 
     def get_success_url(self):
-        return reverse_lazy('articulo:articulo')
+        return reverse_lazy('articulo:inventario')
     success_message = 'Operacion Exitosa'
 
 
@@ -154,7 +154,7 @@ def generador(request):
 def articulo_edi(request, pk):
     articulo = Articulo.objects.get(id=pk)
     cat = Categoria.objects.all()
-    catName = request.POST.get('id_categoria')
+
     if request.method == 'GET':
         form = ArticuloForm(instance=articulo)
     else:

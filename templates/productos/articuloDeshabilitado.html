@@ -27,7 +27,7 @@
 
                 </div>
             <div class="my-3 p-3 bg-white rounded box-shadow">
-                <h6 class="border-bottom border-gray pb-2 mb-0">Articulos sin existencias</h6>
+                <h6 class="border-bottom border-gray pb-2 mb-0">Listado de artículos deshabilitados</h6>
                 {% if inventario %}
                     {% for foo in inventario %}
                 <div class="media text-muted pt-3 bg-hover">
@@ -52,7 +52,7 @@
                 </div>
                     {% endfor %}
                 {% else %}
-                    <h6>No tienes Arriculos sin unidades</h6>
+                    <h6>No tienes artículos deshabilitados</h6>
                 {% endif %}
 
             </div>

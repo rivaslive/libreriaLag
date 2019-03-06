@@ -51,7 +51,7 @@
                 Administración de usuario
             </h6>
             <a class="dropdown-item d-flex mx-0" style="min-width: 100%"
-               {% if correcto == '1' %} href=" {% url 'articulo:inventario' %} {% else %} onclick="return abrir_modal('{% url 'articulo:inventario' %}')" {% endif %}">
+               {% if correcto == '1' %} href=" {% url 'ventas:listVenta' %} {% else %} onclick="return abrir_modal('{% url 'ventas:listVenta' %}')" {% endif %}">
                 <div class="mr-3">
                     <div class="icono">
                         <i class="fas fa-book"></i>

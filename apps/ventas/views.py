@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, timedelta
 
 from django.contrib import messages
@@ -723,4 +724,64 @@ def reporte(request):
     return render(request, 'ventas/arqueo.html', {'query':query,'query2':query2,'query3':query3, 'total':total, 'fecha':fechaNow,'total2':total2, 'fecha2':fechaAfter})
 
 
+def graficas(request):
+    dataset = detalle.objects.values('id_articulo__nombre_articulo').exclude(id_venta__estado=1).annotate(
+        total=Sum('cantidad')).order_by('-sub_total')[:5]
+    print (dataset)
+    categories = list()
+    survived_series_data = list()
+
+    for entry in dataset[::-1]:
+        categories.append('%s ' % entry['id_articulo__nombre_articulo'])
+        gananc = entry['total']
+        totali = round(gananc, 2)
+        survived_series_data.append(totali)
+
+    survived_series = {
+        'name': 'Productos',
+        'data': survived_series_data,
+        "colorByPoint": True,
+    }
+    chart = {
+        'chart': {'type': 'column'},
+        'title': {'text': '5 productos mas vendidos'},
+        'xAxis': {'categories': categories},
+        'yAxis': {'title': {'text': 'Cantidades en Unidades'}},
+        'series': [survived_series]
+    }
+    dump = json.dumps(chart)
+
+    dataset2 = detalle.objects.values('id_articulo__nombre_articulo').exclude(id_venta__estado=1).annotate(
+        total=Sum('cantidad')).order_by('sub_total')[:5]
+    print (dataset2)
+    categories = list()
+    survived_series_data = list()
+    datos = list()
+    for entry in dataset2[::-1]:
+        categories.append('%s ' % entry['id_articulo__nombre_articulo'])
+        gananc = entry['total']
+        totali = round(gananc, 2)
+        survived_series_data.append(totali)
+    i=0
+    for s in survived_series_data:
+        datos.append({'name':categories[i], 'y':s})
+        i= i+1
+
+    survived_series = {
+        'name': 'Articulos',
+        'data': datos,
+        "colorByPoint": 'true',
+    }
+    chart = {
+        'chart': {'type': 'pie'},
+        'title': {'text': '5 productos menos vendidos'},
+        'series': [survived_series]
+    }
+    print(chart)
+    dump2 = json.dumps(chart)
+
+
+    fechaNOW = datetime.now()
+    return render(request, 'productos/index.html',
+                  {'charte': dump, 'charte2': dump2, 'fecha': fechaNOW})
 

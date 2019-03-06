@@ -60,7 +60,7 @@ class CrearArticulo(SuccessMessageMixin, CreateView):
     form_class = ArticuloForm
 
     def get_success_url(self):
-        return reverse_lazy('articulo:articulo')
+        return reverse_lazy('articulo:inventario')
     success_message = 'Operacion Exitosa'
 
 

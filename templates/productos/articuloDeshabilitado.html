@@ -44,7 +44,7 @@
                             <p>Precio de venta: <strong>{{ foo.precio_unidad }}</strong></p>
                             <p>Unidades disponibles: <strong style="color: orangered">{{ foo.stock }}</strong></p>
                             <p>
-                                <a title="Habilitar este artículo" data-toggle="modal" data-target="#editar" onclick="return abrir_modal('{% url 'articulo:darAlta' foo.pk %}')"><i class="btn btn-success2 fas fa-check-circle"></i></a>
+                                <a title="Habilitar este artículo" data-toggle="modal" data-target="#editar" onclick="return abrir_modal('{% url 'articulo:darAlta' foo.pk %}')"><i class="btn  btn-success2">Habilitar</i></a>
                                 <a title="Editar y habilitar"  data-toggle="modal" data-target="#editar"  onclick="return abrir_modal('{% url 'articulo:editarInventario' foo.pk %}')" ><i class="btn btn-purple aling-right icon-pencil shopping"></i></a>
                             </p>
                         </div>

@@ -28,14 +28,7 @@
                     <div class="form-group col-md-4">
                         <label for="Categoria"><b>Categoria</b></label>
 
-                        <select name="id_categoria" required=""  class="form-control" id="id_id_categoria">
-
-                            {% for categoria in categorias %}
-                             <option value="{{ categoria.pk }}" selected="">{{ categoria.nombre_Categoria }}</option>
-                            {% endfor %}
-
-
-                        </select>
+                        {{ form.id_categoria }}
                     </div>
                     <div class="form-group col-md-4">
                         <label for="Id_Presentacion"><b>Presentación</b></label>
@@ -52,13 +45,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="id_precio_unidad"><b>Precio de venta Unidad</b></label>
-                        {% if  form.precio_unidad %}
-                        
-                        <input type="text" name="precio_unidad" value="{% if articulo.precio_unidad %} {{ articulo.precio_unidad}} {% endif %} " required="" class="form-control" id="id_precio_unidad">
-                        {% else %}
-                        <input type="text" name="precio_unidad"  required="" class="form-control" id="id_precio_unidad">
-                        
-                        {% endif %}
+                        {{ form.precio_unidad }}
 
                     </div>
                     <div class="form-group col-md-4">

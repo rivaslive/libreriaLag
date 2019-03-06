@@ -153,7 +153,7 @@ def generador(request):
 def articulo_edi(request, pk):
     articulo = Articulo.objects.get(id=pk)
     cat = Categoria.objects.all()
-    catName = request.POST.get('id_categoria')
+
     if request.method == 'GET':
         form = ArticuloForm(instance=articulo)
     else:
